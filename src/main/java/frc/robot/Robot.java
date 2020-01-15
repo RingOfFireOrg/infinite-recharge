@@ -26,6 +26,12 @@ public class Robot extends TimedRobot {
   AHRS ahrs;
 
   NeoTankDrive neoDrive;
+
+  Vision vision;
+
+  double tx;
+  double ty;
+  double ta;
   
   public CANSparkMax frontLeftMotor;
   public CANSparkMax frontRightMotor;
@@ -43,6 +49,7 @@ public class Robot extends TimedRobot {
     frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
     backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
     backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
+    vision = new Vision();
   }
 
   @Override
@@ -65,6 +72,9 @@ public class Robot extends TimedRobot {
     double leftSpeed = leftstick.getY();
 
     neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
+
+    vision.updateVisionVals(); 
+    vision.getTargetDistance();
   }
 
   @Override
