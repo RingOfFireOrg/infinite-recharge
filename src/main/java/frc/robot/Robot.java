@@ -36,7 +36,8 @@ public class Robot extends TimedRobot {
   public CANSparkMax frontRightMotor;
   public CANSparkMax backRightMotor;
   public CANSparkMax backLeftMotor;
-  
+  public CANSparkMax neoPrototypeMotor;
+
   boolean foundVisionTarget = false;
 
   @Override
@@ -54,6 +55,7 @@ public class Robot extends TimedRobot {
     frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
     backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
     backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
+    neoPrototypeMotor = new CANSparkMax(RobotMap.NEO_PROTOTYPE, MotorType.kBrushless);
   }
 
   @Override
@@ -74,8 +76,10 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     double rightSpeed = rightstick.getY();
     double leftSpeed = leftstick.getY();
+    double manipulatorStickSpeed = manipulatorStick.getY();
     currentGyroAngle = ahrs.getAngle();
 
+    neoPrototypeMotor.set(manipulatorStickSpeed);
     neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
 
     vision.updateVisionVals(); 
