@@ -12,7 +12,7 @@ import java.lang.Math;
 public class Vision {
     private double ts; // Skew
     private double tv; // Vaild targets
-    private double tx; // x offset (+-27 deg)
+    public double tx; // x offset (+-27 deg)
     private double ty; // y offset (+- 20.5 deg)
     private double ta; // Area
     private double thor; // Horizontal sidelength
@@ -44,7 +44,7 @@ public class Vision {
         SmartDashboard.putNumber("ta", ta);
     }
 
-    public void getVisionTargetDistance(){
+    public double getVisionTargetDistance(){
         double heightDifference = TARGET_HEIGHT - CAMERA_HEIGHT;
         double totalAngle = CAMERA_MOUNT_ANGLE + ty;
 
@@ -53,10 +53,20 @@ public class Vision {
 
         double targetDistance = heightDifference / (Math.sin(Math.toRadians(totalAngle)));
         SmartDashboard.putNumber("Target Distance", targetDistance);
+        
+        return targetDistance;
     }
 
     public boolean foundTarget() {
         if (tv == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean linedUp() {
+        if (tx < 2) {
             return true;
         } else {
             return false;
@@ -71,8 +81,14 @@ public class Vision {
         }
     }
 
-    public double getVisionTargetAngle() {
+    public double getVisionTargetAngle(double currentGyroAngle) {
         updateVisionVals();
-        return tx;
+        double visionTargetAngle = (currentGyroAngle - tx)%360;
+        return visionTargetAngle;
+    }
+
+    public void writeDistanceAndAngle() {
+        SmartDashboard.putNumber("Distance", getVisionTargetDistance());
+        SmartDashboard.putNumber("Angle to target", tx);
     }
 }

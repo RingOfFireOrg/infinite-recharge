@@ -11,6 +11,8 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.Joystick;
 
@@ -23,6 +25,7 @@ public class Robot extends TimedRobot {
   Joystick rightstick = new Joystick(0);
   Joystick leftstick = new Joystick(1);
   Joystick manipulatorStick = new Joystick(2);
+  JoystickButton visionButton = new JoystickButton(rightstick, 1);
   
   AHRS ahrs;
   NeoTankDrive neoDrive;
@@ -38,7 +41,7 @@ public class Robot extends TimedRobot {
   public CANSparkMax backLeftMotor;
   public CANSparkMax neoPrototypeMotor;
 
-  boolean foundVisionTarget = false;
+  boolean lookingForVisionTarget = false;
 
   @Override
   public void robotInit() {
@@ -47,8 +50,8 @@ public class Robot extends TimedRobot {
 
     neoDrive = new NeoTankDrive();
 
-    visionLineupPid = new PID(0.02, 0.005 ,0);
-    visionLineupPid.setOutputRange(-0.5, 0.5);
+    visionLineupPid = new PID(0.003, 0.0005 ,0);
+    visionLineupPid.setOutputRange(-0.2, 0.2);
     
     vision = new Vision();
     frontLeftMotor = new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless);
@@ -56,6 +59,8 @@ public class Robot extends TimedRobot {
     backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
     backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
     neoPrototypeMotor = new CANSparkMax(RobotMap.NEO_PROTOTYPE, MotorType.kBrushless);
+
+    lookingForVisionTarget = false;
   }
 
   @Override
@@ -77,23 +82,41 @@ public class Robot extends TimedRobot {
     double rightSpeed = rightstick.getY();
     double leftSpeed = leftstick.getY();
     double manipulatorStickSpeed = manipulatorStick.getY();
+    double currentTargetDist = vision.getVisionTargetDistance();
+    boolean visionButtonPressed = visionButton.get();
     currentGyroAngle = ahrs.getAngle();
 
     neoPrototypeMotor.set(manipulatorStickSpeed);
     neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
 
     vision.updateVisionVals(); 
-    vision.getVisionTargetDistance();
     
-    if (vision.foundTarget()) {
-        if (!foundVisionTarget) {
-            foundVisionTarget = true;
-            visionLineupPid.reset();
-        }
-        visionLineupPid.setError(Math.abs(vision.getVisionTargetAngle()));
-        visionLineupPid.update();
-        drivetrainRotationMagnitude = visionLineupPid.getOutput();
+    if (visionButtonPressed){
+      // while (vision.foundTarget() && !vision.linedUp()) {
+          if (!lookingForVisionTarget) {
+              lookingForVisionTarget = true;
+              visionLineupPid.reset();
+          }
+          visionLineupPid.setError(vision.getVisionTargetAngle(currentGyroAngle));
+          visionLineupPid.update();
+          drivetrainRotationMagnitude = visionLineupPid.getOutput();
+
+            if (Math.abs(vision.tx) > 2) {
+              neoDrive.setSpeed(-drivetrainRotationMagnitude, -drivetrainRotationMagnitude);
+              SmartDashboard.putBoolean("Vision status", lookingForVisionTarget);
+              SmartDashboard.putString("Target status", "Going to target!");
+          } else {
+              // neoDrive.stop();
+              lookingForVisionTarget = false;
+              SmartDashboard.putString("Target status", "Found target!");
+          }
+      // }
     }
+
+    // while (vision.foundTarget() && vision.linedUp()) {
+    //     vision.writeDistanceAndAngle();
+    //     // In the future, this method will double check that the robot is in shooting range
+    // }
   }
 
   @Override
