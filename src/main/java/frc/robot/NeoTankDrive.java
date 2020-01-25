@@ -23,4 +23,14 @@ public class NeoTankDrive {
         rightMotors.set(limiter * rightSpeed);
         leftMotors.set(limiter * -leftSpeed);
     }
+
+    public void setSpeed(double rightSpeed, double leftSpeed){
+        rightMotors.set(rightSpeed);
+        leftMotors.set(leftSpeed);
+    }
+
+    public void stop(){
+        rightMotors.set(0);
+        leftMotors.set(0);
+    }
 }
