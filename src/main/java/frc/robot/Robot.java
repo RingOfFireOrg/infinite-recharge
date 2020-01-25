@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.Joystick;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.VictorSP;
 
 
 public class Robot extends TimedRobot {
@@ -31,6 +32,7 @@ public class Robot extends TimedRobot {
   NeoTankDrive neoDrive;
   Vision vision;
   PID visionLineupPid;
+  Shooter shooter;
 
   double currentGyroAngle;
   double drivetrainRotationMagnitude;
@@ -39,7 +41,8 @@ public class Robot extends TimedRobot {
   public CANSparkMax frontRightMotor;
   public CANSparkMax backRightMotor;
   public CANSparkMax backLeftMotor;
-  public CANSparkMax neoPrototypeMotor;
+  public VictorSP leftShooterMotor;
+  public VictorSP rightShooterMotor;
 
   boolean lookingForVisionTarget = false;
 
@@ -49,6 +52,7 @@ public class Robot extends TimedRobot {
     ahrs.reset();
 
     neoDrive = new NeoTankDrive();
+    shooter = new Shooter();
 
     visionLineupPid = new PID(0.003, 0.0005 ,0);
     visionLineupPid.setOutputRange(-0.2, 0.2);
@@ -58,7 +62,6 @@ public class Robot extends TimedRobot {
     frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
     backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
     backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
-    neoPrototypeMotor = new CANSparkMax(RobotMap.NEO_PROTOTYPE, MotorType.kBrushless);
 
     lookingForVisionTarget = false;
   }
@@ -86,10 +89,11 @@ public class Robot extends TimedRobot {
     boolean visionButtonPressed = visionButton.get();
     currentGyroAngle = ahrs.getAngle();
 
-    neoPrototypeMotor.set(manipulatorStickSpeed);
     neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
 
     vision.updateVisionVals(); 
+
+    shooter.setToShoot(manipulatorStickSpeed);
     
     if (visionButtonPressed){
       // while (vision.foundTarget() && !vision.linedUp()) {

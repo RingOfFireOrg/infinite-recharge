@@ -26,5 +26,6 @@ public class RobotMap {
 	public static final int DRIVE_TRAIN_RIGHT_ENCODER_B = 3;
 
 	// Mechanism Motors
-	public static final int NEO_PROTOTYPE = 5;
+	public static final int LEFT_SHOOTER_MOTOR = 0;
+	public static final int RIGHT_SHOOTER_MOTOR = 1;
 }
