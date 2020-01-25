@@ -9,6 +9,9 @@ public class Shooter {
         new VictorSP(RobotMap.RIGHT_SHOOTER_MOTOR));
 
     public void setToShoot(double speed){
+        if (Math.abs(speed) < 0.05){
+            speed = 0;
+        }
         shooterMotors.set(-speed);
     }
 }
