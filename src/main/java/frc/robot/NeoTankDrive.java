@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-
+/*
 public class NeoTankDrive {
     SpeedControllerGroup rightMotors = new SpeedControllerGroup(
         new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless),
@@ -24,3 +24,5 @@ public class NeoTankDrive {
         leftMotors.set(limiter * -leftSpeed);
     }
 }
+*/
+

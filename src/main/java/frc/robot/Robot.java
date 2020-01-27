@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
 
 import com.revrobotics.CANSparkMax;
@@ -23,12 +24,14 @@ public class Robot extends TimedRobot {
     Joystick leftstick = new Joystick(1);
     Joystick manipulatorStick = new Joystick(2);
 
-    AHRS ahrs;
+    CANSparkMax shooterMotor = new CANSparkMax(RobotMap.MOTOR_SHOOTER, MotorType.kBrushless);
+
+    //AHRS ahrs;
 
     //NeoTankDrive neoDrive;
     DifferentialDrive tankDrive;
 
-    Vision vision;
+    //Vision vision;
 
     double tx;
     double ty;
@@ -37,14 +40,14 @@ public class Robot extends TimedRobot {
 
     @Override
     public void robotInit() {
-        ahrs = new AHRS(SerialPort.Port.kUSB);
-        ahrs.reset();
+        //ahrs = new AHRS(SerialPort.Port.kUSB);
+        //ahrs.reset();
 
         //neoDrive = new NeoTankDrive();
         tankDrive = new CimTank ();
 
       
-        vision = new Vision();
+        //vision = new Vision();
     }
 
     @Override
@@ -65,12 +68,13 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
+        double shooterSpeed = manipulatorStick.getY();
 
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         tankDrive.tankDrive(leftSpeed, rightSpeed, true);
-
-        vision.updateVisionVals();
-        vision.getTargetDistance();
+        shooterMotor.set(shooterSpeed);
+        //vision.updateVisionVals();
+        //vision.getTargetDistance();
     }
 
     @Override
