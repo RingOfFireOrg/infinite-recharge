@@ -11,51 +11,34 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.vision.VisionPipeline;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 public class Robot extends TimedRobot {
 
   Joystick rightstick = new Joystick(0);
   Joystick leftstick = new Joystick(1);
   Joystick manipulatorStick = new Joystick(2);
-  
-  AHRS ahrs;
-  NeoTankDrive neoDrive;
-  Vision vision;
-  PID visionLineupPid;
 
-  double currentGyroAngle;
-  double drivetrainRotationMagnitude;
-  
-  public CANSparkMax frontLeftMotor;
-  public CANSparkMax frontRightMotor;
-  public CANSparkMax backRightMotor;
-  public CANSparkMax backLeftMotor;
-  public CANSparkMax neoPrototypeMotor;
+  AHRS ahrs;
 
   boolean foundVisionTarget = false;
+
+  DifferentialDrive drive;
+  VictorSPX intake, indexer;
+
 
   @Override
   public void robotInit() {
     ahrs = new AHRS(SerialPort.Port.kUSB);
     ahrs.reset();
 
-    neoDrive = new NeoTankDrive();
-
-    visionLineupPid = new PID(0.02, 0.005 ,0);
-    visionLineupPid.setOutputRange(-0.5, 0.5);
-    
-    vision = new Vision();
-    frontLeftMotor = new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless);
-    frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
-    backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
-    backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
-    neoPrototypeMotor = new CANSparkMax(RobotMap.NEO_PROTOTYPE, MotorType.kBrushless);
+    drive = new DifferentialDrive(new TalonSRX(foo), new TalonSRX(foo));
+    intake = new VictorSPX(foo);
+    indexer = new VictorSPX(foo2);
   }
 
   @Override
@@ -74,26 +57,10 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double rightSpeed = rightstick.getY();
-    double leftSpeed = leftstick.getY();
-    double manipulatorStickSpeed = manipulatorStick.getY();
-    currentGyroAngle = ahrs.getAngle();
-
-    neoPrototypeMotor.set(manipulatorStickSpeed);
-    neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
-
-    vision.updateVisionVals(); 
-    vision.getVisionTargetDistance();
-    
-    if (vision.foundTarget()) {
-        if (!foundVisionTarget) {
-            foundVisionTarget = true;
-            visionLineupPid.reset();
-        }
-        visionLineupPid.setError(Math.abs(vision.getVisionTargetAngle()));
-        visionLineupPid.update();
-        drivetrainRotationMagnitude = visionLineupPid.getOutput();
-    }
+    drive.arcadeDrive(-leftstick.getY(), -rightstick.getY());
+    motorPower = manipulatorStick.getY();
+    intake.set(motorPower);
+    indexer.set(motorPower);
   }
 
   @Override
