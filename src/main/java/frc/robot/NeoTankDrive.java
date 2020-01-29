@@ -6,12 +6,18 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 public class NeoTankDrive {
-    SpeedControllerGroup rightMotors = new SpeedControllerGroup(
-        new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless),
-        new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless));
-    SpeedControllerGroup leftMotors = new SpeedControllerGroup(
-        new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless),
-        new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless));
+    SpeedControllerGroup leftCluster, rightCluster;
+    public NeoTankDrive () {
+        leftCluster = new SpeedControllerGroup(
+            new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless),
+            new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless));
+        rightCluster = new SpeedControllerGroup(
+            new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless),
+            new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless));
+
+        leftCluster.setInverted(true);
+        rightCluster.setInverted(false);
+    }
 
 
     public void drive(double rightSpeed, double leftSpeed, double limiter, boolean isSquared){
@@ -20,7 +26,7 @@ public class NeoTankDrive {
             rightSpeed = limiter * Math.copySign(rightSpeed * rightSpeed, rightSpeed);
         }
 
-        rightMotors.set(limiter * rightSpeed);
-        leftMotors.set(limiter * -leftSpeed);
+        rightCluster.set(limiter * rightSpeed);
+        leftCluster.set(limiter * leftSpeed);
     }
 }
