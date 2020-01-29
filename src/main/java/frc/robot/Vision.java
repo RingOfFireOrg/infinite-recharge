@@ -5,13 +5,19 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SerialPort;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.lang.Math;
 
+enum Steps{
+    PID_RESET, PID_UPDATE, SET_MOTORS, CHECK_LINEUP
+}
 
 public class Vision {
     private double ts; // Skew
-    private double tv; // Vaild targets
+    private double tv; // Valid targets
     public double tx; // x offset (+-27 deg)
     private double ty; // y offset (+- 20.5 deg)
     private double ta; // Area
@@ -20,7 +26,10 @@ public class Vision {
 
     private double lineupError;
 
-    AHRS ahrs;
+    PID visionLineupPid;
+    NeoTankDrive neoDrive = new NeoTankDrive();
+
+    AHRS ahrs = new AHRS(SerialPort.Port.kUSB);
 
     final int ALLOWED_OFFSET = 20;
 
@@ -31,6 +40,11 @@ public class Vision {
     final double CAMERA_MOUNT_ANGLE = 0.0; // Limelight's mounting angle in degrees
     final double MAX_SHOOTING_ANGLE = 45; // Maximum shooting angle in degrees
 
+    double currentGyroAngle;
+    double drivetrainRotationMagnitude;
+    boolean lookingForVisionTarget;
+
+    Steps currentStep = Steps.PID_RESET;
 
     public void updateVisionVals(){
         tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0.0);
@@ -90,5 +104,43 @@ public class Vision {
     public void writeDistanceAndAngle() {
         SmartDashboard.putNumber("Distance", getVisionTargetDistance());
         SmartDashboard.putNumber("Angle to target", tx);
+    }
+
+    public void initVision(){
+        boolean lookingForVisionTarget = false;
+
+        visionLineupPid = new PID(0.003, 0.0005 ,0);
+        visionLineupPid.setOutputRange(-0.2, 0.2);
+    }
+
+    public void runVision() {
+        double currentTargetDist = getVisionTargetDistance();
+        currentGyroAngle = ahrs.getAngle();
+
+        switch(currentStep){
+            case PID_RESET:
+                if (!lookingForVisionTarget) {
+                    lookingForVisionTarget = true;
+                    visionLineupPid.reset();
+                }
+                currentStep = Steps.PID_UPDATE;
+            case PID_UPDATE:
+                visionLineupPid.setError(getVisionTargetAngle(currentGyroAngle));
+                visionLineupPid.update();
+                currentStep = Steps.SET_MOTORS;
+            case SET_MOTORS:
+                drivetrainRotationMagnitude = -visionLineupPid.getOutput();
+                currentStep = Steps.CHECK_LINEUP;
+            case CHECK_LINEUP:
+                if (Math.abs(tx) > 2) {
+                    neoDrive.setSpeed(drivetrainRotationMagnitude, drivetrainRotationMagnitude);
+                    SmartDashboard.putBoolean("Vision status", lookingForVisionTarget);
+                    SmartDashboard.putString("Target status", "Going to target!");
+                } else {
+                    lookingForVisionTarget = false;
+                    SmartDashboard.putString("Target status", "Found target!");
+                    currentStep = Steps.PID_RESET;
+                }
+        }
     }
 }

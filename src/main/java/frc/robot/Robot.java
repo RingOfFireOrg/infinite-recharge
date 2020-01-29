@@ -11,14 +11,12 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.Joystick;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.VictorSP;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 public class Robot extends TimedRobot {
@@ -27,15 +25,11 @@ public class Robot extends TimedRobot {
   Joystick leftstick = new Joystick(1);
   Joystick manipulatorStick = new Joystick(2);
   JoystickButton visionButton = new JoystickButton(rightstick, 1);
-  
+
   AHRS ahrs;
   NeoTankDrive neoDrive;
-  Vision vision;
-  PID visionLineupPid;
   Shooter shooter;
-
-  double currentGyroAngle;
-  double drivetrainRotationMagnitude;
+  Vision vision;
   
   public CANSparkMax frontLeftMotor;
   public CANSparkMax frontRightMotor;
@@ -44,8 +38,6 @@ public class Robot extends TimedRobot {
   public VictorSP leftShooterMotor;
   public VictorSP rightShooterMotor;
 
-  boolean lookingForVisionTarget = false;
-
   @Override
   public void robotInit() {
     ahrs = new AHRS(SerialPort.Port.kUSB);
@@ -53,17 +45,14 @@ public class Robot extends TimedRobot {
 
     neoDrive = new NeoTankDrive();
     shooter = new Shooter();
-
-    visionLineupPid = new PID(0.003, 0.0005 ,0);
-    visionLineupPid.setOutputRange(-0.2, 0.2);
-    
     vision = new Vision();
+    
     frontLeftMotor = new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless);
     frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
     backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
     backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
 
-    lookingForVisionTarget = false;
+    vision.initVision();
   }
 
   @Override
@@ -85,37 +74,19 @@ public class Robot extends TimedRobot {
     double rightSpeed = rightstick.getY();
     double leftSpeed = leftstick.getY();
     double manipulatorStickSpeed = manipulatorStick.getY();
-    double currentTargetDist = vision.getVisionTargetDistance();
     boolean visionButtonPressed = visionButton.get();
-    currentGyroAngle = ahrs.getAngle();
 
     neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
 
-    vision.updateVisionVals(); 
-
+    vision.updateVisionVals();
+    if (visionButtonPressed) {
+      vision.runVision();
+    }
     shooter.setToShoot(manipulatorStickSpeed);
     
-    if (visionButtonPressed){
-      // while (vision.foundTarget() && !vision.linedUp()) {
-          if (!lookingForVisionTarget) {
-              lookingForVisionTarget = true;
-              visionLineupPid.reset();
-          }
-          visionLineupPid.setError(vision.getVisionTargetAngle(currentGyroAngle));
-          visionLineupPid.update();
-          drivetrainRotationMagnitude = visionLineupPid.getOutput();
 
-            if (Math.abs(vision.tx) > 2) {
-              neoDrive.setSpeed(-drivetrainRotationMagnitude, -drivetrainRotationMagnitude);
-              SmartDashboard.putBoolean("Vision status", lookingForVisionTarget);
-              SmartDashboard.putString("Target status", "Going to target!");
-          } else {
-              // neoDrive.stop();
-              lookingForVisionTarget = false;
-              SmartDashboard.putString("Target status", "Found target!");
-          }
       // }
-    }
+
 
     // while (vision.foundTarget() && vision.linedUp()) {
     //     vision.writeDistanceAndAngle();
