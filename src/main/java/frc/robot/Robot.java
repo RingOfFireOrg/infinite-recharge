@@ -7,12 +7,11 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -24,7 +23,9 @@ public class Robot extends TimedRobot {
     Joystick leftstick = new Joystick(1);
     Joystick manipulatorStick = new Joystick(2);
 
-    CANSparkMax shooterMotor = new CANSparkMax(RobotMap.MOTOR_SHOOTER, MotorType.kBrushless);
+    PWMVictorSPX collectorMotor = new PWMVictorSPX(RobotMap.MOTOR_COLLECTOR);
+
+    Outtake outtake = new Outtake();
 
     //AHRS ahrs;
 
@@ -68,11 +69,17 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
-        double shooterSpeed = manipulatorStick.getY();
+        double collectorSpeed = manipulatorStick.getY();
+        boolean triggerPulled = manipulatorStick.getTrigger();
 
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         tankDrive.tankDrive(leftSpeed, rightSpeed, true);
-        shooterMotor.set(shooterSpeed);
+        collectorMotor.set(collectorSpeed);
+        if(triggerPulled) {
+            outtake.open();
+        } else {
+            outtake.close();
+        }
         //vision.updateVisionVals();
         //vision.getTargetDistance();
     }

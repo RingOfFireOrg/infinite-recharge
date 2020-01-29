@@ -17,15 +17,13 @@ public class RobotMap {
 	//pwm
 	public static final int MOTOR_RIGHT = 0;
 	public static final int MOTOR_LEFT = 1;
+	public static final int SERVO_RIGHT = 3;
+	public static final int SERVO_LEFT = 4;
 	
 	//canbus
-	public static final int MOTOR_SHOOTER = 3;
+	public static final int MOTOR_COLLECTOR = 2;
 	
 
-	// Drive Train Encoders
-	public static final int DRIVE_TRAIN_LEFT_ENCODER_A = 0;
-	public static final int DRIVE_TRAIN_LEFT_ENCODER_B = 1;
-	public static final int DRIVE_TRAIN_RIGHT_ENCODER_A = 2;
-	public static final int DRIVE_TRAIN_RIGHT_ENCODER_B = 3;
+
 
 }
