@@ -9,9 +9,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import java.lang.Math;
 
-enum Steps{
+enum Steps {
     PID_RESET, PID_UPDATE, SET_MOTORS, CHECK_LINEUP
 }
 
@@ -46,7 +47,7 @@ public class Vision {
 
     Steps currentStep = Steps.PID_RESET;
 
-    public void updateVisionVals(){
+    public void updateVisionVals() {
         tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0.0);
         tx = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
         ty = NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0);
@@ -58,7 +59,7 @@ public class Vision {
         SmartDashboard.putNumber("ta", ta);
     }
 
-    public double getVisionTargetDistance(){
+    public double getVisionTargetDistance() {
         double heightDifference = TARGET_HEIGHT - CAMERA_HEIGHT;
         double totalAngle = CAMERA_MOUNT_ANGLE + ty;
 
@@ -67,7 +68,7 @@ public class Vision {
 
         double targetDistance = heightDifference / (Math.sin(Math.toRadians(totalAngle)));
         SmartDashboard.putNumber("Target Distance", targetDistance);
-        
+
         return targetDistance;
     }
 
@@ -97,7 +98,7 @@ public class Vision {
 
     public double getVisionTargetAngle(double currentGyroAngle) {
         updateVisionVals();
-        double visionTargetAngle = (currentGyroAngle - tx)%360;
+        double visionTargetAngle = (currentGyroAngle - tx) % 360;
         return visionTargetAngle;
     }
 
@@ -106,10 +107,10 @@ public class Vision {
         SmartDashboard.putNumber("Angle to target", tx);
     }
 
-    public void initVision(){
+    public void initVision() {
         boolean lookingForVisionTarget = false;
 
-        visionLineupPid = new PID(0.003, 0.0005 ,0);
+        visionLineupPid = new PID(0.003, 0.0005, 0);
         visionLineupPid.setOutputRange(-0.2, 0.2);
     }
 
@@ -117,7 +118,7 @@ public class Vision {
         double currentTargetDist = getVisionTargetDistance();
         currentGyroAngle = ahrs.getAngle();
 
-        switch(currentStep){
+        switch (currentStep) {
             case PID_RESET:
                 if (!lookingForVisionTarget) {
                     lookingForVisionTarget = true;
