@@ -9,46 +9,31 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-
+import edu.wpi.first.wpilibj.VictorSP;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 public class Robot extends TimedRobot {
-
-    Joystick rightstick = new Joystick(0);
-    Joystick leftstick = new Joystick(1);
-    Joystick manipulatorStick = new Joystick(2);
-
-    PWMVictorSPX collectorMotor = new PWMVictorSPX(RobotMap.MOTOR_COLLECTOR);
-
-    Outtake outtake = new Outtake();
-
-    //AHRS ahrs;
-
-    //NeoTankDrive neoDrive;
-    DifferentialDrive tankDrive;
-
-    //Vision vision;
-
-    double tx;
-    double ty;
-    double ta;
-
+    CimTank tankDrive;
+    Joystick rightstick;
+    Joystick leftstick;
+    Joystick manipulatorStick;
+    JoystickButton intakeButton;
+    CANSparkMax intakeMotor;
 
     @Override
     public void robotInit() {
-        //ahrs = new AHRS(SerialPort.Port.kUSB);
-        //ahrs.reset();
+        tankDrive = new CimTank();
+        Joystick rightstick = new Joystick(0);
+        Joystick leftstick = new Joystick(1);
+        Joystick manipulatorStick = new Joystick(2);
+        JoystickButton intakeButton = new JoystickButton(manipulatorStick, 1);
 
-        //neoDrive = new NeoTankDrive();
-        tankDrive = new CimTank ();
-
-      
-        //vision = new Vision();
+        CANSparkMax intakeMotor = new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
     }
 
     @Override
@@ -69,19 +54,15 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
-        double collectorSpeed = manipulatorStick.getY();
-        boolean triggerPulled = manipulatorStick.getTrigger();
+        boolean intakeButtonPressed = intakeButton.get();
 
-        //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
-        tankDrive.tankDrive(leftSpeed, rightSpeed, true);
-        collectorMotor.set(collectorSpeed);
-        if(triggerPulled) {
-            outtake.open();
+        tankDrive.drive(leftSpeed, rightSpeed, true, 1);
+
+        if (intakeButtonPressed) {
+            intakeMotor.set(0.4);
         } else {
-            outtake.close();
+            intakeMotor.set(0);
         }
-        //vision.updateVisionVals();
-        //vision.getTargetDistance();
     }
 
     @Override

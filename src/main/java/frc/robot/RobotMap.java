@@ -14,14 +14,10 @@ public class RobotMap {
 	// Analog Ports
 
 	// Drive Train Motors
-	//pwm
 	public static final int MOTOR_RIGHT = 0;
 	public static final int MOTOR_LEFT = 1;
-	public static final int SERVO_RIGHT = 3;
-	public static final int SERVO_LEFT = 4;
-	
-	//canbus
-	public static final int MOTOR_COLLECTOR = 2;
+
+	public static final int INTAKE_MOTOR = 1;
 	
 
 

@@ -1,29 +1,20 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import  edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 
+public class CimTank {
+    SpeedControllerGroup leftMotors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.MOTOR_LEFT));
+    SpeedControllerGroup rightMotors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.MOTOR_RIGHT));
 
-public class CimTank extends DifferentialDrive {
-
-        public CimTank () 
-        {
-
-            super (new SpeedControllerGroup(
-                       new PWMVictorSPX(RobotMap.MOTOR_LEFT)
-                       ),    
-                   new SpeedControllerGroup(
-                       new PWMVictorSPX(RobotMap.MOTOR_RIGHT)
-                    )
-            );
-
+    public void drive(double leftSpeed, double rightSpeed, boolean isSquared, double limiter){
+        if (isSquared) {
+            leftSpeed = Math.copySign(leftSpeed * leftSpeed, leftSpeed);
+            rightSpeed = Math.copySign(rightSpeed * rightSpeed, rightSpeed);
         }
 
-
-
+        leftMotors.set(limiter * leftSpeed);
+        rightMotors.set((limiter * rightSpeed));
+    }
 }
