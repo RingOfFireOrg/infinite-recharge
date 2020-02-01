@@ -14,8 +14,8 @@ public class RobotMap {
 	// Analog Ports
 
 	// Drive Train Motors
-	public static final int MOTOR_RIGHT = 0;
-	public static final int MOTOR_LEFT = 1;
+	public static final int MOTOR_RIGHT = 2;
+	public static final int MOTOR_LEFT = 3;
 
 	public static final int INTAKE_MOTOR = 1;
 	

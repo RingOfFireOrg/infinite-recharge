@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
@@ -19,21 +20,18 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Robot extends TimedRobot {
     CimTank tankDrive;
-    Joystick rightstick;
-    Joystick leftstick;
-    Joystick manipulatorStick;
-    JoystickButton intakeButton;
-    CANSparkMax intakeMotor;
+
+    Joystick rightstick = new Joystick(0);
+    Joystick leftstick = new Joystick(1);
+    Joystick manipulatorStick = new Joystick(2);
+    JoystickButton intakeButton = new JoystickButton(manipulatorStick, 1);
+
+    CANSparkMax intakeMotor = new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
 
     @Override
     public void robotInit() {
         tankDrive = new CimTank();
-        Joystick rightstick = new Joystick(0);
-        Joystick leftstick = new Joystick(1);
-        Joystick manipulatorStick = new Joystick(2);
-        JoystickButton intakeButton = new JoystickButton(manipulatorStick, 1);
 
-        CANSparkMax intakeMotor = new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
     }
 
     @Override
@@ -52,17 +50,14 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        double rightSpeed = rightstick.getY();
-        double leftSpeed = leftstick.getY();
+        double rightSpeed = -rightstick.getY();
+        double leftSpeed = -leftstick.getY();
+        double intakeSpeed = manipulatorStick.getY();
         boolean intakeButtonPressed = intakeButton.get();
 
-        tankDrive.drive(leftSpeed, rightSpeed, true, 1);
+        tankDrive.drive(leftSpeed, rightSpeed, false, 1);
 
-        if (intakeButtonPressed) {
-            intakeMotor.set(0.4);
-        } else {
-            intakeMotor.set(0);
-        }
+        intakeMotor.set(-intakeSpeed);
     }
 
     @Override
