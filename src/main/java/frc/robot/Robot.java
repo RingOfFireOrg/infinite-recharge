@@ -7,31 +7,43 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
+import com.revrobotics.ColorSensorV3;
+import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.VictorSP;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.util.Color;
 
 
 public class Robot extends TimedRobot {
     CimTank tankDrive;
+    ColorSensorV3 colorSensor;
+    String currentColor = "none";
 
-    Joystick rightstick = new Joystick(0);
-    Joystick leftstick = new Joystick(1);
-    Joystick manipulatorStick = new Joystick(2);
-    JoystickButton intakeButton = new JoystickButton(manipulatorStick, 1);
+    Joystick rightStick = new Joystick(0);
+    Joystick leftStick = new Joystick(1);
 
-    CANSparkMax intakeMotor = new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
+    private final I2C.Port i2cPort = I2C.Port.kOnboard;
+    private final ColorMatch colorMatcher = new ColorMatch();
+
+    private final Color redTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
+    private final Color greenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
+    private final Color blueTarget = ColorMatch.makeColor(0.143, 0.427, 0.429);
+    private final Color yellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+
 
     @Override
     public void robotInit() {
         tankDrive = new CimTank();
+        colorSensor = new ColorSensorV3(i2cPort);
 
+        colorMatcher.addColorMatch(redTarget);
+        colorMatcher.addColorMatch(greenTarget);
+        colorMatcher.addColorMatch(blueTarget);
+        colorMatcher.addColorMatch(yellowTarget);
     }
 
     @Override
@@ -50,14 +62,30 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
-        double rightSpeed = -rightstick.getY();
-        double leftSpeed = -leftstick.getY();
-        double intakeSpeed = manipulatorStick.getY();
-        boolean intakeButtonPressed = intakeButton.get();
+        double rightSpeed = -rightStick.getY();
+        double leftSpeed = -leftStick.getY();
+        Color currentDetectedColor = colorSensor.getColor();
+        ColorMatchResult colorMatcherResult = colorMatcher.matchClosestColor(currentDetectedColor);
 
-        tankDrive.drive(leftSpeed, rightSpeed, false, 1);
+        tankDrive.drive(leftSpeed, rightSpeed, true, 1);
 
-        intakeMotor.set(-intakeSpeed);
+        if (colorMatcherResult.color == redTarget) {
+            currentColor = "Red";
+        } else if (colorMatcherResult.color == greenTarget) {
+            currentColor = "Green";
+        } else if (colorMatcherResult.color == blueTarget) {
+            currentColor = "Blue";
+        } else if (colorMatcherResult.color == yellowTarget) {
+            currentColor = "Yellow";
+        } else {
+            currentColor = "Unknown";
+        }
+
+        SmartDashboard.putNumber("Red", colorSensor.getRed());
+        SmartDashboard.putNumber("Green", colorSensor.getGreen());
+        SmartDashboard.putNumber("Blue", colorSensor.getBlue());
+
+        SmartDashboard.putString("ColorMatch detected color", currentColor);
     }
 
     @Override

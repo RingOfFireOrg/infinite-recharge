@@ -8,18 +8,11 @@ public class RobotMap {
 	public static final int JOYSTICK_DRIVE_LEFT = 1;
 	public static final int JOYSTICK_MANIPULATOR = 2;
 
-	//Joystick Buttons
 
-	// Robot Ports
 	// Analog Ports
+	public static final int COLOR_SENSOR = 0;
 
 	// Drive Train Motors
 	public static final int MOTOR_RIGHT = 2;
 	public static final int MOTOR_LEFT = 3;
-
-	public static final int INTAKE_MOTOR = 1;
-	
-
-
-
 }
