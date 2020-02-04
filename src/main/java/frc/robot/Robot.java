@@ -13,7 +13,6 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -86,6 +85,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("Blue", colorSensor.getBlue());
 
         SmartDashboard.putString("ColorMatch detected color", currentColor);
+        SmartDashboard.putNumber("ColorMatch confidence", colorMatcherResult.confidence);
     }
 
     @Override
