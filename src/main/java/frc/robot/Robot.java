@@ -13,6 +13,7 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -21,12 +22,15 @@ public class Robot extends TimedRobot {
     CimTank tankDrive;
     ColorSensorV3 colorSensor;
     String currentColor = "none";
+    String lastColor = "none";
+    int spinCount = 0;
 
     Joystick rightStick = new Joystick(0);
     Joystick leftStick = new Joystick(1);
 
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorMatch colorMatcher = new ColorMatch();
+    VictorSP diskSpinnerMotor = new VictorSP(9);
 
     private final Color redTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
     private final Color greenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
@@ -38,6 +42,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         tankDrive = new CimTank();
         colorSensor = new ColorSensorV3(i2cPort);
+        spinCount = 0;
 
         colorMatcher.addColorMatch(redTarget);
         colorMatcher.addColorMatch(greenTarget);
@@ -70,14 +75,33 @@ public class Robot extends TimedRobot {
 
         if (colorMatcherResult.color == redTarget) {
             currentColor = "Red";
+            lastColor = currentColor;
         } else if (colorMatcherResult.color == greenTarget) {
             currentColor = "Green";
+            lastColor = currentColor;
         } else if (colorMatcherResult.color == blueTarget) {
             currentColor = "Blue";
+            lastColor = currentColor;
         } else if (colorMatcherResult.color == yellowTarget) {
             currentColor = "Yellow";
+            lastColor = currentColor;
         } else {
             currentColor = "Unknown";
+            lastColor = "none";
+        }
+
+        if (!currentColor.equals(lastColor)) {
+            spinCount += 1;
+        }
+
+        if (spinCount > 16){
+//            diskSpinnerMotor.set(0);
+            SmartDashboard.putString("Target status", "found target");
+            SmartDashboard.putNumber("Spin count", spinCount);
+        } else {
+//            diskSpinnerMotor.set(0.25);
+            SmartDashboard.putString("Target status", "no target found");
+            SmartDashboard.putNumber("Spin count", spinCount);
         }
 
         SmartDashboard.putNumber("Red", colorSensor.getRed());
