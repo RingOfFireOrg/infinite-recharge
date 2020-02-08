@@ -74,26 +74,23 @@ public class Robot extends TimedRobot {
 
         tankDrive.drive(leftSpeed, rightSpeed, true, 1);
 
+        if (colorMatcherResult.color == redTarget) {
+            currentColor = "Red";
+        } else if (colorMatcherResult.color == greenTarget) {
+            currentColor = "Green";
+        } else if (colorMatcherResult.color == blueTarget) {
+            currentColor = "Blue";
+        } else if (colorMatcherResult.color == yellowTarget) {
+            currentColor = "Yellow";
+        } else {
+            currentColor = "Unknown";
+        }
+
         if (!currentColor.equals(lastColor)) {
             spinCount += 1;
         }
 
-        if (colorMatcherResult.color == redTarget) {
-            currentColor = "Red";
-            lastColor = currentColor;
-        } else if (colorMatcherResult.color == greenTarget) {
-            currentColor = "Green";
-            lastColor = currentColor;
-        } else if (colorMatcherResult.color == blueTarget) {
-            currentColor = "Blue";
-            lastColor = currentColor;
-        } else if (colorMatcherResult.color == yellowTarget) {
-            currentColor = "Yellow";
-            lastColor = currentColor;
-        } else {
-            currentColor = "Unknown";
-            lastColor = "none";
-        }
+        lastColor = currentColor;
 
         if (spinCount > 16){
 //            diskSpinnerMotor.set(0);
