@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -36,7 +37,7 @@ public class Robot extends TimedRobot {
   public CANSparkMax frontRightMotor;
   public CANSparkMax backRightMotor;
   public CANSparkMax backLeftMotor;
-  public CANSparkMax neoPrototypeMotor;
+  public PWMVictorSPX climberUpMotor;
 
   boolean foundVisionTarget = false;
 
@@ -55,7 +56,7 @@ public class Robot extends TimedRobot {
     frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
     backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
     backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
-    neoPrototypeMotor = new CANSparkMax(RobotMap.NEO_PROTOTYPE, MotorType.kBrushless);
+    climberUpMotor = new PWMVictorSPX(RobotMap.CLIMBER_UP);
   }
 
   @Override
@@ -79,7 +80,7 @@ public class Robot extends TimedRobot {
     double manipulatorStickSpeed = manipulatorStick.getY();
     currentGyroAngle = ahrs.getAngle();
 
-    neoPrototypeMotor.set(manipulatorStickSpeed);
+    climberUpMotor.set(manipulatorStickSpeed);
     neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
 
     vision.updateVisionVals(); 
