@@ -74,6 +74,10 @@ public class Robot extends TimedRobot {
 
         tankDrive.drive(leftSpeed, rightSpeed, true, 1);
 
+        if (!currentColor.equals(lastColor)) {
+            spinCount += 1;
+        }
+
         if (colorMatcherResult.color == redTarget) {
             currentColor = "Red";
             lastColor = currentColor;
@@ -89,10 +93,6 @@ public class Robot extends TimedRobot {
         } else {
             currentColor = "Unknown";
             lastColor = "none";
-        }
-
-        if (!currentColor.equals(lastColor)) {
-            spinCount += 1;
         }
 
         if (spinCount > 16){
