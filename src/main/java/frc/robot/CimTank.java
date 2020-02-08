@@ -1,11 +1,11 @@
 package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.VictorSP;
 
 public class CimTank {
-    SpeedControllerGroup leftMotors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.MOTOR_LEFT));
-    SpeedControllerGroup rightMotors = new SpeedControllerGroup(new WPI_TalonSRX(RobotMap.MOTOR_RIGHT));
+    SpeedControllerGroup leftMotors = new SpeedControllerGroup(new VictorSP(RobotMap.MOTOR_LEFT));
+    SpeedControllerGroup rightMotors = new SpeedControllerGroup(new VictorSP(RobotMap.MOTOR_RIGHT));
 
     public void drive(double leftSpeed, double rightSpeed, boolean isSquared, double limiter){
         if (isSquared) {

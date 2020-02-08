@@ -7,13 +7,13 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 
@@ -30,7 +30,7 @@ public class Robot extends TimedRobot {
 
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorMatch colorMatcher = new ColorMatch();
-    VictorSP diskSpinnerMotor = new VictorSP(9);
+    VictorSPX diskSpinnerMotor = new VictorSPX(9);
 
     private final Color redTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
     private final Color greenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);

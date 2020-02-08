@@ -13,6 +13,6 @@ public class RobotMap {
 	public static final int COLOR_SENSOR = 0;
 
 	// Drive Train Motors
-	public static final int MOTOR_RIGHT = 2;
-	public static final int MOTOR_LEFT = 3;
+	public static final int MOTOR_RIGHT = 0;
+	public static final int MOTOR_LEFT = 1;
 }
