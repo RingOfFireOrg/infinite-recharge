@@ -43,6 +43,7 @@ public class Robot extends TimedRobot {
         tankDrive = new CimTank();
         colorSensor = new ColorSensorV3(i2cPort);
         spinCount = 0;
+//        colorSensor = new ColorSensorV3(I2C.Port.kMXP);
 
         colorMatcher.addColorMatch(redTarget);
         colorMatcher.addColorMatch(greenTarget);
