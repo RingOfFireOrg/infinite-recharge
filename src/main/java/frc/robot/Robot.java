@@ -27,7 +27,7 @@ public class Robot extends TimedRobot {
 
     NeoTankDrive neoDrive;
 
-    Vision vision;
+    //Vision vision;
 
     double tx;
     double ty;
@@ -49,7 +49,7 @@ public class Robot extends TimedRobot {
         frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
         backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
         backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
-        vision = new Vision();
+        //vision = new Vision();
     }
 
     @Override
@@ -73,8 +73,8 @@ public class Robot extends TimedRobot {
 
         neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
 
-        vision.updateVisionVals();
-        vision.getTargetDistance();
+        //vision.updateVisionVals();
+        //vision.getTargetDistance();
     }
 
     @Override

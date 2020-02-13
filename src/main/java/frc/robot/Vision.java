@@ -1,4 +1,4 @@
-package frc.robot;
+/*package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -179,4 +179,4 @@ public class Vision {
         double targetDistance = heightDifference / (Math.sin(Math.toRadians(totalAngle)));
         SmartDashboard.putNumber("Target Distance", targetDistance);
     }
-}
+}*/
