@@ -80,11 +80,11 @@ public class Robot extends TimedRobot {
     double rightSpeed = rightstick.getY();
     double leftSpeed = leftstick.getY();
     double manipulatorStickSpeed = manipulatorStick.getY();
-    double manipulatorWinchStickSpeed = manipulatorStick.getX(); 
+    //double manipulatorStickSpeed = manipulatorStick.getX(); 
     currentGyroAngle = ahrs.getAngle();
 
     climberUpMotor.set(manipulatorStickSpeed);// This controls the wheel climber up and down motion 
-    winchMotor.set(manipulatorWinchStickSpeed);//This controls the winch motor, so that we can lift the bot
+    winchMotor.set(-manipulatorStickSpeed);//This controls the winch motor, so that we can lift the bot
     neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
   
 
