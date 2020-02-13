@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
   public CANSparkMax backRightMotor;
   public CANSparkMax backLeftMotor;
   public PWMVictorSPX climberUpMotor;
+  public PWMVictorSPX winchMotor;
 
   boolean foundVisionTarget = false;
 
@@ -57,6 +58,7 @@ public class Robot extends TimedRobot {
     backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
     backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
     climberUpMotor = new PWMVictorSPX(RobotMap.CLIMBER_UP);
+    winchMotor = new PWMVictorSPX(RobotMap.WINCH);
   }
 
   @Override
@@ -78,10 +80,13 @@ public class Robot extends TimedRobot {
     double rightSpeed = rightstick.getY();
     double leftSpeed = leftstick.getY();
     double manipulatorStickSpeed = manipulatorStick.getY();
+    double manipulatorWinchStickSpeed = manipulatorStick.getX(); 
     currentGyroAngle = ahrs.getAngle();
 
-    climberUpMotor.set(manipulatorStickSpeed);
+    climberUpMotor.set(manipulatorStickSpeed);// This controls the wheel climber up and down motion 
+    winchMotor.set(manipulatorWinchStickSpeed);//This controls the winch motor, so that we can lift the bot
     neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
+  
 
     vision.updateVisionVals(); 
     vision.getVisionTargetDistance();

@@ -27,4 +27,5 @@ public class RobotMap {
 
 	// Mechanism Motors
 	public static final int CLIMBER_UP = 0;
+	public static final int WINCH = 1;
 }
