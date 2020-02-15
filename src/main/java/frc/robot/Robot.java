@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
@@ -18,13 +19,13 @@ import edu.wpi.first.wpilibj.PWMVictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-
 public class Robot extends TimedRobot {
 
   Joystick rightstick = new Joystick(0);
   Joystick leftstick = new Joystick(1);
   Joystick manipulatorStick = new Joystick(2);
-  
+  JoystickButton manipulatorStickButton = new JoystickButton(manipulatorStick, 11);
+
   AHRS ahrs;
   NeoTankDrive neoDrive;
   Vision vision;
@@ -32,7 +33,7 @@ public class Robot extends TimedRobot {
 
   double currentGyroAngle;
   double drivetrainRotationMagnitude;
-  
+
   public CANSparkMax frontLeftMotor;
   public CANSparkMax frontRightMotor;
   public CANSparkMax backRightMotor;
@@ -49,9 +50,9 @@ public class Robot extends TimedRobot {
 
     neoDrive = new NeoTankDrive();
 
-    visionLineupPid = new PID(0.02, 0.005 ,0);
+    visionLineupPid = new PID(0.02, 0.005, 0);
     visionLineupPid.setOutputRange(-0.5, 0.5);
-    
+
     vision = new Vision();
     frontLeftMotor = new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless);
     frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
@@ -80,25 +81,25 @@ public class Robot extends TimedRobot {
     double rightSpeed = rightstick.getY();
     double leftSpeed = leftstick.getY();
     double manipulatorStickSpeed = manipulatorStick.getY();
-    //double manipulatorStickSpeed = manipulatorStick.getX(); 
+    // double manipulatorWinchStickSpeed = manipulatorStickButton.get();
     currentGyroAngle = ahrs.getAngle();
+    climberUpMotor.set(manipulatorStickSpeed);// This controls the wheel climber up and down motion
+    // WHile button 11 is pushed the winch motor runs
+    while (manipulatorStickButton.get()) {
+      winchMotor.set(0.5);// This controls the winch motor, so that we can lift the bot
+    }
 
-    climberUpMotor.set(manipulatorStickSpeed);// This controls the wheel climber up and down motion 
-    winchMotor.set(-manipulatorStickSpeed);//This controls the winch motor, so that we can lift the bot
-    neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
-  
-
-    vision.updateVisionVals(); 
+    vision.updateVisionVals();
     vision.getVisionTargetDistance();
-    
+
     if (vision.foundTarget()) {
-        if (!foundVisionTarget) {
-            foundVisionTarget = true;
-            visionLineupPid.reset();
-        }
-        visionLineupPid.setError(Math.abs(vision.getVisionTargetAngle()));
-        visionLineupPid.update();
-        drivetrainRotationMagnitude = visionLineupPid.getOutput();
+      if (!foundVisionTarget) {
+        foundVisionTarget = true;
+        visionLineupPid.reset();
+      }
+      visionLineupPid.setError(Math.abs(vision.getVisionTargetAngle()));
+      visionLineupPid.update();
+      drivetrainRotationMagnitude = visionLineupPid.getOutput();
     }
   }
 
