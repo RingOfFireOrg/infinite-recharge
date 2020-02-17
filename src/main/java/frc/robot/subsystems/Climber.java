@@ -6,24 +6,31 @@ import frc.robot.RobotMap;
 
 public class Climber extends InternalSubsystem {
 
-    public PWMVictorSPX climberUpMotor;
-    public PWMVictorSPX winchMotor;
+    enum State 
+    { 
+        IDLE,
+        EXTENDING, RETRACTING; 
+    }
 
+    private PWMVictorSPX climberUpMotor;
+    private PWMVictorSPX winchMotor;
+    private PWMVictorSPX traverseMotor;
+    private State state;
+    
+    
+    
     public Climber() {
         climberUpMotor = new PWMVictorSPX(RobotMap.CLIMBER_UP);
         winchMotor = new PWMVictorSPX(RobotMap.WINCH);
-
+        state = State.IDLE;
     }
 
-    public boolean setExtend() {
-        return true;
+    public void setState(State state){
+        this.state = state;
+        
     }
 
-    public boolean setRetract() {
-        return true;
-    }
-
-    public boolean setTraverseSpeed() {
+    public boolean setTraverseSpeed(double speed) {
         return true;
     }
 

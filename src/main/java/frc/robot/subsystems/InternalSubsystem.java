@@ -1,7 +1,5 @@
 package frc.robot.subsystems;
 
-public class InternalSubsystem {
-    public void periodic() {
-
-    }
+abstract public class InternalSubsystem {
+    abstract public void periodic();
 }
