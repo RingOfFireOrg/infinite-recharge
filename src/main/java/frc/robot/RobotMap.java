@@ -34,4 +34,8 @@ public class RobotMap {
 	public static final double DRIVEBOX_KS_CONSTANT = 0.268; //to be defined later
 	public static final double DRIVEBOX_KV_CONSTANT = 1.89; //to be defined later
 	public static final double DRIVEBOX_KA_CONSTANT = 0.243;//to be defined later
+
+	
+	public static final int CLIMBER_UP = 0;
+	public static final int WINCH = 1;
 }
