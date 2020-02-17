@@ -34,13 +34,7 @@ public class Robot extends TimedRobot {
 
   double currentGyroAngle;
   double drivetrainRotationMagnitude;
-
-  public CANSparkMax frontLeftMotor;
-  public CANSparkMax frontRightMotor;
-  public CANSparkMax backRightMotor;
-  public CANSparkMax backLeftMotor;
-  public PWMVictorSPX climberUpMotor;
-  public PWMVictorSPX winchMotor;
+  
 
   boolean foundVisionTarget = false;
 
@@ -55,13 +49,7 @@ public class Robot extends TimedRobot {
     visionLineupPid.setOutputRange(-0.5, 0.5);
 
     vision = new Vision();
-    frontLeftMotor = new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless);
-    frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
-    backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
-    backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
-    climberUpMotor = new PWMVictorSPX(RobotMap.CLIMBER_UP);
-    winchMotor = new PWMVictorSPX(RobotMap.WINCH);
-
+    
     RobotContainer container = new RobotContainer();
   }
 
@@ -81,30 +69,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    double rightSpeed = rightstick.getY();
-    double leftSpeed = leftstick.getY();
-    double manipulatorStickSpeed = manipulatorStick.getY();
-    // double manipulatorWinchStickSpeed = manipulatorStickButton.get();
-    currentGyroAngle = ahrs.getAngle();
-    climberUpMotor.set(manipulatorStickSpeed);// This controls the wheel climber up and down motion
-    // WHile button 11 is pushed the winch motor runs
-    while (manipulatorStickButton.get()) {
-      winchMotor.set(0.5);// This controls the winch motor, so that we can lift the bot
-    }
-
-    vision.updateVisionVals();
-    vision.getVisionTargetDistance();
-
-    if (vision.foundTarget()) {
-      if (!foundVisionTarget) {
-        foundVisionTarget = true;
-        visionLineupPid.reset();
-      }
-      visionLineupPid.setError(Math.abs(vision.getVisionTargetAngle()));
-      visionLineupPid.update();
-      drivetrainRotationMagnitude = visionLineupPid.getOutput();
-    }
-  
+    container.robotUpdateSystems();
   }
 
   @Override
