@@ -24,6 +24,7 @@ public class RobotMap {
 	public static final int SHOOTER_OUTPUT_MOTOR = _;
 	public static final int CLIMBER_WINCH = _;
 	public static final int CLIMBER_EXTENSION = _;
+	public static final int CLIMBER_TRAVERSE = _;
 
 	// Drive Train Encoders
 	public static final int DRIVE_TRAIN_LEFT_ENCODER_A = 0;
