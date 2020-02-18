@@ -4,6 +4,7 @@ import frc.robot.RobotMap;
 
 public class Intake extends InternalSubsystem {
 
+    
     public Intake() {
 
     }
