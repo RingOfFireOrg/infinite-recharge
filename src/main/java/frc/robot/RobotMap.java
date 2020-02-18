@@ -20,6 +20,7 @@ public class RobotMap {
 	
 	//canbus
 	public static final int MOTOR_SHOOTER = 3;
+	public static final int MOTOR_SHOOTER2 = 8;
 	
 
 	// Drive Train Encoders

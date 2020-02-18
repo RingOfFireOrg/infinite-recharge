@@ -12,20 +12,32 @@ import com.kauailabs.navx.frc.AHRS;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 
 public class Robot extends TimedRobot {
+    double DEAD_ZONE_START = -0.2;
+    double DEAD_ZONE_END = 0.2;
+    double STOPPED = 0.0;
+    double FULL_MULTIPLIER = 1.0;
+    int BTN_60_PCT = 6;
+    int BTN_70_PCT = 7;
+    int BTN_FULL = 8;
 
     Joystick rightstick = new Joystick(0);
     Joystick leftstick = new Joystick(1);
     Joystick manipulatorStick = new Joystick(2);
 
-    CANSparkMax shooterMotor = new CANSparkMax(RobotMap.MOTOR_SHOOTER, MotorType.kBrushless);
+    double speedMultiplier = FULL_MULTIPLIER;
 
+    CANSparkMax shooterMotor = new CANSparkMax(RobotMap.MOTOR_SHOOTER, MotorType.kBrushless);
+    CANSparkMax shooterMotor2 = new CANSparkMax(RobotMap.MOTOR_SHOOTER2, MotorType.kBrushless);
+    
     //AHRS ahrs;
 
     //NeoTankDrive neoDrive;
@@ -66,16 +78,29 @@ public class Robot extends TimedRobot {
 
     @Override
     public void teleopPeriodic() {
+
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
         double shooterSpeed = manipulatorStick.getY();
+        if (shooterSpeed > DEAD_ZONE_START && shooterSpeed < DEAD_ZONE_END) shooterSpeed = STOPPED; 
 
+        if (manipulatorStick.getRawButtonPressed(BTN_60_PCT)) {
+            speedMultiplier = 0.56;
+        } else if (manipulatorStick.getRawButtonPressed(BTN_70_PCT)) {
+            speedMultiplier = 0.5635;
+        } else if (manipulatorStick.getRawButtonPressed(BTN_FULL)) {
+            speedMultiplier = FULL_MULTIPLIER;
+        }
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         tankDrive.tankDrive(leftSpeed, rightSpeed, true);
-        shooterMotor.set(shooterSpeed);
+        shooterMotor.set(shooterSpeed * speedMultiplier);
+        shooterMotor2.set(shooterSpeed * speedMultiplier);
+        SmartDashboard.putNumber("Shooter speed", shooterSpeed * speedMultiplier);
         //vision.updateVisionVals();
         //vision.getTargetDistance();
     }
+
+        
 
     @Override
     public void testPeriodic() {
