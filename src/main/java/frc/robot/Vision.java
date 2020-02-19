@@ -8,7 +8,7 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import java.lang.Math;
 
-//TODO 
+//TODO update this code -JTW
 
 public class Vision {
     private double ts; // Skew
