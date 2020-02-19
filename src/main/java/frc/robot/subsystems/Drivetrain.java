@@ -27,6 +27,10 @@ public class Drivetrain extends InternalSubsystem{
     DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.ROBOT_TRACK_WIDTH_IN));
     DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
 
+    private double speedLimit = 1;
+
+    private double leftGoalSpeed, rightGoalSpeed;
+
     SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(RobotMap.DRIVEBOX_KS_CONSTANT, RobotMap.DRIVEBOX_KV_CONSTANT, RobotMap.DRIVEBOX_KA_CONSTANT);
     public Drivetrain () {
         leftSlave.follow(leftMaster);
@@ -46,11 +50,20 @@ public class Drivetrain extends InternalSubsystem{
             rightMaster.getEncoder().getVelocity() / RobotMap.DRIVEBASE_GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(3.0) / 60
         );
     }
+
+    public boolean setDriveSpeeds(double leftGoalSpeed, double rightGoalSpeed) {
+        this.leftGoalSpeed = leftGoalSpeed;
+        this.rightGoalSpeed = rightGoalSpeed;
+        return true;
+    }
     
 
     @Override
     public void periodic() {
         odometry.update(getHeading(), leftMaster.getEncoder().getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * Units.inchesToMeters(6.0),
         rightMaster.getEncoder().getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * Units.inchesToMeters(6.0));
+
+        leftMaster.set(speedLimit * Math.copySign(leftGoalSpeed * leftGoalSpeed, leftGoalSpeed));
+        rightMaster.set(speedLimit * Math.copySign(rightGoalSpeed * rightGoalSpeed, rightGoalSpeed));
     }
 }
