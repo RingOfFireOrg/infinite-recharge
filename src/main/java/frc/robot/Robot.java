@@ -28,7 +28,6 @@ public class Robot extends TimedRobot {
   JoystickButton manipulatorStickButton = new JoystickButton(manipulatorStick, 11);
 
   AHRS ahrs;
-  NeoTankDrive neoDrive;
   Vision vision;
   PID visionLineupPid;
 
@@ -42,8 +41,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     ahrs = new AHRS(SerialPort.Port.kUSB);
     ahrs.reset();
-
-    neoDrive = new NeoTankDrive();
 
     visionLineupPid = new PID(0.02, 0.005, 0);
     visionLineupPid.setOutputRange(-0.5, 0.5);
@@ -75,4 +72,5 @@ public class Robot extends TimedRobot {
   @Override
   public void testPeriodic() {
   }
+  
 }

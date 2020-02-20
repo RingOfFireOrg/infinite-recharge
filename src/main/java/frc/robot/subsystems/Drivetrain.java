@@ -10,8 +10,10 @@ import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.RobotMap;
+import frc.robot.PID;
 
 //drive train is tank drive style
 
@@ -32,6 +34,12 @@ public class Drivetrain extends InternalSubsystem{
     private double leftGoalSpeed, rightGoalSpeed;
 
     SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(RobotMap.DRIVEBOX_KS_CONSTANT, RobotMap.DRIVEBOX_KV_CONSTANT, RobotMap.DRIVEBOX_KA_CONSTANT);
+    
+    PID leftSpeedPID = new PID(9.95, 0, 0);
+    PID rightSpeedPID = new PID(9.95, 0, 0);
+
+    public Pose2d pose = new Pose2d();
+
     public Drivetrain () {
         leftSlave.follow(leftMaster);
         rightSlave.follow(rightMaster);
@@ -57,6 +65,25 @@ public class Drivetrain extends InternalSubsystem{
         return true;
     }
     
+    public SimpleMotorFeedforward getFeedForward() {
+        return feedForward;
+    }
+
+    public DifferentialDriveKinematics getKinematics() {
+        return kinematics;
+    }
+
+    public PID getLeftPID() {
+        return leftSpeedPID;
+    }
+
+    public PID getRightPID() {
+        return rightSpeedPID;
+    }
+
+    public Pose2d getPose() {
+        return pose;
+    }
 
     @Override
     public void periodic() {
