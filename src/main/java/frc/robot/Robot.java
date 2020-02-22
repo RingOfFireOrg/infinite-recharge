@@ -38,8 +38,8 @@ public class Robot extends TimedRobot {
 
     double speedMultiplier = FULL_MULTIPLIER;
 
-    CANSparkMax shooterMotor = new CANSparkMax(RobotMap.MOTOR_SHOOTER, MotorType.kBrushless);
-    CANSparkMax shooterMotor2 = new CANSparkMax(RobotMap.MOTOR_SHOOTER2, MotorType.kBrushless);
+   // CANSparkMax shooterMotor = new CANSparkMax(RobotMap.MOTOR_SHOOTER, MotorType.kBrushless);
+   // CANSparkMax shooterMotor2 = new CANSparkMax(RobotMap.MOTOR_SHOOTER2, MotorType.kBrushless);
     
     //AHRS ahrs;
 
@@ -59,7 +59,7 @@ public class Robot extends TimedRobot {
         //ahrs.reset();
 
         //neoDrive = new NeoTankDrive();
-        tankDrive = new CimTank ();
+        tankDrive = new SparkMaxTank ();
 
       
         //vision = new Vision();
@@ -94,23 +94,28 @@ public class Robot extends TimedRobot {
         } else if (manipulatorStick.getRawButtonPressed(BTN_FULL)) {
             speedMultiplier = FULL_MULTIPLIER;
         }
+        leftSpeed = leftSpeed / 2;
+        rightSpeed = rightSpeed / 2;
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         tankDrive.tankDrive(leftSpeed, rightSpeed, true);
-        shooterMotor.set(shooterSpeed * speedMultiplier);
-        shooterMotor2.set(shooterSpeed * speedMultiplier);
+        SmartDashboard.putNumber("leftSpeed", leftSpeed);
+        SmartDashboard.putNumber("rightSpeed", rightSpeed);
+
+        //shooterMotor.set(shooterSpeed * speedMultiplier);
+        //shooterMotor2.set(shooterSpeed * speedMultiplier);
         SmartDashboard.putNumber("Shooter speed", shooterSpeed * speedMultiplier);
         //vision.updateVisionVals();
         //vision.getTargetDistance();
 
 
 // Creates UsbCamera and MjpegServer [1] and connects them
-CameraServer.getInstance().startAutomaticCapture();
+//CameraServer.getInstance().startAutomaticCapture();
 
 // Creates the CvSink and connects it to the UsbCamera
-CvSink cvSink = CameraServer.getInstance().getVideo();
+//CvSink cvSink = CameraServer.getInstance().getVideo();
 
 // Creates the CvSource and MjpegServer [2] and connects them
-CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
+//CvSource outputStream = CameraServer.getInstance().putVideo("Blur", 640, 480);
 
     }
 

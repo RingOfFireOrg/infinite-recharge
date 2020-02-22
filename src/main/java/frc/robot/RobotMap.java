@@ -14,13 +14,16 @@ public class RobotMap {
 	// Analog Ports
 
 	// Drive Train Motors
-	//pwm
-	public static final int MOTOR_RIGHT = 0;
-	public static final int MOTOR_LEFT = 1;
+	//
+	public static final int NEO_FRONT_LEFT = 5;
+	public static final int NEO_FRONT_RIGHT = 4;
+	public static final int NEO_BACK_RIGHT = 3;
+	public static final int NEO_BACK_LEFT = 2;
+
 	
 	//canbus
-	public static final int MOTOR_SHOOTER = 3;
-	public static final int MOTOR_SHOOTER2 = 8;
+	//public static final int MOTOR_SHOOTER = 3;
+	//public static final int MOTOR_SHOOTER2 = 8;
 	
 
 	// Drive Train Encoders
