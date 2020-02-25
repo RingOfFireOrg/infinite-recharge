@@ -85,12 +85,19 @@ public class Drivetrain extends InternalSubsystem{
         return pose;
     }
 
+    public void teleopControl() {
+        double inputSpeed = controlSystem.leftDriveStick.getY();
+        leftGoalSpeed = Math.copySign(inputSpeed * inputSpeed, inputSpeed);
+        inputSpeed = controlSystem.rightDriveStick.getY();
+        rightGoalSpeed = Math.copySign(inputSpeed * inputSpeed, inputSpeed);
+    }
+
     @Override
     public void periodic() {
         odometry.update(getHeading(), leftMaster.getEncoder().getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * Units.inchesToMeters(6.0),
         rightMaster.getEncoder().getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * Units.inchesToMeters(6.0));
 
-        leftMaster.set(speedLimit * Math.copySign(leftGoalSpeed * leftGoalSpeed, leftGoalSpeed));
-        rightMaster.set(speedLimit * Math.copySign(rightGoalSpeed * rightGoalSpeed, rightGoalSpeed));
+        leftMaster.set(leftGoalSpeed);
+        rightMaster.set(rightGoalSpeed);
     }
 }

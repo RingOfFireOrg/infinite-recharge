@@ -29,6 +29,10 @@ public class Intake extends InternalSubsystem {
         return state;
     }
 
+    public void teleopControl() {
+        
+    }
+
     public void periodic() {
         //this method will be run every code loop
         if (state == IntakeStates.IDLE) {

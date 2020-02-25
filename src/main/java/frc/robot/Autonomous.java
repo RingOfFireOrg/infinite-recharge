@@ -31,7 +31,7 @@ public class Autonomous {
         );
     }
 
-    RamseteCommand command = new RamseteCommand {
+    // RamseteCommand command = new RamseteCommand {
         
-    }
+    // }
 }

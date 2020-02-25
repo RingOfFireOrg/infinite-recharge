@@ -36,6 +36,10 @@ public class Shooter extends InternalSubsystem {
         return 1;
     }
 
+    public void teleopControl() {
+        
+    }
+
     public void periodic() {
         //this method will be run every code loop
     }

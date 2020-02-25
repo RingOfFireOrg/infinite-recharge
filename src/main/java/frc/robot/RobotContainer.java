@@ -1,10 +1,6 @@
 package frc.robot;
 
-import frc.robot.subsystems.Drivetrain;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.Indexer;
-import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.*;
 
 public class RobotContainer {
 
@@ -13,6 +9,7 @@ public class RobotContainer {
     public Shooter shooter = new Shooter();
     public Climber climber = new Climber();
     public Indexer indexer = new Indexer();
+    public ControlPanel controlPanel = new ControlPanel();
     
 
     private static RobotContainer robotContainer;
@@ -28,8 +25,22 @@ public class RobotContainer {
         return robotContainer;
     }
 
+    public void runTeleopControls() {
+        drive.teleopControl();
+        intake.teleopControl();
+        shooter.teleopControl();
+        climber.teleopControl();
+        indexer.teleopControl();
+        controlPanel.teleopControl();
+    }
+
     public void robotUpdateSystems() {
         drive.periodic();
+        intake.periodic();
+        shooter.periodic();
+        climber.periodic();
+        indexer.periodic();
+        controlPanel.periodic();
     }
 
     public Drivetrain getDrivetrain() {

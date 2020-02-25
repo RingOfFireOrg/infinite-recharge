@@ -22,10 +22,7 @@ public class Robot extends TimedRobot {
 
   RobotContainer container;
  
-  Joystick rightstick = new Joystick(0);
-  Joystick leftstick = new Joystick(1);
-  Joystick manipulatorStick = new Joystick(2);
-  JoystickButton manipulatorStickButton = new JoystickButton(manipulatorStick, 11);
+  ControlSystems controlSystem;
 
   AHRS ahrs;
   Vision vision;
@@ -39,6 +36,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
+    controlSystem = ControlSystems.getInstance();
+    container = RobotContainer.getInstance();
     ahrs = new AHRS(SerialPort.Port.kUSB);
     ahrs.reset();
 
@@ -46,8 +45,6 @@ public class Robot extends TimedRobot {
     visionLineupPid.setOutputRange(-0.5, 0.5);
 
     vision = new Vision();
-    
-    RobotContainer container = new RobotContainer();
   }
 
   @Override
@@ -66,6 +63,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    container.
     container.robotUpdateSystems();
   }
 

@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 
 import frc.robot.RobotMap;
@@ -10,17 +13,15 @@ public class Climber extends InternalSubsystem {
         IDLE,EXTENDING, RETRACTING; 
     }
 
-    private PWMVictorSPX climberUpMotor;
-    private PWMVictorSPX winchMotor;
-    private PWMVictorSPX traverseMotor;
+    private TalonSRX extensionMotor, climbMotor, traverseMotor;
     private ClimberState state;
     
     private double traverseSpeed = 0;
     
     public Climber() {
-        climberUpMotor = new PWMVictorSPX(RobotMap.CLIMBER_EXTENSION);
-        winchMotor = new PWMVictorSPX(RobotMap.CLIMBER_WINCH);
-        traverseMotor = new PWMVictorSPX(RobotMap.CLIMBER_TRAVERSE);
+        extensionMotor = new TalonSRX(RobotMap.CLIMBER_EXTENSION);
+        climbMotor = new TalonSRX(RobotMap.CLIMBER_WINCH);
+        traverseMotor = new TalonSRX(RobotMap.CLIMBER_TRAVERSE);
         state = ClimberState.IDLE;
     }
 
@@ -33,19 +34,23 @@ public class Climber extends InternalSubsystem {
         return true;
     }
 
+    public void teleopControl() {
+        
+    }
+
     public void periodic() {
         //this method will be run every code loop
         if (state == ClimberState.IDLE) {
-            winchMotor.set(0);
-            climberUpMotor.set(0);
+            climbMotor.set(ControlMode.PercentOutput, 0);
+            extensionMotor.set(ControlMode.PercentOutput, 0);
         } else if (state == ClimberState.RETRACTING) {
-            winchMotor.set(-1);
-            climberUpMotor.set(1);
+            climbMotor.set(ControlMode.PercentOutput,-1);
+            extensionMotor.set(ControlMode.PercentOutput, 1);
         } else if (state == ClimberState.EXTENDING) {
-            winchMotor.set(1);
-            climberUpMotor.set(-1);
+            climbMotor.set(ControlMode.PercentOutput, 1);
+            extensionMotor.set(ControlMode.PercentOutput, -1);
         }
 
-        traverseMotor.set(traverseSpeed);
+        traverseMotor.set(ControlMode.PercentOutput, traverseSpeed);
     }
 }
