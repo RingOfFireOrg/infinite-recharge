@@ -9,6 +9,7 @@ package frc.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import com.revrobotics.CANEncoder;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Joystick;
@@ -17,6 +18,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends TimedRobot {
@@ -30,6 +32,7 @@ public class Robot extends TimedRobot {
     NeoTankDrive neoDrive;
     Shooter shooter;
     Vision vision;
+    Encoders encoders;
 
     public CANSparkMax frontLeftMotor;
     public CANSparkMax frontRightMotor;
@@ -37,6 +40,12 @@ public class Robot extends TimedRobot {
     public CANSparkMax backLeftMotor;
     public VictorSP leftShooterMotor;
     public VictorSP rightShooterMotor;
+
+    public CANEncoder rightEncoderA;
+    public CANEncoder rightEncoderB;
+    public CANEncoder leftEncoderA;
+    public CANEncoder leftEncoderB;
+
 
     @Override
     public void robotInit() {
@@ -46,12 +55,19 @@ public class Robot extends TimedRobot {
         neoDrive = new NeoTankDrive();
         shooter = new Shooter();
         vision = new Vision();
+        encoders = new Encoders();
 
         frontLeftMotor = new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless);
         frontRightMotor = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
         backRightMotor = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
         backLeftMotor = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
 
+        rightEncoderA = frontRightMotor.getEncoder();
+        rightEncoderB = backRightMotor.getEncoder();
+        leftEncoderA = frontLeftMotor.getEncoder();
+        leftEncoderB = backLeftMotor.getEncoder();
+
+        encoders.initEncoders(rightEncoderA, rightEncoderB, leftEncoderA, leftEncoderB);
         vision.initVision();
     }
 
@@ -88,6 +104,8 @@ public class Robot extends TimedRobot {
         //     vision.writeDistanceAndAngle();
         //     // In the future, this method will double check that the robot is in shooting range
         // }
+
+        SmartDashboard.putNumber("RightEncoderAValue:", encoders.getSingleEncoderVal(rightEncoderA));
     }
 
     @Override
