@@ -20,26 +20,27 @@ public class Shooter extends InternalSubsystem {
     }
 
     public boolean setShoot() {
-
+        // Set to shooting speed
         return true;
     }
 
     public boolean setSlow() {
-
+        // Used for testing or removing balls from shooter safely
         return true;
     }
 
     public boolean isSpunUp() {
+        // Returns true if shooter RPM is in ideal speed range
         return true;
     }
 
     public int getState() {
-
+        // Returns current shooter state
         return 1;
     }
 
     public void teleopControl() {
-        
+        // Takes driver input and sets states
     }
 
     public void periodic() {
