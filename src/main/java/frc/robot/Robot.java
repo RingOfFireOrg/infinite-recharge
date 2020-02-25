@@ -9,10 +9,10 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
@@ -63,7 +63,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    container.
+    container.runTeleopControls();
     container.robotUpdateSystems();
   }
 

@@ -2,7 +2,7 @@ package frc.robot;
 
 import java.util.Arrays;
 
-import edu.wpi.first.wpilibj.command.Command;
+//import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.controller.RamseteController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -32,6 +32,7 @@ public class Autonomous {
             Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
             config
         );
+    }
 
     // RamseteCommand command = new RamseteCommand {
         

@@ -8,7 +8,20 @@ public class RobotMap {
 	public static final int JOYSTICK_DRIVE_LEFT = 1;
 	public static final int GAMEPAD_MANIPULATOR = 2;
 
-	//Joystick Buttons
+	//Gamepad Buttons
+	public static final int MANIPULATOR_LEFT_BUMPER = 5;
+	public static final int MANIPULATOR_RIGHT_BUMPER = 6;
+	public static final int MANIPULATOR_A_BUTTON = 1;
+	public static final int MANIPULATOR_B_BUTTON = 2;
+	public static final int MANIPULATOR_X_BUTTON = 3;
+	public static final int MANIPULATOR_Y_BUTTON = 4;
+
+	//Gamepad Axes
+	public static final int MANIPULATOR_RIGHT_TRIGGER = 3;
+	public static final int MANIPULATOR_LEFT_TRIGGER = 2;
+	public static final int MANIPULATOR_LEFT_JOYSTICK_Y = 1;
+	public static final int MANIPULATOR_RIGHT_JOYSTICK_Y = 5;
+
 
 	// Robot Ports
 	// Analog Ports
@@ -25,6 +38,8 @@ public class RobotMap {
 	public static final int CLIMBER_WINCH = 9;//TODO define this
 	public static final int CLIMBER_EXTENSION = 10;//TODO define this
 	public static final int CLIMBER_TRAVERSE = 11;//TODO define this
+	public static final int CONTROL_PANEL_ACTUATOR = 12; //TODO define this
+	public static final int CONTROL_PANEL_SPIN = 13; //TODO define this
 
 	// Drive Train Encoders
 	public static final int DRIVE_TRAIN_LEFT_ENCODER_A = 0;
