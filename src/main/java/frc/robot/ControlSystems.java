@@ -28,12 +28,6 @@ public class ControlSystems {
         positionControl = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_X_BUTTON);
         rotationControl = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_Y_BUTTON); 
 
-    //     public static final int MANIPULATOR_LEFT_BUMPER = 5;
-	// public static final int MANIPULATOR_RIGHT_BUMPER = 6;
-	// public static final int MANIPULATOR_A_BUTTON = 1;
-	// public static final int MANIPULATOR_B_BUTTON = 2;
-	// public static final int MANIPULATOR_X_BUTTON = 3;
-	// public static final int MANIPULATOR_Y_BUTTON = 4;
     }
 
     public static ControlSystems getInstance() {
@@ -59,9 +53,5 @@ public class ControlSystems {
         return manipulatorGamepad.getRawAxis(RobotMap.MANIPULATOR_RIGHT_TRIGGER);
     }
 
-    // public static final int MANIPULATOR_RIGHT_TRIGGER = 3;
-	// public static final int MANIPULATOR_LEFT_TRIGGER = 2;
-	// public static final int MANIPULATOR_LEFT_JOYSTICK_Y = 1;
-	// public static final int MANIPULATOR_RIGHT_JOYSTICK_Y = 5;
 
 }
