@@ -30,7 +30,10 @@ public class Intake extends InternalSubsystem {
     }
 
     public void teleopControl() {
-        
+        //this should be set based off of 3 factors:
+        //if the intake is running either way, it should run in
+        //is the left trigger is depressed, it should run in/out?
+        //if the shooter has been spun up ((isSpunUp))
     }
 
     public void periodic() {
