@@ -26,11 +26,6 @@ public class Robot extends TimedRobot {
 
   AHRS ahrs;
   Vision vision;
-  PID visionLineupPid;
-
-  double currentGyroAngle;
-  double drivetrainRotationMagnitude;
-  
 
   boolean foundVisionTarget = false;
 
@@ -40,9 +35,6 @@ public class Robot extends TimedRobot {
     container = RobotContainer.getInstance();
     ahrs = new AHRS(SerialPort.Port.kUSB);
     ahrs.reset();
-
-    visionLineupPid = new PID(0.02, 0.005, 0);
-    visionLineupPid.setOutputRange(-0.5, 0.5);
 
     vision = new Vision();
   }
