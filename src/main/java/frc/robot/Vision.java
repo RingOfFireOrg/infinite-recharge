@@ -12,9 +12,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.lang.Math;
 
-enum Steps {
-    PID_RESET, PID_UPDATE, SET_MOTORS, CHECK_LINEUP
-}
 
 public class Vision {
     private double ts; // Skew
@@ -45,7 +42,7 @@ public class Vision {
     double drivetrainRotationMagnitude;
     boolean lookingForVisionTarget;
 
-    Steps currentStep = Steps.PID_RESET;
+    VisionStates currentStep = VisionStates.PID_RESET;
 
     public void updateVisionVals() {
         tv = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0.0);
@@ -124,14 +121,14 @@ public class Vision {
                     lookingForVisionTarget = true;
                     visionLineupPid.reset();
                 }
-                currentStep = Steps.PID_UPDATE;
+                currentStep = VisionStates.PID_UPDATE;
             case PID_UPDATE:
                 visionLineupPid.setError(getVisionTargetAngle(currentGyroAngle));
                 visionLineupPid.update();
-                currentStep = Steps.SET_MOTORS;
+                currentStep = VisionStates.SET_MOTORS;
             case SET_MOTORS:
                 drivetrainRotationMagnitude = -visionLineupPid.getOutput();
-                currentStep = Steps.CHECK_LINEUP;
+                currentStep = VisionStates.CHECK_LINEUP;
             case CHECK_LINEUP:
                 if (Math.abs(tx) > 2) {
                     neoDrive.setSpeed(drivetrainRotationMagnitude, drivetrainRotationMagnitude);
@@ -140,7 +137,7 @@ public class Vision {
                 } else {
                     lookingForVisionTarget = false;
                     SmartDashboard.putString("Target status", "Found target!");
-                    currentStep = Steps.PID_RESET;
+                    currentStep = VisionStates.PID_RESET;
                 }
         }
     }
