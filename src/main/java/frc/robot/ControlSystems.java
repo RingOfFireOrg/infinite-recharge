@@ -13,7 +13,7 @@ public class ControlSystems {
     public XboxController manipulatorGamepad;
     public JoystickButton climberExtend, climberRetract, intakeForward, intakeReverse, positionControl, rotationControl;
 
-    
+
     private static ControlSystems controlSystems;
 
     protected ControlSystems() {
@@ -26,7 +26,7 @@ public class ControlSystems {
         intakeForward = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_A_BUTTON);
         intakeReverse = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_B_BUTTON);
         positionControl = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_X_BUTTON);
-        rotationControl = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_Y_BUTTON);
+        rotationControl = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_Y_BUTTON); 
 
     //     public static final int MANIPULATOR_LEFT_BUMPER = 5;
 	// public static final int MANIPULATOR_RIGHT_BUMPER = 6;
