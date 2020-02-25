@@ -25,11 +25,9 @@ public class Vision {
     private double lineupError;
 
     PID visionLineupPid;
-<<<<<<< Updated upstream
     NeoTankDrive neoDrive = new NeoTankDrive();
-=======
+
 //    NeoTankDrive neoDrive = new NeoTankDrive();  //TODO Change to correct drivetrain
->>>>>>> Stashed changes
 
     AHRS ahrs = new AHRS(SerialPort.Port.kUSB);
 
@@ -135,11 +133,8 @@ public class Vision {
                 currentStep = VisionStates.CHECK_LINEUP;
             case CHECK_LINEUP:
                 if (Math.abs(tx) > 2) {
-<<<<<<< Updated upstream
                     neoDrive.setSpeed(drivetrainRotationMagnitude, drivetrainRotationMagnitude);
-=======
 //                    neoDrive.setSpeed(drivetrainRotationMagnitude, drivetrainRotationMagnitude);  //TODO Change to correct drivetrain
->>>>>>> Stashed changes
                     SmartDashboard.putBoolean("Vision status", lookingForVisionTarget);
                     SmartDashboard.putString("Target status", "Going to target!");
                 } else {
