@@ -5,6 +5,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
 
+//Prototype code authors: (Duncan, Bella, Jeremy)?
+
 public class Shooter extends InternalSubsystem {
 
     CANSparkMax feederMotor;

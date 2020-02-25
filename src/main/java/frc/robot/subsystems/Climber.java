@@ -7,6 +7,9 @@ import edu.wpi.first.wpilibj.PWMVictorSPX;
 
 import frc.robot.RobotMap;
 
+//Prototype code authors: () Rachel
+
+//Prototype code authors: 
 public class Climber extends InternalSubsystem {
 
     enum ClimberState { 

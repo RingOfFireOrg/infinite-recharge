@@ -17,6 +17,7 @@ import frc.robot.PID;
 
 //drive train is tank drive style
 
+
 public class Drivetrain extends InternalSubsystem{
     CANSparkMax leftMaster = new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless);
     CANSparkMax rightMaster = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
