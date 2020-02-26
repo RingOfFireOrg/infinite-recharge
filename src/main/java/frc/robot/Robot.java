@@ -33,8 +33,6 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     controlSystem = ControlSystems.getInstance();
     container = RobotContainer.getInstance();
-    ahrs = new AHRS(SerialPort.Port.kUSB);
-    ahrs.reset();
 
     vision = new Vision();
   }
@@ -61,6 +59,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+    container.runPowerCellSystem();
+    container.robotUpdateSystems();
   }
   
 }
