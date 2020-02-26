@@ -94,8 +94,8 @@ public class Robot extends TimedRobot {
         } else if (manipulatorStick.getRawButtonPressed(BTN_FULL)) {
             speedMultiplier = FULL_MULTIPLIER;
         }
-        leftSpeed = leftSpeed / 2;
-        rightSpeed = rightSpeed / 2;
+        leftSpeed = leftSpeed * 0.5;
+        rightSpeed = rightSpeed * 0.5;
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         tankDrive.tankDrive(leftSpeed, rightSpeed, true);
         SmartDashboard.putNumber("leftSpeed", leftSpeed);
