@@ -17,6 +17,7 @@ public class Intake extends InternalSubsystem {
     
     IntakeStates state;
 
+    
     public Intake() {
         intakeMotor = new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
         state = IntakeStates.IDLE;
