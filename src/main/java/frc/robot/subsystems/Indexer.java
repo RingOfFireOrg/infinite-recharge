@@ -7,7 +7,6 @@ import frc.robot.RobotMap;
 //Prototype code authors: (Duncan, Aaron, Gray)?
 
 public class Indexer extends InternalSubsystem {
-    VictorSP indexMotor = new VictorSP(RobotMap.INDEXER_MOTOR);
 
     enum IndexerState {
         IDLE, FORWARD, BACKWARD
