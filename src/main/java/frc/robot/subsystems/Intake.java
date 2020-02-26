@@ -36,7 +36,7 @@ public class Intake extends InternalSubsystem {
             state = IntakeStates.IN;
         } else if (super.controlSystem.intakeReverse.get() == true) {
             state = IntakeStates.OUT;
-        } else if () {
+        } else {
             state = IntakeStates.IDLE;
         }
     }
