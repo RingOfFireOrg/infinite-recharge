@@ -1,21 +1,29 @@
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+import edu.wpi.first.wpilibj.SerialPort;
+
 import frc.robot.subsystems.*;
 
 public class RobotContainer {
 
+    //mechanical subsystems
     public Drivetrain drive = new Drivetrain();
     public Intake intake = new Intake();
     public Shooter shooter = new Shooter();
     public Climber climber = new Climber();
     public Indexer indexer = new Indexer();
     public ControlPanel controlPanel = new ControlPanel();
+
+    //other portions
+    public AHRS ahrs;
     
 
     private static RobotContainer robotContainer;
 
     protected RobotContainer() {
-
+        ahrs = new AHRS(SerialPort.Port.kUSB);
+		ahrs.reset();
     }
 
     public static RobotContainer getInstance() {
@@ -41,9 +49,5 @@ public class RobotContainer {
         climber.periodic();
         indexer.periodic();
         controlPanel.periodic();
-    }
-
-    public Drivetrain getDrivetrain() {
-        return drive;
     }
 }

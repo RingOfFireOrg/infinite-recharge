@@ -5,6 +5,8 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.RobotMap;
 
+//Prototype code authors: Jason?
+
 public class Intake extends InternalSubsystem {
 
     private CANSparkMax intakeMotor;

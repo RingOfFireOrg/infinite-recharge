@@ -6,6 +6,9 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import frc.robot.RobotMap;
 
+//Prototype code authors: () Rachel
+
+//Prototype code authors: 
 public class Climber extends InternalSubsystem {
 
     enum ClimberState { 
