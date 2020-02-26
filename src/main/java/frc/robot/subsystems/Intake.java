@@ -38,7 +38,7 @@ public class Intake extends InternalSubsystem {
         } else {
             state = IntakeStates.IDLE;
         }
-    }
+    } 
 
     public void periodic() {
         //this method will be run every code loop during teleop and autonomous
