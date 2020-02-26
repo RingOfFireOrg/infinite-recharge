@@ -18,22 +18,8 @@ public class Indexer extends InternalSubsystem {
         state = IndexerState.IDLE;
     }
 
-    public boolean setForward() {
-        // Moves balls to shooter
-        state = IndexerState.FORWARD;
-        return true;
-    }
-
-    public boolean setBack() {
-        // Moves balls toward intake
-        state = IndexerState.BACKWARD;
-        return true;
-    }
-
-    public boolean setOff() {
-        // Sets indexer to 0
-        state = IndexerState.IDLE;
-        return true;
+    public void setState(IndexerState state) {
+        this.state = state;
     }
 
     public int getState() {
@@ -43,6 +29,13 @@ public class Indexer extends InternalSubsystem {
 
     public void teleopControl() {
         // Takes driver input and sets states
+        if (super.controlSystem.indexerIn.get() == true) {
+            setState(IndexerState.FORWARD);
+        } else if (super.controlSystem.indexerOut.get() == true) {
+            setState(IndexerState.BACKWARD);
+        } else {
+            setState(IndexerState.IDLE);
+        }
     }
 
     public void periodic() {
