@@ -19,11 +19,11 @@ import frc.robot.PID;
 
 
 public class Drivetrain extends InternalSubsystem{
-    CANSparkMax leftMaster = new CANSparkMax(RobotMap.NEO_FRONT_LEFT, MotorType.kBrushless);
-    CANSparkMax rightMaster = new CANSparkMax(RobotMap.NEO_FRONT_RIGHT, MotorType.kBrushless);
+    CANSparkMax leftMaster = new CANSparkMax(RobotMap.DT_LEFT_MASTER, MotorType.kBrushless);
+    CANSparkMax rightMaster = new CANSparkMax(RobotMap.DT_RIGHT_MASTER, MotorType.kBrushless);
 
-    CANSparkMax leftSlave = new CANSparkMax(RobotMap.NEO_BACK_LEFT, MotorType.kBrushless);
-    CANSparkMax rightSlave = new CANSparkMax(RobotMap.NEO_BACK_RIGHT, MotorType.kBrushless);
+    CANSparkMax leftSlave = new CANSparkMax(RobotMap.DT_LEFT_SLAVE, MotorType.kBrushless);
+    CANSparkMax rightSlave = new CANSparkMax(RobotMap.DT_RIGHT_SLAVE, MotorType.kBrushless);
 
     AHRS gyro = new AHRS(SerialPort.Port.kUSB);
     
@@ -87,9 +87,9 @@ public class Drivetrain extends InternalSubsystem{
     }
 
     public void teleopControl() {
-        double inputSpeed = controlSystem.leftDriveStick.getY();
+        double inputSpeed = super.controlSystem.leftDriveStick.getY();
         leftGoalSpeed = Math.copySign(inputSpeed * inputSpeed, inputSpeed);
-        inputSpeed = controlSystem.rightDriveStick.getY();
+        inputSpeed = super.controlSystem.rightDriveStick.getY();
         rightGoalSpeed = Math.copySign(inputSpeed * inputSpeed, inputSpeed);
     }
 
