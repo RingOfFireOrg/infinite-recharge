@@ -38,12 +38,14 @@ public class Climber extends InternalSubsystem {
 
     public void teleopControl() {
         if (super.controlSystem.climberExtend.get() == true) {
-            state = ClimberState.EXTENDING;
+            setState(ClimberState.EXTENDING);
         } else if (super.controlSystem.climberRetract.get() == true) {
-            state = ClimberState.RETRACTING;
+            setState(ClimberState.RETRACTING);
         } else {
-            state = ClimberState.IDLE;
+            setState(ClimberState.IDLE);
         }
+
+        if (super.controlSystem.getDp)
     }
 
     public void periodic() {
