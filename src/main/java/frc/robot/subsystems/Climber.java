@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 
 import frc.robot.RobotMap;
+import frc.robot.ControlSystems.directions;
 
 //Prototype code authors: () Rachel
 
@@ -45,7 +46,13 @@ public class Climber extends InternalSubsystem {
             setState(ClimberState.IDLE);
         }
 
-        if (super.controlSystem.getDp)
+        if (super.controlSystem.getDPAD() == directions.WEST) {
+            setTraverseSpeed(-1);
+        } else if (super.controlSystem.getDPAD() == directions.EAST) {
+            setTraverseSpeed(1);
+        } else {
+            setTraverseSpeed(0);
+        }
     }
 
     public void periodic() {
