@@ -48,7 +48,12 @@ public class Indexer extends InternalSubsystem {
     public void periodic() {
         if (state == IndexerState.FORWARD) {
             indexMotor.set(1);
-        } if else ()
+        } else if (state == IndexerState.BACKWARD){
+            indexMotor.set(-1);        
+        } else if (state == IndexerState.IDLE){
+                indexMotor.set(0);
+        }
+        
         //this method will be run every code loop
     }
 }
