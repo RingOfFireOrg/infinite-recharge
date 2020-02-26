@@ -35,11 +35,15 @@ public class RobotContainer {
 
     public void runTeleopControls() {
         drive.teleopControl();
+        climber.teleopControl();
+        controlPanel.teleopControl();
+        runPowerCellSystem();
+    }
+
+    public void runPowerCellSystem() {
         intake.teleopControl();
         shooter.teleopControl();
-        climber.teleopControl();
         indexer.teleopControl();
-        controlPanel.teleopControl();
     }
 
     public void robotUpdateSystems() {

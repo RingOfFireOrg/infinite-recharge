@@ -3,7 +3,6 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
-import edu.wpi.first.wpilibj.PWMVictorSPX;
 
 import frc.robot.RobotMap;
 
@@ -38,7 +37,13 @@ public class Climber extends InternalSubsystem {
     }
 
     public void teleopControl() {
-        
+        if (super.controlSystem.climberExtend.get() == true) {
+            state = ClimberState.EXTENDING;
+        } else if (super.controlSystem.climberRetract.get() == true) {
+            state = ClimberState.RETRACTING;
+        } else {
+            state = ClimberState.IDLE;
+        }
     }
 
     public void periodic() {
