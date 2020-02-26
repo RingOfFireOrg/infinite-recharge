@@ -12,7 +12,7 @@ import frc.robot.RobotMap;
 public class Climber extends InternalSubsystem {
 
     enum ClimberState { 
-        IDLE,EXTENDING, RETRACTING; 
+        IDLE, EXTENDING, RETRACTING;
     }
 
     private TalonSRX extensionMotor, climbMotor, traverseMotor;
