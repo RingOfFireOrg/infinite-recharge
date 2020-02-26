@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import com.revrobotics.CANSparkMax;
@@ -31,10 +32,13 @@ public class Robot extends TimedRobot {
     int BTN_60_PCT = 6;
     int BTN_70_PCT = 7;
     int BTN_FULL = 8;
+    int BTN_INTAKE = 8;
 
     Joystick rightstick = new Joystick(0);
     Joystick leftstick = new Joystick(1);
     Joystick manipulatorStick = new Joystick(2);
+    PWMVictorSPX transfermotor = new PWMVictorSPX(RobotMap.PWM_TRANSFER);
+    CANSparkMax intakemotor = new CANSparkMax (RobotMap.CAN_INTAKE, MotorType.kBrushless);
 
     double speedMultiplier = FULL_MULTIPLIER;
 
@@ -85,6 +89,12 @@ public class Robot extends TimedRobot {
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
         double shooterSpeed = manipulatorStick.getY();
+
+        boolean Forward_Transfer = manipulatorStick.getRawButton(RobotMap.TRANSFER_FORWARD_BTN);
+        boolean Backward_Transfer = manipulatorStick.getRawButton(RobotMap.TRANSFER_BACKWARD_BTN);
+        boolean Forward_Intake = manipulatorStick.getRawButton(RobotMap.INTAKE_INPUT_BTN);
+        boolean Backward_Intake = manipulatorStick.getRawButton(RobotMap.INTAKE_OUTPUT_BTN);
+
         if (shooterSpeed > DEAD_ZONE_START && shooterSpeed < DEAD_ZONE_END) shooterSpeed = STOPPED; 
 
         if (manipulatorStick.getRawButtonPressed(BTN_60_PCT)) {
@@ -94,8 +104,31 @@ public class Robot extends TimedRobot {
         } else if (manipulatorStick.getRawButtonPressed(BTN_FULL)) {
             speedMultiplier = FULL_MULTIPLIER;
         }
-        leftSpeed = leftSpeed * 0.5;
-        rightSpeed = rightSpeed * 0.5;
+
+        if (Forward_Transfer || Backward_Transfer){
+
+            if (Forward_Transfer) {
+                transfermotor.set(0.5);
+            } else if (Backward_Transfer) {
+                transfermotor.set(-0.5);
+            } 
+        } else {
+            transfermotor.set(0);
+        }
+        if (Forward_Intake || Backward_Intake){
+
+            if (Forward_Intake) {
+                intakemotor.set(0.5);
+            } else if (Backward_Intake) {
+                intakemotor.set(-0.5);
+            } 
+        } else {
+            intakemotor.set(0);
+        }
+      
+
+        leftSpeed = leftSpeed * 1;
+        rightSpeed = rightSpeed * 1;
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         tankDrive.tankDrive(leftSpeed, rightSpeed, true);
         SmartDashboard.putNumber("leftSpeed", leftSpeed);
