@@ -17,7 +17,6 @@ public class Intake extends InternalSubsystem {
     
     IntakeStates state;
 
-    
     public Intake() {
         intakeMotor = new CANSparkMax(RobotMap.INTAKE_MOTOR, MotorType.kBrushless);
         state = IntakeStates.IDLE;
@@ -33,10 +32,13 @@ public class Intake extends InternalSubsystem {
     }
 
     public void teleopControl() {
-        //this should be set based off of 3 factors:
-        //if the intake is running either way, it should run in
-        //is the left trigger is depressed, it should run in/out?
-        //if the shooter has been spun up ((isSpunUp))
+        if (super.controlSystem.intakeForward.get() == true) {
+            state = IntakeStates.IN;
+        } else if (super.controlSystem.intakeReverse.get() == true) {
+            state = IntakeStates.OUT;
+        } else if () {
+            state = IntakeStates.IDLE;
+        }
     }
 
     public void periodic() {
