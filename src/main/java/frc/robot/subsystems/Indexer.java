@@ -7,10 +7,11 @@ import frc.robot.RobotMap;
 //Prototype code authors: (Duncan, Aaron, Gray)?
 
 public class Indexer extends InternalSubsystem {
+    VictorSP indexMotor = new VictorSP(RobotMap.INDEXER_MOTOR);
+
     enum IndexerState {
         IDLE, FORWARD, BACKWARD
     }
-
 
     IndexerState state;
     PWMVictorSPX indexMotor = new PWMVictorSPX(0);
@@ -19,8 +20,8 @@ public class Indexer extends InternalSubsystem {
         state = IndexerState.IDLE;
     }
 
-    public void setState(IndexerState state) {
-        this.state = state;
+    public void setState(IndexerState desiredState) {
+        this.state = desiredState;
     }
 
     public int getState() {
@@ -30,9 +31,9 @@ public class Indexer extends InternalSubsystem {
 
     public void teleopControl() {
         // Takes driver input and sets states
-        if (super.controlSystem.indexerIn.get() == true) {
+        if (super.controlSystem.indexerIn.get()) {
             setState(IndexerState.FORWARD);
-        } else if (super.controlSystem.indexerOut.get() == true) {
+        } else if (super.controlSystem.indexerOut.get()) {
             setState(IndexerState.BACKWARD);
         } else {
             setState(IndexerState.IDLE);
@@ -40,6 +41,7 @@ public class Indexer extends InternalSubsystem {
     }
 
     public void periodic() {
+        //this method will be run every code loop
         if (state == IndexerState.FORWARD) {
             indexMotor.set(0.75);
         } else if (state == IndexerState.BACKWARD){
@@ -47,7 +49,5 @@ public class Indexer extends InternalSubsystem {
         } else if (state == IndexerState.IDLE){
             indexMotor.set(0);
         }
-        
-        //this method will be run every code loop
     }
 }
