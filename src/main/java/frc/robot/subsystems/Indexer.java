@@ -1,7 +1,6 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.VictorSP;
 import frc.robot.RobotMap;
 
 //Prototype code authors: (Duncan, Aaron, Gray)?
@@ -13,7 +12,7 @@ public class Indexer extends InternalSubsystem {
     }
 
     IndexerState state;
-    PWMVictorSPX indexMotor = new PWMVictorSPX(0);
+    PWMVictorSPX indexMotor = new PWMVictorSPX(RobotMap.INDEXER_MOTOR);
     
     public Indexer() {
         state = IndexerState.IDLE;
