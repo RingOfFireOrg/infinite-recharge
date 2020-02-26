@@ -38,13 +38,13 @@ public class Climber extends InternalSubsystem {
     }
 
     public void teleopControl() {
-        if (super.controlSystem.climberExtend.get() == true) {
-            setState(ClimberState.EXTENDING);
-        } else if (super.controlSystem.climberRetract.get() == true) {
-            setState(ClimberState.RETRACTING);
-        } else {
-            setState(ClimberState.IDLE);
-        }
+        // if (super.controlSystem.climberExtend.get() == true) {
+        //     setState(ClimberState.EXTENDING);
+        // } else if (super.controlSystem.climberRetract.get() == true) {
+        //     setState(ClimberState.RETRACTING);
+        // } else {
+        //     setState(ClimberState.IDLE);
+        // }
 
         if (super.controlSystem.getDPAD() == directions.WEST) {
             setTraverseSpeed(-1);
