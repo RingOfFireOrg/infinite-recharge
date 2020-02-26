@@ -14,21 +14,28 @@ public class Shooter extends InternalSubsystem {
     CANSparkMax shooterMotor;
 
     double baseShooterSpeed = 0.56;
+    double baseLowerShooterSpeed = 1;
 
     public enum shooterStates {
         OFF, BASE_SPEED
     }
 
-    shooterStates state;
+    shooterStates upperState;
+    shooterStates lowerState;
 
     public Shooter() {
         feederMotor = new CANSparkMax(RobotMap.SHOOTER_FEEDER_MOTOR, MotorType.kBrushless);
         shooterMotor = new CANSparkMax(RobotMap.SHOOTER_OUTPUT_MOTOR, MotorType.kBrushless);
-        state = shooterStates.OFF;
+        upperState = shooterStates.OFF;
+        lowerState = shooterStates.OFF;
     }
 
     public void setState(shooterStates state) {
-        this.state = state;
+        this.upperState = state;
+    }
+
+    public void setLowerShooterState(shooterStates state) {
+        this.lowerState = state;
     }
 
     public boolean isSpunUp() {
@@ -45,6 +52,10 @@ public class Shooter extends InternalSubsystem {
         baseShooterSpeed = speed;
     }
 
+    public void setLowerShooterSpeed(double speed){
+        baseLowerShooterSpeed = speed;
+    }
+
     public void teleopControl() {
         // Takes driver input and sets states
         if (super.controlSystem.getManipulatorRightTrigger() > 0.05) {
@@ -52,15 +63,27 @@ public class Shooter extends InternalSubsystem {
         } else {
             setState(shooterStates.OFF);
         }
+        if (super.controlSystem.getManipulatorLeftTrigger() > 0.05) {
+            setLowerShooterState(shooterStates.BASE_SPEED);
+        } else {
+            setLowerShooterState(shooterStates.OFF);
+        }
         baseShooterSpeed = super.controlSystem.getManipulatorRightTrigger();
+        baseLowerShooterSpeed = super.controlSystem.getManipulatorLeftTrigger();
     }
 
     public void periodic() {
         //this method will be run every code loop
-        if (state == shooterStates.BASE_SPEED) {
+        if (upperState == shooterStates.BASE_SPEED) {
             shooterMotor.set(baseShooterSpeed);
         } else {
             shooterMotor.set(0);
+        }
+
+        if (lowerState == shooterStates.BASE_SPEED) {
+            feederMotor.set(baseLowerShooterSpeed);
+        } else {
+            feederMotor.set(0);
         }
 
     }

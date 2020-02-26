@@ -9,7 +9,7 @@ public class ControlSystems {
 
     public Joystick leftDriveStick, rightDriveStick;
     public XboxController manipulatorGamepad;
-    public JoystickButton climberExtend, climberRetract, intakeForward, intakeReverse, positionControl, rotationControl;
+    public JoystickButton indexerIn, indexerOut, intakeForward, intakeReverse, positionControl, rotationControl;
 
     public enum directions {
         EAST, NORTHEAST, NORTH, NORTHWEST, WEST, SOUTHWEST, SOUTH, SOUTHEAST, NEUTRAL
@@ -22,8 +22,8 @@ public class ControlSystems {
         rightDriveStick = new Joystick(RobotMap.JOYSTICK_DRIVE_RIGHT);
         manipulatorGamepad = new XboxController(RobotMap.GAMEPAD_MANIPULATOR);
 
-        climberExtend = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_LEFT_BUMPER);
-        climberRetract = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_RIGHT_BUMPER);
+        indexerOut = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_LEFT_BUMPER);
+        indexerIn = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_RIGHT_BUMPER);
         intakeForward = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_A_BUTTON);
         intakeReverse = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_B_BUTTON);
         positionControl = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_X_BUTTON);
