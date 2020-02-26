@@ -32,7 +32,7 @@ public class RobotMap {
 	public static final int NEO_BACK_RIGHT = 3;//TODO define this
 	public static final int NEO_BACK_LEFT = 4;//TODO define this
 	public static final int INTAKE_MOTOR = 7;
-	public static final int INDEXER_MOTOR = 6;//TODO define this
+	public static final int INDEXER_MOTOR = 0;
 	public static final int SHOOTER_FEEDER_MOTOR = 6;
 	public static final int SHOOTER_OUTPUT_MOTOR = 5;
 	public static final int CLIMBER_WINCH = 9;//TODO define this
