@@ -4,8 +4,22 @@ package frc.robot.subsystems;
 
 public class ControlPanel extends InternalSubsystem {
 
-    public ControlPanel () {
+    public enum VerticalControlPanelStates {
+        EXTENDING, RETRACTING, IDLE
+    }
 
+    public enum SpinnerStates {
+        LEFT, RIGHT, AUTO, IDLE
+    }
+
+    private double spinnerSpeed;
+
+    public ControlPanel () {
+        spinnerSpeed = 0;
+    }
+
+    public void setVerticalState(VerticalControlPanelStates state) {
+ //finish
     }
 
     public void teleopControl() {
