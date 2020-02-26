@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.VictorSP;
 import frc.robot.RobotMap;
 
@@ -12,7 +13,7 @@ public class Indexer extends InternalSubsystem {
 
 
     IndexerState state;
-    VictorSP indexMotor = new VictorSP(0);
+    PWMVictorSPX indexMotor = new PWMVictorSPX(0);
     
     public Indexer() {
         state = IndexerState.IDLE;
@@ -40,11 +41,11 @@ public class Indexer extends InternalSubsystem {
 
     public void periodic() {
         if (state == IndexerState.FORWARD) {
-            indexMotor.set(1);
+            indexMotor.set(0.75);
         } else if (state == IndexerState.BACKWARD){
-            indexMotor.set(-1);        
+            indexMotor.set(-0.75);        
         } else if (state == IndexerState.IDLE){
-                indexMotor.set(0);
+            indexMotor.set(0);
         }
         
         //this method will be run every code loop
