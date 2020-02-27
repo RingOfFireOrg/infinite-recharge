@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class ControlSystems {
 
     public Joystick leftDriveStick, rightDriveStick;
-    public XboxController manipulatorGamepad;
+    public XboxController manipulatorGamepadTeleop, manipulatorGamepadEndgame;
     public JoystickButton indexerIn, indexerOut, intakeForward, intakeReverse, positionControl, rotationControl;
 
     public enum directions {
@@ -20,14 +20,15 @@ public class ControlSystems {
     protected ControlSystems() {
         leftDriveStick = new Joystick(RobotMap.JOYSTICK_DRIVE_LEFT);
         rightDriveStick = new Joystick(RobotMap.JOYSTICK_DRIVE_RIGHT);
-        manipulatorGamepad = new XboxController(RobotMap.GAMEPAD_MANIPULATOR);
+        manipulatorGamepadTeleop = new XboxController(RobotMap.GAMEPAD_MANIPULATOR);
+        manipulatorGamepadEndgame = new XboxController(RobotMap.GAMEPAD_ENDGAME);
 
-        indexerOut = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_LEFT_BUMPER);
-        indexerIn = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_RIGHT_BUMPER);
-        intakeForward = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_A_BUTTON);
-        intakeReverse = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_B_BUTTON);
-        positionControl = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_X_BUTTON);
-        rotationControl = new JoystickButton(manipulatorGamepad, RobotMap.MANIPULATOR_Y_BUTTON);
+        indexerOut = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_LEFT_BUMPER);
+        indexerIn = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_RIGHT_BUMPER);
+        intakeForward = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_A_BUTTON);
+        intakeReverse = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_B_BUTTON);
+        positionControl = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_X_BUTTON);
+        rotationControl = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_Y_BUTTON);
 
     }
 
@@ -39,42 +40,63 @@ public class ControlSystems {
     }
 
     public double getManipulatorLeftY() {
-        return manipulatorGamepad.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y);
+        return manipulatorGamepadTeleop.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y);
     }
 
     public double getManipulatorRightY() {
-        return manipulatorGamepad.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_Y);
+        return manipulatorGamepadTeleop.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_Y);
     }
 
     public double getManipulatorLeftTrigger() {
-        return manipulatorGamepad.getRawAxis(RobotMap.MANIPULATOR_LEFT_TRIGGER);
+        return manipulatorGamepadTeleop.getRawAxis(RobotMap.MANIPULATOR_LEFT_TRIGGER);
     }
 
     public double getManipulatorRightTrigger() {
-        return manipulatorGamepad.getRawAxis(RobotMap.MANIPULATOR_RIGHT_TRIGGER);
+        return manipulatorGamepadTeleop.getRawAxis(RobotMap.MANIPULATOR_RIGHT_TRIGGER);
     }
 
     public directions getDPAD() {
-        if (manipulatorGamepad.getPOV() == 0) {
+        if (manipulatorGamepadTeleop.getPOV() == 0) {
             return directions.NORTH;
-        } else if (manipulatorGamepad.getPOV() == 45) {
+        } else if (manipulatorGamepadTeleop.getPOV() == 45) {
             return directions.NORTHEAST;
-        } else if (manipulatorGamepad.getPOV() == 90) {
+        } else if (manipulatorGamepadTeleop.getPOV() == 90) {
             return directions.EAST;
-        } else if (manipulatorGamepad.getPOV() == 135) {
+        } else if (manipulatorGamepadTeleop.getPOV() == 135) {
             return directions.SOUTHEAST;
-        } else if (manipulatorGamepad.getPOV() == 180) {
+        } else if (manipulatorGamepadTeleop.getPOV() == 180) {
             return directions.SOUTH;
-        } else if (manipulatorGamepad.getPOV() == 225) {
+        } else if (manipulatorGamepadTeleop.getPOV() == 225) {
             return directions.SOUTHWEST;
-        } else if (manipulatorGamepad.getPOV() == 270) {
+        } else if (manipulatorGamepadTeleop.getPOV() == 270) {
             return directions.WEST;
-        } else if (manipulatorGamepad.getPOV() == 315) {
+        } else if (manipulatorGamepadTeleop.getPOV() == 315) {
             return directions.NORTHWEST;
         } else {
             return directions.NEUTRAL;
         }
+    }
 
+    public directions getEndgameDPAD() {
+        if (manipulatorGamepadEndgame.getPOV() == 0) {
+            return directions.NORTH;
+        } else if (manipulatorGamepadEndgame.getPOV() == 45) {
+            return directions.NORTHEAST;
+        } else if (manipulatorGamepadEndgame.getPOV() == 90) {
+            return directions.EAST;
+        } else if (manipulatorGamepadEndgame.getPOV() == 135) {
+            return directions.SOUTHEAST;
+        } else if (manipulatorGamepadEndgame.getPOV() == 180) {
+            return directions.SOUTH;
+        } else if (manipulatorGamepadEndgame.getPOV() == 225) {
+            return directions.SOUTHWEST;
+        } else if (manipulatorGamepadEndgame.getPOV() == 270) {
+            return directions.WEST;
+        } else if (manipulatorGamepadEndgame.getPOV() == 315) {
+            return directions.NORTHWEST;
+        } else {
+            return directions.NEUTRAL;
+        }
     }
 
 }
