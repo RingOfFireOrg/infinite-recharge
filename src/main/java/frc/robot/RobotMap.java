@@ -4,8 +4,8 @@ public class RobotMap {
 
 	// Ports not on robot
 	// Joysticks
-	public static final int JOYSTICK_DRIVE_RIGHT = 0;
-	public static final int JOYSTICK_DRIVE_LEFT = 1;
+	public static final int JOYSTICK_DRIVE_LEFT = 0;
+	public static final int JOYSTICK_DRIVE_RIGHT = 1;
 	public static final int GAMEPAD_MANIPULATOR = 2;
 
 	//Gamepad Buttons
@@ -27,9 +27,9 @@ public class RobotMap {
 	// Analog Ports
 
 	// CAN Ports
-	public static final int DT_LEFT_MASTER = 3; //TODO define this
+	public static final int DT_LEFT_MASTER = 1; //TODO define this
 	public static final int DT_LEFT_SLAVE = 2;//TODO define this
-	public static final int DT_RIGHT_MASTER = 1;//TODO define this
+	public static final int DT_RIGHT_MASTER = 3;//TODO define this
 	public static final int DT_RIGHT_SLAVE = 4;//TODO define this
 	
 	public static final int INTAKE_MOTOR = 7;
