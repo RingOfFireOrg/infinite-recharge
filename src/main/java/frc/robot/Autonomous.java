@@ -23,15 +23,15 @@ public class Autonomous {
         return true;
     }
 
-    public void getAutonomousCommand() {
-        TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(2), Units.feetToMeters(2));
-        config.setKinematics(robotContainer.drive.getKinematics());
+    // public void getAutonomousCommand() {
+    //     TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(2), Units.feetToMeters(2));
+    //     config.setKinematics(robotContainer.drive.getKinematics());
 
-        Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
-            Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
-            config
-        );
-    }
+    //     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
+    //         Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
+    //         config
+    //     );
+    // }
 
     // RamseteCommand command = new RamseteCommand {
         

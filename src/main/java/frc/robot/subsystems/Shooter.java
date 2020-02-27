@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Climber.ClimberState;
 
@@ -28,6 +29,7 @@ public class Shooter extends InternalSubsystem {
         shooterMotor = new CANSparkMax(RobotMap.SHOOTER_OUTPUT_MOTOR, MotorType.kBrushless);
         upperState = shooterStates.OFF;
         lowerState = shooterStates.OFF;
+        feederMotor.set(0);
     }
 
     public void setState(shooterStates state) {
@@ -57,13 +59,13 @@ public class Shooter extends InternalSubsystem {
     }
 
     public void teleopControl() {
-        // Takes driver input and sets states
+        //Takes driver input and sets states
         if (super.controlSystem.getManipulatorRightTrigger() > 0.05) {
             setState(shooterStates.BASE_SPEED);
         } else {
             setState(shooterStates.OFF);
         }
-        if (super.controlSystem.getManipulatorLeftTrigger() > 0.05) {
+        if (Math.abs(super.controlSystem.getManipulatorLeftTrigger()) > 0.05) {
             setLowerShooterState(shooterStates.BASE_SPEED);
         } else {
             setLowerShooterState(shooterStates.OFF);
