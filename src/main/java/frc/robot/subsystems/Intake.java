@@ -46,9 +46,9 @@ public class Intake extends InternalSubsystem {
         if (state == IntakeStates.IDLE) {
             intakeMotor.set(0);
         } else if (state == IntakeStates.OUT) {
-            intakeMotor.set(-0.6);
+            intakeMotor.set(-0.1);
         } else if (state == IntakeStates.IN) {
-            intakeMotor.set(0.6);
+            intakeMotor.set(0.1);
         }
     }
 }
