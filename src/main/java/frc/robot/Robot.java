@@ -59,8 +59,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    container.runPowerCellSystem();
-    container.robotUpdateSystems();
+    container.runSelectSystem();
   }
   
 }

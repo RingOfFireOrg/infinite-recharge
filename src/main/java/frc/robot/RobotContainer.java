@@ -54,4 +54,9 @@ public class RobotContainer {
         indexer.periodic();
         controlPanel.periodic();
     }
+
+    public void runSelectSystem() {
+        drive.teleopControl();
+        drive.periodic();
+    }
 }
