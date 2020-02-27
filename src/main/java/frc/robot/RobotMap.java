@@ -27,10 +27,10 @@ public class RobotMap {
 	// Analog Ports
 
 	// CAN Ports
-	public static final int DT_LEFT_MASTER = 1; //TODO define this
-	public static final int DT_LEFT_SLAVE = 2;//TODO define this
-	public static final int DT_RIGHT_MASTER = 3;//TODO define this
-	public static final int DT_RIGHT_SLAVE = 4;//TODO define this
+	public static final int DT_LEFT_FORWARD = 1; //TODO define this
+	public static final int DT_LEFT_BACK = 2;//TODO define this
+	public static final int DT_RIGHT_FORWARD = 3;//TODO define this
+	public static final int DT_RIGHT_BACK = 4;//TODO define this
 	
 	public static final int INTAKE_MOTOR = 7;
 	public static final int SHOOTER_FEEDER_MOTOR = 5;
