@@ -67,11 +67,11 @@ public class Drivetrain extends InternalSubsystem{
     //     );
     // }
 
-    // public boolean setDriveSpeeds(double leftGoalSpeed, double rightGoalSpeed) {
-    //     this.leftGoalSpeed = leftGoalSpeed;
-    //     this.rightGoalSpeed = rightGoalSpeed;
-    //     return true;
-    // }
+    public boolean setDriveSpeeds(double leftGoalSpeed, double rightGoalSpeed) {
+        this.leftGoalSpeed = leftGoalSpeed;
+        this.rightGoalSpeed = rightGoalSpeed;
+        return true;
+    }
     
     // public SimpleMotorFeedforward getFeedForward() {
     //     return feedForward;
