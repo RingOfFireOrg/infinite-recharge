@@ -9,6 +9,9 @@ public class RobotMap {
 	public static final int GAMEPAD_MANIPULATOR = 2;
 	public static final int GAMEPAD_ENDGAME = 3;
 
+	// Joystick Buttons
+	public static final int DRIVER_TRIGGER = 1;
+	
 	//Gamepad Buttons
 	public static final int MANIPULATOR_LEFT_BUMPER = 5;
 	public static final int MANIPULATOR_RIGHT_BUMPER = 6;
@@ -16,6 +19,8 @@ public class RobotMap {
 	public static final int MANIPULATOR_B_BUTTON = 2;
 	public static final int MANIPULATOR_X_BUTTON = 3;
 	public static final int MANIPULATOR_Y_BUTTON = 4;
+	public static final int MANIPULATOR_START_BUTTON = 8;
+
 
 	//Gamepad Axes
 	public static final int MANIPULATOR_RIGHT_TRIGGER = 3;
@@ -50,6 +55,11 @@ public class RobotMap {
 	public static final int DRIVE_TRAIN_LEFT_ENCODER_B = 1;
 	public static final int DRIVE_TRAIN_RIGHT_ENCODER_A = 2;
 	public static final int DRIVE_TRAIN_RIGHT_ENCODER_B = 3;
+
+	// Cameras
+
+	public static final int TRANSFER_CAMERA = 0;
+	public static final int INTAKE_CAMERA = 1;
 
 	//design constants:
 	public static final double ROBOT_TRACK_WIDTH_IN = 22; 
