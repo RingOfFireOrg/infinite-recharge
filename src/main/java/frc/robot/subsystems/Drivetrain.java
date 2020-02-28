@@ -46,13 +46,13 @@ public class Drivetrain extends InternalSubsystem{
 
     public Drivetrain () {
         CANSparkMax rightForward = new CANSparkMax(RobotMap.DT_RIGHT_FORWARD, MotorType.kBrushless);
-        rightForward.setInverted(false);
+        rightForward.setInverted(true);
         CANSparkMax rightBack = new CANSparkMax(RobotMap.DT_RIGHT_BACK, MotorType.kBrushless);
         rightBack.setInverted(true);
         CANSparkMax leftForward = new CANSparkMax(RobotMap.DT_LEFT_FORWARD, MotorType.kBrushless);
         leftForward.setInverted(false);
         CANSparkMax leftBack = new CANSparkMax(RobotMap.DT_LEFT_BACK, MotorType.kBrushless);
-        leftBack.setInverted(true);
+        leftBack.setInverted(false);
         leftMotors = new SpeedControllerGroup(leftForward, leftBack);
         rightMotors = new SpeedControllerGroup(rightForward, rightBack);
         // leftMotors.setInverted(false);
