@@ -7,7 +7,7 @@ import frc.robot.RobotMap;
 
 public class Indexer extends InternalSubsystem {
 
-    enum IndexerState {
+    public enum IndexerState {
         IDLE, FORWARD, BACKWARD
     }
 

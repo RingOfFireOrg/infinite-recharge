@@ -9,7 +9,7 @@ public class ControlSystems {
 
     public Joystick leftDriveStick, rightDriveStick;
     public XboxController manipulatorGamepadTeleop, manipulatorGamepadEndgame;
-    public JoystickButton indexerIn, indexerOut, intakeForward, intakeReverse, positionControl, rotationControl, switchCameraViewManipulator, switchCameraViewDriver;
+    public JoystickButton indexerIn, indexerOut, intakeForward, intakeReverse, positionControl, manualSpinner, switchCameraViewManipulator, switchCameraViewDriver
 
     public enum directions {
         EAST, NORTHEAST, NORTH, NORTHWEST, WEST, SOUTHWEST, SOUTH, SOUTHEAST, NEUTRAL
@@ -28,9 +28,10 @@ public class ControlSystems {
         intakeForward = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_A_BUTTON);
         intakeReverse = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_B_BUTTON);
         positionControl = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_X_BUTTON);
-        rotationControl = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_Y_BUTTON);
+        manualSpinner = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_Y_BUTTON);
         switchCameraViewManipulator = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_START_BUTTON);
         switchCameraViewDriver = new JoystickButton(leftDriveStick, RobotMap.DRIVER_TRIGGER);
+
     }
 
     public static ControlSystems getInstance() {

@@ -17,7 +17,7 @@ public class Climber extends InternalSubsystem {
     }
 
     enum WinchState {
-        IDLE, WINDING_UP
+        IDLE, WINDING_UP, WINDING_DOWN
     }
 
     private TalonSRX extensionMotor, climbMotor;
@@ -26,6 +26,8 @@ public class Climber extends InternalSubsystem {
     private WinchState winchState;
 
     private double traverseSpeed = 0;
+    private double liftSpeed = 0;
+    private double winchSpeed = 0;
 
     public Climber() {
         extensionMotor = new TalonSRX(RobotMap.CLIMBER_EXTENSION);
@@ -47,19 +49,53 @@ public class Climber extends InternalSubsystem {
         return true;
     }
 
-    public void teleopControl() {
-        if (super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_RIGHT_TRIGGER) > 0.1) {
-            setState(ClimberState.EXTENDING);
-        } else if (super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_TRIGGER) > 0.1) {
-            setState(ClimberState.RETRACTING);
+    public void setLift(double liftSpeed) {
+        this.liftSpeed = liftSpeed;
+        if (liftSpeed > 0) {
+            state = ClimberState.EXTENDING;
+        } else if (liftSpeed < 0) {
+            state = ClimberState.RETRACTING;
         } else {
-            setState(ClimberState.IDLE);
+            state = ClimberState.IDLE;
         }
+    } 
 
-        if (super.controlSystem.manipulatorGamepadEndgame.getAButton()) {
+    public void setWinch(double winchSpeed) {
+        this.winchSpeed = winchSpeed;
+        if (winchSpeed > 0) {
             winchState = winchState.WINDING_UP;
+        } else if (winchSpeed < 0) {
+            winchState = winchState.WINDING_DOWN;
         } else {
             winchState = winchState.IDLE;
+        }
+    }
+
+    public void teleopControl() {
+        // if (super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_RIGHT_TRIGGER) > 0.1) {
+        //     setState(ClimberState.EXTENDING);
+        // } else if (super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_TRIGGER) > 0.1) {
+        //     setState(ClimberState.RETRACTING);
+        // } else {
+        //     setState(ClimberState.IDLE);
+        // }
+
+        // if (super.controlSystem.manipulatorGamepadEndgame.getAButton()) {
+        //     winchState = winchState.WINDING_UP;
+        // } else {
+        //     winchState = winchState.IDLE;
+        // }
+
+        if (Math.abs(super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_Y)) > 0.1) {
+            setLift(-super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_Y));
+        } else {
+            setLift(0);
+        }
+
+        if (Math.abs(super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y)) > 0.1) {
+            setWinch(-super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y));
+        } else {
+            setWinch(0);
         }
 
         if (super.controlSystem.getEndgameDPAD() == directions.WEST) {
@@ -78,16 +114,16 @@ public class Climber extends InternalSubsystem {
             extensionMotor.set(ControlMode.PercentOutput, 0);
         } else if (state == ClimberState.RETRACTING) {
             // climbMotor.set(ControlMode.PercentOutput,-1);
-            extensionMotor.set(ControlMode.PercentOutput, 1);
+            extensionMotor.set(ControlMode.PercentOutput, liftSpeed);
         } else if (state == ClimberState.EXTENDING) {
             // climbMotor.set(ControlMode.PercentOutput, 1);
-            extensionMotor.set(ControlMode.PercentOutput, -1);
+            extensionMotor.set(ControlMode.PercentOutput, liftSpeed);
         }
 
         if (winchState == WinchState.WINDING_UP) {
-            climbMotor.set(ControlMode.PercentOutput, 1);
-        } else if (state == ClimberState.EXTENDING) {
-            climbMotor.set(ControlMode.PercentOutput, -1);
+            climbMotor.set(ControlMode.PercentOutput, winchSpeed);
+        } else if (state == ClimberState.EXTENDING || winchState == winchState.WINDING_DOWN) {
+            climbMotor.set(ControlMode.PercentOutput, winchSpeed);
         } else {
             climbMotor.set(ControlMode.PercentOutput, 0);
         }
