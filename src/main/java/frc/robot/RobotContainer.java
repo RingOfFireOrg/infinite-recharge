@@ -55,7 +55,7 @@ public class RobotContainer {
         climber.periodic();
         indexer.periodic();
         controlPanel.periodic();
-        webcams.periodic()
+        webcams.periodic();
         
     }
 
