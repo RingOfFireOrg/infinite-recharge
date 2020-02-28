@@ -28,22 +28,24 @@ public class RobotMap {
 	// Analog Ports
 
 	// CAN Ports
-	public static final int DT_LEFT_FORWARD = 1; //TODO define this
-	public static final int DT_LEFT_BACK = 2;//TODO define this
-	public static final int DT_RIGHT_FORWARD = 3;//TODO define this
-	public static final int DT_RIGHT_BACK = 4;//TODO define this
+	public static final int DT_LEFT_FORWARD = 1; 
+	public static final int DT_LEFT_BACK = 2;
+	public static final int DT_RIGHT_FORWARD = 3;
+	public static final int DT_RIGHT_BACK = 4;
 	
-	public static final int INTAKE_MOTOR = 7;
+
 	public static final int SHOOTER_FEEDER_MOTOR = 5;
 	public static final int SHOOTER_OUTPUT_MOTOR = 6;
-	public static final int CLIMBER_WINCH = 9;//TODO define this
-	public static final int CLIMBER_EXTENSION = 10;//TODO define this
-	public static final int CLIMBER_TRAVERSE = 11;//TODO define this
-	public static final int CONTROL_PANEL_ACTUATOR = 12; //TODO define this
-	public static final int CONTROL_PANEL_SPIN = 13; //TODO define this
+	public static final int INTAKE_MOTOR = 7;
+	public static final int CLIMBER_EXTENSION = 8;
+	public static final int CLIMBER_WINCH = 9;
 
 	//PWM Ports
 	public static final int INDEXER_MOTOR = 0;
+	public static final int CLIMBER_TRAVERSE = 1;
+	public static final int CONTROL_PANEL_ACTUATOR = 2; 
+	public static final int CONTROL_PANEL_SPIN = 3; 
+
 
 	// Drive Train Encoders
 	public static final int DRIVE_TRAIN_LEFT_ENCODER_A = 0;
