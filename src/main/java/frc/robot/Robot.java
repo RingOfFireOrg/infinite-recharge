@@ -7,34 +7,25 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.vision.VisionPipeline;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
-import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 public class Robot extends TimedRobot {
 
   RobotContainer container;
- 
+
   ControlSystems controlSystem;
 
-  AHRS ahrs;
   Vision vision;
 
-  boolean foundVisionTarget = false;
+  Autonomous autonomous;
 
   @Override
   public void robotInit() {
     controlSystem = ControlSystems.getInstance();
     container = RobotContainer.getInstance();
-
     vision = new Vision();
+    autonomous = new Autonomous();
   }
 
   @Override
@@ -48,7 +39,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {
-
+    autonomous.runAutonomous();
+    container.robotUpdateSystems();
   }
 
   @Override
@@ -61,5 +53,5 @@ public class Robot extends TimedRobot {
   public void testPeriodic() {
     container.runSelectSystem();
   }
-  
+
 }
