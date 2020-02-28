@@ -14,6 +14,7 @@ public class RobotContainer {
     public Climber climber = new Climber();
     public Indexer indexer = new Indexer();
     public ControlPanel controlPanel = new ControlPanel();
+    public Webcams webcams = new Webcams();
 
     //other portions
     public AHRS ahrs;
@@ -37,6 +38,7 @@ public class RobotContainer {
         drive.teleopControl();
         climber.teleopControl();
         controlPanel.teleopControl();
+        webcams.teleopControl();
         runPowerCellSystem();
     }
 
@@ -53,6 +55,8 @@ public class RobotContainer {
         climber.periodic();
         indexer.periodic();
         controlPanel.periodic();
+        webcams.periodic();
+        
     }
 
     public void runSelectSystem() {
