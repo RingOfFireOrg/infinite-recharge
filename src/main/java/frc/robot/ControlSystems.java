@@ -9,7 +9,7 @@ public class ControlSystems {
 
     public Joystick leftDriveStick, rightDriveStick;
     public XboxController manipulatorGamepadTeleop, manipulatorGamepadEndgame;
-    public JoystickButton indexerIn, indexerOut, intakeForward, intakeReverse, positionControl, manualSpinner, switchCameraViewManipulator, switchCameraViewDriver
+    public JoystickButton indexerIn, indexerOut, intakeForward, intakeReverse, positionControl, manualSpinner, switchCameraViewManipulator, switchCameraViewDriver;
 
     public enum directions {
         EAST, NORTHEAST, NORTH, NORTHWEST, WEST, SOUTHWEST, SOUTH, SOUTHEAST, NEUTRAL
