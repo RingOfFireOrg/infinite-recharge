@@ -45,10 +45,18 @@ public class Drivetrain extends InternalSubsystem{
     //public Pose2d pose = new Pose2d();
 
     public Drivetrain () {
-        leftMotors = new SpeedControllerGroup(new CANSparkMax(RobotMap.DT_LEFT_BACK, MotorType.kBrushless), new CANSparkMax(RobotMap.DT_LEFT_BACK, MotorType.kBrushless));
-        rightMotors = new SpeedControllerGroup(new CANSparkMax(RobotMap.DT_RIGHT_FORWARD, MotorType.kBrushless), new CANSparkMax(RobotMap.DT_RIGHT_BACK, MotorType.kBrushless));
-        leftMotors.setInverted(false);
-        rightMotors.setInverted(false);
+        CANSparkMax rightForward = new CANSparkMax(RobotMap.DT_RIGHT_FORWARD, MotorType.kBrushless);
+        rightForward.setInverted(true);
+        CANSparkMax rightBack = new CANSparkMax(RobotMap.DT_RIGHT_BACK, MotorType.kBrushless);
+        rightBack.setInverted(true);
+        CANSparkMax leftForward = new CANSparkMax(RobotMap.DT_LEFT_FORWARD, MotorType.kBrushless);
+        leftForward.setInverted(false);
+        CANSparkMax leftBack = new CANSparkMax(RobotMap.DT_LEFT_BACK, MotorType.kBrushless);
+        leftBack.setInverted(false);
+        leftMotors = new SpeedControllerGroup(leftForward, leftBack);
+        rightMotors = new SpeedControllerGroup(rightForward, rightBack);
+        // leftMotors.setInverted(false);
+        // rightMotors.setInverted(false);
         // leftSlave.follow(leftMaster);
         // rightSlave.follow(rightMaster);
 
