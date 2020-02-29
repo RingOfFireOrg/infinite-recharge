@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
@@ -35,6 +36,7 @@ public class Autonomous {
 
     public Autonomous() {
         autonomousTimer = new Timer();
+        autonomousTimer.start();
         drive = new PID(0.03, 0, 0);
         autonomousStep = 0;
         autonomousChooser.setDefaultOption(SimpleAuto1, SimpleAuto1);
@@ -43,11 +45,12 @@ public class Autonomous {
     }
 
     public boolean runAutonomous() {
-        if (autonomousChooser.getSelected() == SimpleAuto1) {
-            simpleAuto1();
-        } else if (autonomousChooser.getSelected() == SimpleAuto2) {
-            simpleAuto2();
-        }
+        simpleAuto1();
+        // if (autonomousChooser.getSelected() == SimpleAuto1) {
+        //     simpleAuto1();
+        // } else if (autonomousChooser.getSelected() == SimpleAuto2) {
+        //     simpleAuto2();
+        // }
         return true;
     }
 
@@ -79,34 +82,35 @@ public class Autonomous {
 
     //simple auto that will drive forward for x time and then shoot against wall
     public void simpleAuto1() {
+        SmartDashboard.putNumber("time", autonomousTimer.get() - transitionTime);
         switch (autonomousStep) {
             case 0:
             /*should be driving forward 10 feet, still needs to be tuned */
                 drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
                 robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
-                if (robotContainer.drive.getLeftInches() > 36/*autonomousTimer.get() - transitionTime > 1000*/) {
+                if (robotContainer.drive.getLeftInches() > 96/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;
             case 1:
                 robotContainer.drive.setDriveSpeeds(0, 0);
-                if (autonomousTimer.get() - transitionTime > 500) {
+                if (autonomousTimer.get() - transitionTime > 0.5) {
                     switchStep();
                 }
                 break;
             case 2:
                 robotContainer.shooter.setLowerShooterSpeed(1);
-                robotContainer.shooter.setShooterSpeed(1);
+                robotContainer.shooter.setShooterSpeed(0.56);
                 robotContainer.shooter.setLowerShooterState(shooterStates.BASE_SPEED);
                 robotContainer.shooter.setState(shooterStates.BASE_SPEED);
-                if (autonomousTimer.get() - transitionTime > 1000) {
+                if (autonomousTimer.get() - transitionTime > 1) {
                     switchStep();
                 }
                 break;
             case 3:
-                robotContainer.indexer.setState(Indexer.IndexerState.FORWARD);
-                if (autonomousTimer.get() - transitionTime > 4000) {
+                robotContainer.indexer.setState(Indexer.IndexerState.BACKWARD);
+                if (autonomousTimer.get() - transitionTime > 10) {
                     switchStep();
                 }
                 break;
