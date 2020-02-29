@@ -43,6 +43,7 @@ public class Autonomous {
         autonomousChooser.setDefaultOption(DriveAndShoot, DriveAndShoot);
         autonomousChooser.addOption(StraightShot, StraightShot);
         autonomousChooser.addOption(SimpleDrive, SimpleDrive);
+        SmartDashboard.putData(autonomousChooser);
 
     }
 
