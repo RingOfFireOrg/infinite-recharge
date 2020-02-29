@@ -70,8 +70,8 @@ public class Shooter extends InternalSubsystem {
         } else {
             setLowerShooterState(shooterStates.OFF);
         }
-        baseShooterSpeed = super.controlSystem.getManipulatorRightTrigger() * 0.63;
-        baseLowerShooterSpeed = super.controlSystem.getManipulatorLeftTrigger() * 0.63;
+        baseShooterSpeed = super.controlSystem.getManipulatorRightTrigger() * 0.56;
+        baseLowerShooterSpeed = super.controlSystem.getManipulatorLeftTrigger() * 1;
     }
 
     public void periodic() {
