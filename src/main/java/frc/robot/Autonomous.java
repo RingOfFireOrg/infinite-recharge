@@ -81,9 +81,10 @@ public class Autonomous {
     public void simpleAuto1() {
         switch (autonomousStep) {
             case 0:
+            /*should be driving forward 10 feet, still needs to be tuned */
                 drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
-                robotContainer.drive.setDriveSpeeds(0.3 + drive.getOutput(), 0.3 - drive.getOutput());
+                robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
                 if (robotContainer.drive.getLeftInches() > 36/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
