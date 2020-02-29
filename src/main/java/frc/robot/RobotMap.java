@@ -42,8 +42,8 @@ public class RobotMap {
 	public static final int SHOOTER_FEEDER_MOTOR = 5;
 	public static final int SHOOTER_OUTPUT_MOTOR = 6;
 	public static final int INTAKE_MOTOR = 7;
-	public static final int CLIMBER_EXTENSION = 8;
-	public static final int CLIMBER_WINCH = 9;
+	public static final int CLIMBER_EXTENSION = 9;
+	public static final int CLIMBER_WINCH = 8;
 
 	//PWM Ports
 	public static final int INDEXER_MOTOR = 0;

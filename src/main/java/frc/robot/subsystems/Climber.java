@@ -86,14 +86,14 @@ public class Climber extends InternalSubsystem {
         //     winchState = winchState.IDLE;
         // }
 
-        if (Math.abs(super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_Y)) > 0.1) {
-            setLift(-super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_Y));
+        if (Math.abs(super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y)) > 0.1) {
+            setLift(-super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y));
         } else {
             setLift(0);
         }
 
-        if (Math.abs(super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y)) > 0.1) {
-            setWinch(-super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y));
+        if (Math.abs(super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_Y)) > 0.1) {
+            setWinch(-super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_Y));
         } else {
             setWinch(0);
         }
