@@ -122,8 +122,6 @@ public class Climber extends InternalSubsystem {
 
         if (winchState == WinchState.WINDING_UP) {
             climbMotor.set(ControlMode.PercentOutput, winchSpeed);
-        } else if (state == ClimberState.EXTENDING || winchState == winchState.WINDING_DOWN) {
-            climbMotor.set(ControlMode.PercentOutput, winchSpeed);
         } else {
             climbMotor.set(ControlMode.PercentOutput, 0);
         }

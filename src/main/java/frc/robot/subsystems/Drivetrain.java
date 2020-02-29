@@ -1,6 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.CANCoder;
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -36,6 +38,7 @@ public class Drivetrain extends InternalSubsystem{
     //private double speedLimit = 1;
 
     private double leftGoalSpeed, rightGoalSpeed;
+    private CANEncoder leftEncoder, rightEncoder;
 
     //SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(RobotMap.DRIVEBOX_KS_CONSTANT, RobotMap.DRIVEBOX_KV_CONSTANT, RobotMap.DRIVEBOX_KA_CONSTANT);
     
@@ -55,6 +58,8 @@ public class Drivetrain extends InternalSubsystem{
         leftBack.setInverted(false);
         leftMotors = new SpeedControllerGroup(leftForward, leftBack);
         rightMotors = new SpeedControllerGroup(rightForward, rightBack);
+        leftEncoder = leftForward.getEncoder();
+        rightEncoder = rightForward.getEncoder();
         // leftMotors.setInverted(false);
         // rightMotors.setInverted(false);
         // leftSlave.follow(leftMaster);
@@ -79,6 +84,14 @@ public class Drivetrain extends InternalSubsystem{
         this.leftGoalSpeed = leftGoalSpeed;
         this.rightGoalSpeed = rightGoalSpeed;
         return true;
+    }
+
+    public double getLeftInches() {
+        return leftEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN;
+    }
+
+    public double getRightInches() {
+        return rightEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN;
     }
     
     // public SimpleMotorFeedforward getFeedForward() {

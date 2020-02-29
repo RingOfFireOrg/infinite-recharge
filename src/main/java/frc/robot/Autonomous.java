@@ -84,7 +84,7 @@ public class Autonomous {
                 drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
                 robotContainer.drive.setDriveSpeeds(0.3 + drive.getOutput(), 0.3 - drive.getOutput());
-                if (autonomousTimer.get() - transitionTime > 1000) {
+                if (robotContainer.drive.getLeftInches() > 36/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;

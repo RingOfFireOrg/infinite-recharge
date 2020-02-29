@@ -53,12 +53,12 @@ public class RobotMap {
 
 
 	// Drive Train Encoders
-	public static final int DRIVE_TRAIN_LEFT_ENCODER_A = 0;
-	public static final int DRIVE_TRAIN_LEFT_ENCODER_B = 1;
-	public static final int DRIVE_TRAIN_RIGHT_ENCODER_A = 2;
-	public static final int DRIVE_TRAIN_RIGHT_ENCODER_B = 3;
+	// public static final int DRIVE_TRAIN_LEFT_ENCODER_A = 0;
+	// public static final int DRIVE_TRAIN_LEFT_ENCODER_B = 1;
+	// public static final int DRIVE_TRAIN_RIGHT_ENCODER_A = 2;
+	// public static final int DRIVE_TRAIN_RIGHT_ENCODER_B = 3;
 
-	// Cameras
+	// Cameras / USB
 
 	public static final int TRANSFER_CAMERA = 0;
 	public static final int INTAKE_CAMERA = 1;
@@ -69,4 +69,5 @@ public class RobotMap {
 	public static final double DRIVEBOX_KS_CONSTANT = 0.268; //to be defined later
 	public static final double DRIVEBOX_KV_CONSTANT = 1.89; //to be defined later
 	public static final double DRIVEBOX_KA_CONSTANT = 0.243;//to be defined later
+	public static final double DRIVE_WHEEL_DIAMETER_IN = 6;
 }
