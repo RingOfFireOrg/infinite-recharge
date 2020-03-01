@@ -109,7 +109,7 @@ public class Autonomous {
             case 2:
             //begins to spin up the shooters
                 robotContainer.shooter.setLowerShooterSpeed(1);
-                robotContainer.shooter.setShooterSpeed(0.56);
+                robotContainer.shooter.setShooterSpeed(0.61);
                 robotContainer.shooter.setLowerShooterState(shooterStates.BASE_SPEED);
                 robotContainer.shooter.setState(shooterStates.BASE_SPEED);
                 if (autonomousTimer.get() - transitionTime > 1) {
