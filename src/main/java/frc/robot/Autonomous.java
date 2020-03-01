@@ -47,7 +47,9 @@ public class Autonomous {
 
     }
 
-    public boolean runAutonomous() {
+    public void runAutonomous() {
+        driveAndShoot();
+        /*
         if (autonomousChooser.getSelected() == DriveAndShoot) {
             driveAndShoot();
         } else if (autonomousChooser.getSelected() == StraightShot) {
@@ -55,7 +57,7 @@ public class Autonomous {
         } else if (autonomousChooser.getSelected() == SimpleDrive) {
             simpleDrive();
         }
-        return true;
+        */
     }
 
     //simple auto that will shoot immediately
