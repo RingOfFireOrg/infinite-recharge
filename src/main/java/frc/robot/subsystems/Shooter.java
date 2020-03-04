@@ -70,17 +70,19 @@ public class Shooter extends InternalSubsystem {
         } else {
             setLowerShooterState(shooterStates.OFF);
         }
-        baseShooterSpeed = super.controlSystem.getManipulatorRightTrigger() * 0.61;
+        baseShooterSpeed = super.controlSystem.getManipulatorRightTrigger() * 1;
         baseLowerShooterSpeed = super.controlSystem.getManipulatorLeftTrigger() * 1;
     }
 
     public void periodic() {
         //this method will be run every code loop
         if (upperState == shooterStates.BASE_SPEED) {
-            shooterMotor.set(baseShooterSpeed);
+            shooterMotor.set(super.controlSystem.rightDriveStick.getRawAxis(3));
+            SmartDashboard.putNumber("slider", 0.5 + ((super.controlSystem.rightDriveStick.getRawAxis(3) + 1) / 4));
         } else {
             shooterMotor.set(0);
         }
+        SmartDashboard.putNumber("slider", 0.5 + ((super.controlSystem.rightDriveStick.getRawAxis(3) + 1) / 4));
 
         if (lowerState == shooterStates.BASE_SPEED) {
             feederMotor.set(baseLowerShooterSpeed);
