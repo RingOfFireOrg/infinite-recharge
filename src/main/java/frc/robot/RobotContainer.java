@@ -16,7 +16,7 @@ public class RobotContainer {
     public Webcams webcams = new Webcams();
 
     //other portions
-    public AHRS ahrs;
+    public static AHRS ahrs;
     
 
     private static RobotContainer robotContainer;
@@ -61,5 +61,9 @@ public class RobotContainer {
     public void runSelectSystem() {
         drive.teleopControl();
         drive.periodic();
+    }
+
+    public static double getGyroAngle() {
+        return ahrs.getAngle();
     }
 }
