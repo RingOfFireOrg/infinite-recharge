@@ -25,39 +25,48 @@ public class Autonomous {
     double transitionTime = 0;
     PID drive;
 
-    private final String DriveAndShoot = "DriveAndShoot";
-    private final String StraightShot = "StraightShot";
-    private final String SimpleDrive = "SimpleDrive";
+    // private final String DriveAndShoot = "DriveAndShoot";
+    // private final String StraightShot = "StraightShot";
+    // private final String SimpleDrive = "SimpleDrive";
+    // private final String StupidFast = "StupidFast";
+    // private final String InitialPath = "InitialPath";
 
-    private final SendableChooser<String> autonomousChooser = new SendableChooser<>();
+    private final SendableChooser<AutonomousModes> autonomousChooser = new SendableChooser<>();
 
     enum AutonomousModes {
-        FAR_RIGHT_SHOT, CENTERED_SHOT, FAR_RIGHT_SHOT_COLLECT_SHOT, CENTERED_SHOT_COLLECT_SHOT
+        SHOOT_DRIVE, SIMPLE_DRIVE, SIMPLE_PATH
     }
+
+    double startPoint = 0;
 
     public Autonomous() {
         autonomousTimer = new Timer();
         autonomousTimer.start();
         drive = new PID(0.03, 0, 0);
         autonomousStep = 0;
-        autonomousChooser.setDefaultOption(DriveAndShoot, DriveAndShoot);
-        autonomousChooser.addOption(StraightShot, StraightShot);
-        autonomousChooser.addOption(SimpleDrive, SimpleDrive);
+        autonomousChooser.setDefaultOption("DriveAndShoot", AutonomousModes.SHOOT_DRIVE);
+        autonomousChooser.addOption("DriveForward", AutonomousModes.SIMPLE_DRIVE);
+        autonomousChooser.addOption("InitialPathTest", AutonomousModes.SIMPLE_PATH);
+        //autonomousChooser.addOption(StupidFast, StupidFast);
         SmartDashboard.putData(autonomousChooser);
 
     }
 
     public void runAutonomous() {
-        driveAndShoot();
-        /*
-        if (autonomousChooser.getSelected() == DriveAndShoot) {
+       // driveAndShoot();
+        
+        if (autonomousChooser.getSelected() == AutonomousModes.SHOOT_DRIVE) {
             driveAndShoot();
-        } else if (autonomousChooser.getSelected() == StraightShot) {
-            simpleShoot();
-        } else if (autonomousChooser.getSelected() == SimpleDrive) {
+        } else if (autonomousChooser.getSelected() == AutonomousModes.SIMPLE_DRIVE) {
             simpleDrive();
+        } else if (autonomousChooser.getSelected() == AutonomousModes.SIMPLE_PATH) {
+            initialPath();
         }
-        */
+        
+    }
+
+    public void initialPath() {
+
     }
 
     //simple auto that will shoot immediately
@@ -131,6 +140,24 @@ public class Autonomous {
                 break;
 
                 
+        }
+    }
+
+    public void stupidFast() {
+        switch (autonomousStep) {
+            case 0:
+                startPoint = robotContainer.drive.getLeftInches();
+                switchStep();
+            case 1:
+                drive.setError(-robotContainer.ahrs.getAngle());
+                drive.update();
+                robotContainer.drive.setDriveSpeeds(1 + drive.getOutput(), 1 - drive.getOutput());
+                if (robotContainer.drive.getLeftInches() - startPoint > 96/*autonomousTimer.get() - transitionTime > 1000*/) {
+                    switchStep();
+                }
+                break;
+            case 2:
+                robotContainer.drive.setDriveSpeeds(0, 0);
         }
     }
 

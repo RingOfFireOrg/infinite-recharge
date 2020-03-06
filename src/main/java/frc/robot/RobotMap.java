@@ -65,9 +65,9 @@ public class RobotMap {
 
 	//design constants:
 	public static final double ROBOT_TRACK_WIDTH_IN = 22; 
-	public static final double DRIVEBASE_GEAR_RATIO = 10.6; 
-	public static final double DRIVEBOX_KS_CONSTANT = 0.268; //to be defined later
-	public static final double DRIVEBOX_KV_CONSTANT = 1.89; //to be defined later
-	public static final double DRIVEBOX_KA_CONSTANT = 0.243;//to be defined later
+	public static final double DRIVEBASE_GEAR_RATIO = 10.7; 
+	public static final double DRIVEBOX_KS_CONSTANT = 0.998; //to be defined later
+	public static final double DRIVEBOX_KV_CONSTANT = 0.929; //to be defined later
+	public static final double DRIVEBOX_KA_CONSTANT = 0.172;//to be defined later
 	public static final double DRIVE_WHEEL_DIAMETER_IN = 6;
 }
