@@ -60,7 +60,7 @@ public class Drivetrain extends InternalSubsystem{
     }
 
     public Rotation2d getHeading() {
-        return Rotation2d.fromDegrees(-RobotContainer.getGyroAngle());
+        return Rotation2d.fromDegrees(-super.robotContainer.getGyroAngle());
     }
 
     public DifferentialDriveWheelSpeeds getSpeeds() {
