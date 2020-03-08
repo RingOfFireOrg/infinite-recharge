@@ -16,10 +16,10 @@ public class CimTank extends DifferentialDrive {
 
             super (new SpeedControllerGroup(
                        new PWMVictorSPX(RobotMap.MOTOR_LEFT)
-                       ),    
+                       ),   
                    new SpeedControllerGroup(
                        new PWMVictorSPX(RobotMap.MOTOR_RIGHT)
-                    )
+                        )
             );
 
         }

@@ -17,13 +17,7 @@ public class RobotMap {
 	//pwm
 	public static final int MOTOR_RIGHT = 0;
 	public static final int MOTOR_LEFT = 1;
-	public static final int SERVO_RIGHT = 3;
-	public static final int SERVO_LEFT = 4;
+	public static final int TRANSFER = 2;
+
 	
-	//canbus
-	public static final int MOTOR_COLLECTOR = 2;
-	
-
-
-
 }

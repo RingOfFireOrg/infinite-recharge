@@ -23,14 +23,12 @@ public class Robot extends TimedRobot {
     Joystick leftstick = new Joystick(1);
     Joystick manipulatorStick = new Joystick(2);
 
-    PWMVictorSPX collectorMotor = new PWMVictorSPX(RobotMap.MOTOR_COLLECTOR);
-
-    Outtake outtake = new Outtake();
-
     //AHRS ahrs;
 
     //NeoTankDrive neoDrive;
     DifferentialDrive tankDrive;
+ 
+    PWMVictorSPX transferMotor = new PWMVictorSPX(RobotMap.TRANSFER);
 
     //Vision vision;
 
@@ -46,8 +44,6 @@ public class Robot extends TimedRobot {
 
         //neoDrive = new NeoTankDrive();
         tankDrive = new CimTank ();
-
-      
         //vision = new Vision();
     }
 
@@ -70,16 +66,11 @@ public class Robot extends TimedRobot {
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
         double collectorSpeed = manipulatorStick.getY();
-        boolean triggerPulled = manipulatorStick.getTrigger();
 
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         tankDrive.tankDrive(leftSpeed, rightSpeed, true);
-        collectorMotor.set(collectorSpeed);
-        if(triggerPulled) {
-            outtake.open();
-        } else {
-            outtake.close();
-        }
+        transferMotor.set(collectorSpeed);
+
         //vision.updateVisionVals();
         //vision.getTargetDistance();
     }
