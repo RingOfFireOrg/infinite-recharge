@@ -6,6 +6,7 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
@@ -64,24 +65,36 @@ public class Drivetrain extends InternalSubsystem{
     }
 
     public DifferentialDriveWheelSpeeds getSpeeds() {
-        return new DifferentialDriveWheelSpeeds( // returns wheel speeds in meters per second
-            leftEncoder.getVelocity() / RobotMap.DRIVEBASE_GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(3.0) / 60,
-            rightEncoder.getVelocity() / RobotMap.DRIVEBASE_GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(3.0) / 60
+        return new DifferentialDriveWheelSpeeds( // returns wheel speeds in ft per second
+            leftEncoder.getVelocity() / RobotMap.DRIVEBASE_GEAR_RATIO * 2 * Math.PI * 3 / 12 / 60,
+            rightEncoder.getVelocity() / RobotMap.DRIVEBASE_GEAR_RATIO * 2 * Math.PI * 3 / 12 / 60
         );
     }
 
-    public boolean setDriveSpeeds(double leftGoalSpeed, double rightGoalSpeed) {
+    public boolean setRawDriveSpeeds(double leftGoalSpeed, double rightGoalSpeed) {
         this.leftGoalSpeed = leftGoalSpeed;
         this.rightGoalSpeed = rightGoalSpeed;
         return true;
     }
 
-    public double getLeftInches() {
-        return leftEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN;
+    public void setDriveSpeeds(ChassisSpeeds chassisSpeeds) {
+        DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
+        //setVelocities(Units.metersToFeet(wheelSpeeds.leftMetersPerSecond), Units.metersToFeet(wheelSpeeds.rightMetersPerSecond));
+    }
+    
+    // public double getLeftGoalVelocity() {
+
+    // }
+    // public boolean setVelocities(double leftFeetPerSecond, double rightFeetPerSecond) {
+
+    // }
+
+    public double getLeftFeet() {
+        return leftEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN / 12;
     }
 
-    public double getRightInches() {
-        return rightEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN;
+    public double getRightFeet() {
+        return rightEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN / 12;
     }
     
     public SimpleMotorFeedforward getFeedForward() {
@@ -113,13 +126,10 @@ public class Drivetrain extends InternalSubsystem{
 
     @Override
     public void periodic() {
-        // odometry.update(getHeading(), leftMaster.getEncoder().getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * Units.inchesToMeters(6.0),
-        // rightMaster.getEncoder().getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * Units.inchesToMeters(6.0));
+        odometry.update(getHeading(), leftEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * 6 / 12,
+        rightEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * 6 / 12);
 
-        // leftMaster.set(leftGoalSpeed);
-        // rightMaster.set(rightGoalSpeed);
         leftMotors.set(leftGoalSpeed);
-        //leftSlave.set(leftGoalSpeed);
         rightMotors.set(rightGoalSpeed);
     }
 }
