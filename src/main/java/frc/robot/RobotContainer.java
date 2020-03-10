@@ -22,8 +22,8 @@ public class RobotContainer {
     private static RobotContainer robotContainer;
 
     protected RobotContainer() {
-        ahrs = new AHRS(SerialPort.Port.kUSB);
-		ahrs.reset();
+         ahrs = new AHRS(SerialPort.Port.kUSB);
+		 ahrs.reset();
     }
 
     public static RobotContainer getInstance() {
