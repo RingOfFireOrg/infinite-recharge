@@ -1,21 +1,29 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.sensors.CANCoder;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.subsystems.Climber.ClimberState;
+import frc.robot.PID;
 
-//Prototype code authors: (Duncan, Bella, Jeremy)?
 
 public class Shooter extends InternalSubsystem {
 
     CANSparkMax feederMotor;
     CANSparkMax shooterMotor;
+    CANEncoder shooterEncoder;
+    CANEncoder feederEncoder;
 
-    double baseShooterSpeed = 0.56;
+    public final static double BASE_SHOOTER_RPM = 3300;
+    public final static double FULL_SPEED_RPM = RobotMap.NEO_TOP_RPM;
+
     double baseLowerShooterSpeed = 1;
+
+    PID shooterControl;
 
     public enum shooterStates {
         OFF, BASE_SPEED
@@ -30,6 +38,13 @@ public class Shooter extends InternalSubsystem {
         upperState = shooterStates.OFF;
         lowerState = shooterStates.OFF;
         feederMotor.set(0);
+        
+        shooterEncoder = shooterMotor.getEncoder();
+        feederEncoder = feederMotor.getEncoder();
+
+        shooterControl = new PID(1.8, 0.006, 0);
+        shooterControl.setOutputRange(-1000, 1000);
+
     }
 
     public void setState(shooterStates state) {
@@ -51,7 +66,7 @@ public class Shooter extends InternalSubsystem {
     }
 
     public void setShooterSpeed(double speed) {
-        baseShooterSpeed = speed;
+        //BASE_SHOOTER_SPEED = speed;
     }
 
     public void setLowerShooterSpeed(double speed){
@@ -70,25 +85,30 @@ public class Shooter extends InternalSubsystem {
         } else {
             setLowerShooterState(shooterStates.OFF);
         }
-        baseShooterSpeed = super.controlSystem.getManipulatorRightTrigger() * 1;
+        //baseShooterSpeed = super.controlSystem.getManipulatorRightTrigger() * 1;
         baseLowerShooterSpeed = super.controlSystem.getManipulatorLeftTrigger() * 1;
     }
 
     public void periodic() {
         //this method will be run every code loop
         if (upperState == shooterStates.BASE_SPEED) {
-            shooterMotor.set(super.controlSystem.rightDriveStick.getRawAxis(3));
-            SmartDashboard.putNumber("slider", 0.5 + ((super.controlSystem.rightDriveStick.getRawAxis(3) + 1) / 4));
+            shooterControl.setError(BASE_SHOOTER_RPM - shooterEncoder.getVelocity());
+            shooterControl.update();
+            shooterMotor.set((BASE_SHOOTER_RPM + shooterControl.getOutput()) / RobotMap.NEO_TOP_RPM);
+            // shooterControl.setError(FULL_SPEED_RPM - shooterEncoder.getVelocity());
+            // shooterControl.update();
+            // shooterMotor.set((FULL_SPEED_RPM + shooterControl.getOutput()) / RobotMap.NEO_TOP_RPM);
         } else {
             shooterMotor.set(0);
         }
-        SmartDashboard.putNumber("slider", 0.5 + ((super.controlSystem.rightDriveStick.getRawAxis(3) + 1) / 4));
 
         if (lowerState == shooterStates.BASE_SPEED) {
             feederMotor.set(baseLowerShooterSpeed);
         } else {
             feederMotor.set(0);
         }
+        SmartDashboard.putNumber("shooterSpeed", shooterEncoder.getVelocity());
+        SmartDashboard.putNumber("pid output", shooterControl.getOutput());
 
     }
 }

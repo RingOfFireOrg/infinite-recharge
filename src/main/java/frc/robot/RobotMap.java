@@ -63,6 +63,9 @@ public class RobotMap {
 	public static final int TRANSFER_CAMERA = 0;
 	public static final int INTAKE_CAMERA = 1;
 
+
+	//facts
+	public static final double NEO_TOP_RPM = 5880;
 	//design constants:
 	public static final double ROBOT_TRACK_WIDTH_IN = 22; 
 	public static final double DRIVEBASE_GEAR_RATIO = 10.7; 

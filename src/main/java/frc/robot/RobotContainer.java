@@ -22,8 +22,8 @@ public class RobotContainer {
     private static RobotContainer robotContainer;
 
     protected RobotContainer() {
-        ahrs = new AHRS(SerialPort.Port.kUSB);
-		ahrs.reset();
+         ahrs = new AHRS(SerialPort.Port.kUSB);
+		 ahrs.reset();
     }
 
     public static RobotContainer getInstance() {
@@ -64,6 +64,6 @@ public class RobotContainer {
     }
 
     public static double getGyroAngle() {
-        return ahrs.getAngle();
+        return 0;//ahrs.getAngle();
     }
 }
