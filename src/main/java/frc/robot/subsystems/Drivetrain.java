@@ -6,9 +6,11 @@ import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -30,7 +32,7 @@ public class Drivetrain extends InternalSubsystem{
     DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.ROBOT_TRACK_WIDTH_IN));
     DifferentialDriveOdometry odometry;
 
-    private double leftGoalSpeed, rightGoalSpeed;
+    private double leftOutputSpeed, rightOutputSpeed;
     private CANEncoder leftEncoder, rightEncoder;
 
     SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(RobotMap.DRIVEBOX_KS_CONSTANT, RobotMap.DRIVEBOX_KV_CONSTANT, RobotMap.DRIVEBOX_KA_CONSTANT);
@@ -70,24 +72,40 @@ public class Drivetrain extends InternalSubsystem{
     }
 
     public DifferentialDriveWheelSpeeds getSpeeds() {
-        return new DifferentialDriveWheelSpeeds( // returns wheel speeds in meters per second
-            leftEncoder.getVelocity() / RobotMap.DRIVEBASE_GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(3.0) / 60,
-            rightEncoder.getVelocity() / RobotMap.DRIVEBASE_GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(3.0) / 60
+        return new DifferentialDriveWheelSpeeds( // returns wheel speeds in m per second
+            leftEncoder.getVelocity() / RobotMap.DRIVEBASE_GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(3) / 60,
+            rightEncoder.getVelocity() / RobotMap.DRIVEBASE_GEAR_RATIO * 2 * Math.PI * Units.inchesToMeters(3) / 60
         );
     }
 
-    public boolean setDriveSpeeds(double leftGoalSpeed, double rightGoalSpeed) {
-        this.leftGoalSpeed = leftGoalSpeed;
-        this.rightGoalSpeed = rightGoalSpeed;
+    public boolean setRawDriveSpeeds(double leftOutputSpeed, double rightOutputSpeed) {
+        this.leftOutputSpeed = leftOutputSpeed;
+        this.rightOutputSpeed = rightOutputSpeed;
         return true;
     }
 
-    public double getLeftInches() {
-        return leftEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN;
+    public void setDriveSpeeds(ChassisSpeeds chassisSpeeds) {
+        DifferentialDriveWheelSpeeds wheelSpeeds = kinematics.toWheelSpeeds(chassisSpeeds);
+        setVelocities(wheelSpeeds.leftMetersPerSecond, wheelSpeeds.rightMetersPerSecond);
+    }
+    
+    // public double getLeftGoalVelocity() {
+
+    // }
+     public void setVelocities(double leftMeterPerSecond, double rightMeterPerSecond) {
+         leftSpeedPID.setError(leftMeterPerSecond - getSpeeds().leftMetersPerSecond);
+         leftSpeedPID.update();
+         rightSpeedPID.setError(rightMeterPerSecond - getSpeeds().rightMetersPerSecond);
+         rightSpeedPID.update();
+         setRawDriveSpeeds(leftSpeedPID.getOutput(), rightSpeedPID.getOutput());
+     }
+
+    public double getLeftFeet() {
+        return leftEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN / 12;
     }
 
-    public double getRightInches() {
-        return rightEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN;
+    public double getRightFeet() {
+        return rightEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * RobotMap.DRIVE_WHEEL_DIAMETER_IN / 12;
     }
     
     public SimpleMotorFeedforward getFeedForward() {
@@ -112,20 +130,19 @@ public class Drivetrain extends InternalSubsystem{
 
     public void teleopControl() {
         double leftInputSpeed = -0.8 * super.controlSystem.leftDriveStick.getY();
-        leftGoalSpeed = Math.copySign(leftInputSpeed * leftInputSpeed, leftInputSpeed);
+        leftOutputSpeed = Math.copySign(leftInputSpeed * leftInputSpeed, leftInputSpeed);
         double rightInputSymbol = -0.8 * super.controlSystem.rightDriveStick.getY();
-        rightGoalSpeed = Math.copySign(rightInputSymbol * rightInputSymbol, rightInputSymbol);
+        rightOutputSpeed = Math.copySign(rightInputSymbol * rightInputSymbol, rightInputSymbol);
     }
 
     @Override
     public void periodic() {
-        // odometry.update(getHeading(), leftMaster.getEncoder().getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * Units.inchesToMeters(6.0),
-        // rightMaster.getEncoder().getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * Units.inchesToMeters(6.0));
+        odometry.update(getHeading(), leftEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * 2 * Units.inchesToMeters(3),
+        rightEncoder.getPosition() / RobotMap.DRIVEBASE_GEAR_RATIO * Math.PI * 2 * Units.inchesToMeters(3));
 
-        // leftMaster.set(leftGoalSpeed);
-        // rightMaster.set(rightGoalSpeed);
-        leftMotors.set(leftGoalSpeed);
-        //leftSlave.set(leftGoalSpeed);
-        rightMotors.set(rightGoalSpeed);
+        leftMotors.set(leftOutputSpeed);
+        rightMotors.set(rightOutputSpeed);
+        SmartDashboard.putNumber("leftVelocity(M/S)", getSpeeds().leftMetersPerSecond);
+        SmartDashboard.putNumber("rightVelocity(M/S)", getSpeeds().rightMetersPerSecond);
     }
 }

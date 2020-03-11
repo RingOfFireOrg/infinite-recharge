@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 
 
 public class Robot extends TimedRobot {
@@ -51,7 +52,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    container.runSelectSystem();
+    container.drive.setDriveSpeeds(new ChassisSpeeds(0, 1, 0));
+    container.robotUpdateSystems();
   }
 
 }

@@ -7,9 +7,11 @@ import java.util.Arrays;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.controller.RamseteController;
 //import edu.wpi.first.wpilibj2.RamseteCommand;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.trajectory.Trajectory;
@@ -41,6 +43,9 @@ public class Autonomous {
     String angledToTrenchJSON = "paths/output/AngledToTrench.wpilib.json";
     String straightToTrenchJSON = "paths/output/DirectShotToTrench";
 
+    RamseteController ramseteController;
+
+    Trajectory straightToTrench, angledToTrench;
 
 
     double startPoint = 0;
@@ -63,16 +68,18 @@ public class Autonomous {
         //handle trajectory configuration
         try {
             Path angledToTrenchPath = Filesystem.getDeployDirectory().toPath().resolve(angledToTrenchJSON);
-            Trajectory angledToTrench = TrajectoryUtil.fromPathweaverJson(angledToTrenchPath);
+            angledToTrench = TrajectoryUtil.fromPathweaverJson(angledToTrenchPath);
         } catch (IOException ex) {
             DriverStation.reportError("Unable to open trajectory: " + angledToTrenchJSON, ex.getStackTrace());
         }
         try {
             Path straightToTrenchPath = Filesystem.getDeployDirectory().toPath().resolve(straightToTrenchJSON);
-            Trajectory straightToTrench = TrajectoryUtil.fromPathweaverJson(straightToTrenchPath);
+            straightToTrench = TrajectoryUtil.fromPathweaverJson(straightToTrenchPath);
         } catch (IOException ex) {
             DriverStation.reportError("Unable to open trajectory: " + straightToTrenchJSON, ex.getStackTrace());
         }
+
+        ramseteController = new RamseteController();
     }
 
     public void runAutonomous() {
@@ -106,21 +113,22 @@ public class Autonomous {
                 }
                 break;
             case 3:
-                //drive to trench
-                if (robotContainer.drive.getLeftInches() > 96) {
+                ChassisSpeeds goalSpeeds = ramseteController.calculate(robotContainer.drive.getPose(), straightToTrench.sample(getStepTime()));
+                robotContainer.drive.setDriveSpeeds(goalSpeeds);
+                if (robotContainer.drive.getLeftFeet() > 8) {
                     robotContainer.intake.setState(IntakeStates.IN);
                 }
-                if (true/*trajectory is complete*/) {
-                    switchStep();
-                }
+                // if (goalSpeeds.get()) {
+                //     switchStep();
+                // }
                 break;
             case 4:
                 //backup
                 robotContainer.intake.setState(IntakeStates.IDLE);
                 drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
-                robotContainer.drive.setDriveSpeeds(-0.2 + drive.getOutput(), -0.2 - drive.getOutput());
-                if (robotContainer.drive.getLeftInches() < -60/*autonomousTimer.get() - transitionTime > 1000*/) {
+                robotContainer.drive.setRawDriveSpeeds(-0.2 + drive.getOutput(), -0.2 - drive.getOutput());
+                if (robotContainer.drive.getLeftFeet() < -5/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;
@@ -154,17 +162,17 @@ public class Autonomous {
         SmartDashboard.putNumber("time", autonomousTimer.get() - transitionTime);
         switch (autonomousStep) {
             case 0:
-            /*should be driving forward 10 feet, still needs to be tuned */
+            
                 //drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
-                robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
-                if (robotContainer.drive.getLeftInches() > 96/*autonomousTimer.get() - transitionTime > 1000*/) {
+                robotContainer.drive.setRawDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
+                if (robotContainer.drive.getLeftFeet() > 8/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;
             case 1:
             //stops driving -- no brake
-                robotContainer.drive.setDriveSpeeds(0, 0);
+                robotContainer.drive.setRawDriveSpeeds(0, 0);
                 if (autonomousTimer.get() - transitionTime > 0.5) {
                     switchStep();
                 }
@@ -198,43 +206,47 @@ public class Autonomous {
     }
 
     public void stupidFast() {
-        switch (autonomousStep) {
-            case 0:
-                startPoint = robotContainer.drive.getLeftInches();
-                switchStep();
-            case 1:
-                drive.setError(-robotContainer.ahrs.getAngle());
-                drive.update();
-                robotContainer.drive.setDriveSpeeds(1 + drive.getOutput(), 1 - drive.getOutput());
-                if (robotContainer.drive.getLeftInches() - startPoint > 96/*autonomousTimer.get() - transitionTime > 1000*/) {
-                    switchStep();
-                }
-                break;
-            case 2:
-                robotContainer.drive.setDriveSpeeds(0, 0);
-        }
+        // switch (autonomousStep) {
+        //     case 0:
+        //         startPoint = robotContainer.drive.getLeftInches();
+        //         switchStep();
+        //     case 1:
+        //         drive.setError(-robotContainer.ahrs.getAngle());
+        //         drive.update();
+        //         robotContainer.drive.setDriveSpeeds(1 + drive.getOutput(), 1 - drive.getOutput());
+        //         if (robotContainer.drive.getLeftInches() - startPoint > 96/*autonomousTimer.get() - transitionTime > 1000*/) {
+        //             switchStep();
+        //         }
+        //         break;
+        //     case 2:
+        //         robotContainer.drive.setDriveSpeeds(0, 0);
+        // }
     }
 
     public void simpleDrive() {
-        switch (autonomousStep) {
-            case 0:
-                drive.setError(-robotContainer.ahrs.getAngle());
-                drive.update();
-                robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
-                if (robotContainer.drive.getLeftInches() > 96) {
-                    switchStep();
-                }
-                break;
-            case 1:
-            //stop driving --- coasts right now
-                robotContainer.drive.setDriveSpeeds(0, 0);
-                break;
-        }
+        // switch (autonomousStep) {
+        //     case 0:
+        //         drive.setError(-robotContainer.ahrs.getAngle());
+        //         drive.update();
+        //         robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
+        //         if (robotContainer.drive.getLeftInches() > 96) {
+        //             switchStep();
+        //         }
+        //         break;
+        //     case 1:
+        //     //stop driving --- coasts right now
+        //         robotContainer.drive.setDriveSpeeds(0, 0);
+        //         break;
+        // }
     }
 
     private void switchStep() {
         autonomousStep ++;
         transitionTime = autonomousTimer.get();
+    }
+
+    private double getStepTime() {
+        return autonomousTimer.get() - transitionTime;
     }
 
     // public void getAutonomousCommand() {
