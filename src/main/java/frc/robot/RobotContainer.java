@@ -7,13 +7,13 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
 
     //mechanical subsystems
-    public Drivetrain drive = new Drivetrain();
-    public Intake intake = new Intake();
-    public Shooter shooter = new Shooter();
-    public Climber climber = new Climber();
-    public Indexer indexer = new Indexer();
-    public ControlPanel controlPanel = new ControlPanel();
-    public Webcams webcams = new Webcams();
+    public Drivetrain drive;
+    public Intake intake;
+    public Shooter shooter; 
+    public Climber climber; 
+    public Indexer indexer; 
+    public ControlPanel controlPanel;
+    public Webcams webcams; 
 
     //other portions
     public AHRS ahrs;
@@ -23,7 +23,15 @@ public class RobotContainer {
 
     protected RobotContainer() {
          ahrs = new AHRS(SerialPort.Port.kUSB);
-		 ahrs.reset();
+         ahrs.reset();
+         
+        drive = new Drivetrain(ahrs);
+        intake = new Intake();
+        shooter = new Shooter();
+        climber = new Climber();
+        indexer = new Indexer();
+        controlPanel = new ControlPanel();
+        webcams = new Webcams();
     }
 
     public static RobotContainer getInstance() {

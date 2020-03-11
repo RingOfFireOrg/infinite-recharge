@@ -87,7 +87,7 @@ public class Climber extends InternalSubsystem {
         // }
 
         if (Math.abs(super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y)) > 0.1) {
-            setLift(-super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y));
+            setLift(0.7 * -super.controlSystem.manipulatorGamepadEndgame.getRawAxis(RobotMap.MANIPULATOR_LEFT_JOYSTICK_Y));
         } else {
             setLift(0);
         }

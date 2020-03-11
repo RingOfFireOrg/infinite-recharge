@@ -28,7 +28,7 @@ public class Drivetrain extends InternalSubsystem{
     SpeedControllerGroup leftMotors, rightMotors;
     
     DifferentialDriveKinematics kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(RobotMap.ROBOT_TRACK_WIDTH_IN));
-    DifferentialDriveOdometry odometry = new DifferentialDriveOdometry(getHeading());
+    DifferentialDriveOdometry odometry;
 
     private double leftGoalSpeed, rightGoalSpeed;
     private CANEncoder leftEncoder, rightEncoder;
@@ -42,7 +42,11 @@ public class Drivetrain extends InternalSubsystem{
 
     CANSparkMax rightForward, rightBack, leftForward, leftBack;
 
-    public Drivetrain () {
+    AHRS ahrs;
+
+    public Drivetrain (AHRS ahrs) {
+        this.ahrs = ahrs;
+
         rightForward = new CANSparkMax(RobotMap.DT_RIGHT_FORWARD, MotorType.kBrushless);
         rightBack = new CANSparkMax(RobotMap.DT_RIGHT_BACK, MotorType.kBrushless);
         leftForward = new CANSparkMax(RobotMap.DT_LEFT_FORWARD, MotorType.kBrushless);
@@ -57,10 +61,12 @@ public class Drivetrain extends InternalSubsystem{
         rightMotors = new SpeedControllerGroup(rightForward, rightBack);
         leftEncoder = leftForward.getEncoder();
         rightEncoder = rightForward.getEncoder();
+
+        odometry = new DifferentialDriveOdometry(getHeading());
     }
 
     public Rotation2d getHeading() {
-        return Rotation2d.fromDegrees(-super.robotContainer.getGyroAngle());
+        return Rotation2d.fromDegrees(-ahrs.getAngle());
     }
 
     public DifferentialDriveWheelSpeeds getSpeeds() {
