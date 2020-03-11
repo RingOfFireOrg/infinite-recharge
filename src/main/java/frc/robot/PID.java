@@ -4,6 +4,7 @@ public class PID {
     double kP;
     double kI;
     double kD;
+    double feedforward;
     double lastError;
     double integral;
     double minimumOutputValue;
@@ -28,6 +29,7 @@ public class PID {
         minimumOutputValue = -1;
         maximumOutputValue = 1;
         pidOutput = 0;
+        feedforward = 0;
     }
 
     public void setVelocityControl(boolean velocityControl) {
@@ -82,6 +84,10 @@ public class PID {
         integral = 0;
         lastError = 0;
     }
+
+    public void setFeedforward(double feedforward) {
+        this.feedforward = feedforward;
+    }
     
     public void update() {
         integral += (error);
@@ -96,12 +102,12 @@ public class PID {
     }
 
     public double getOutput() {
-        if (pidOutput < minimumOutputValue) {
+        if (pidOutput + feedforward < minimumOutputValue) {
             return minimumOutputValue;
-        } else if (pidOutput > maximumOutputValue) {
+        } else if (pidOutput + feedforward > maximumOutputValue) {
             return maximumOutputValue;
         } else {
-            return pidOutput;
+            return pidOutput + feedforward;
         }
     }
 }

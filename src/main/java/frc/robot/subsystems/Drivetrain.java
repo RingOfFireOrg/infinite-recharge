@@ -40,6 +40,8 @@ public class Drivetrain extends InternalSubsystem{
     PID leftSpeedPID = new PID(9.95, 0, 0);
     PID rightSpeedPID = new PID(9.95, 0, 0);
 
+    public static final double MAX_METERS_PER_SECOND = 10;
+
     public Pose2d pose = new Pose2d();
 
     CANSparkMax rightForward, rightBack, leftForward, leftBack;
@@ -95,9 +97,11 @@ public class Drivetrain extends InternalSubsystem{
      public void setVelocities(double leftMeterPerSecond, double rightMeterPerSecond) {
          leftSpeedPID.setError(leftMeterPerSecond - getSpeeds().leftMetersPerSecond);
          leftSpeedPID.update();
+         leftSpeedPID.setFeedforward(leftMeterPerSecond);
          rightSpeedPID.setError(rightMeterPerSecond - getSpeeds().rightMetersPerSecond);
          rightSpeedPID.update();
-         setRawDriveSpeeds(leftSpeedPID.getOutput(), rightSpeedPID.getOutput());
+         rightSpeedPID.setFeedforward(rightMeterPerSecond);
+         setRawDriveSpeeds(leftSpeedPID.getOutput() / MAX_METERS_PER_SECOND, rightSpeedPID.getOutput() / MAX_METERS_PER_SECOND);
      }
 
     public double getLeftFeet() {
