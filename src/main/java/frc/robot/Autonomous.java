@@ -162,20 +162,20 @@ public class Autonomous {
         SmartDashboard.putNumber("time", autonomousTimer.get() - transitionTime);
         switch (autonomousStep) {
             case 0:
-            /*should be driving forward 10 feet, still needs to be tuned */
+            
                 //drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
-                robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
-                if (robotContainer.drive.getLeftInches() > 96/*autonomousTimer.get() - transitionTime > 1000*/) {
+                robotContainer.drive.setRawDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
+                if (robotContainer.drive.getLeftFeet() > 8/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;
             case 1:
             //stops driving -- no brake
-                // robotContainer.drive.setDriveSpeeds(0, 0);
-                // if (autonomousTimer.get() - transitionTime > 0.5) {
-                //     switchStep();
-                // }
+                robotContainer.drive.setRawDriveSpeeds(0, 0);
+                if (autonomousTimer.get() - transitionTime > 0.5) {
+                    switchStep();
+                }
                 break;
             case 2:
             //begins to spin up the shooters
