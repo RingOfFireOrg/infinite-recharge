@@ -48,8 +48,8 @@ public class RobotMap {
 	//PWM Ports
 	public static final int INDEXER_MOTOR = 0;
 	public static final int CLIMBER_TRAVERSE = 1;
-	public static final int CONTROL_PANEL_ACTUATOR = 2; 
-	public static final int CONTROL_PANEL_SPIN = 3; 
+	public static final int CONTROL_PANEL_ACTUATOR = 3; 
+	public static final int CONTROL_PANEL_SPIN = 2; 
 
 
 	// Drive Train Encoders
