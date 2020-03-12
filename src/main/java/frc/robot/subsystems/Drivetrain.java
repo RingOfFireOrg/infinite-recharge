@@ -37,8 +37,8 @@ public class Drivetrain extends InternalSubsystem{
 
     SimpleMotorFeedforward feedForward = new SimpleMotorFeedforward(RobotMap.DRIVEBOX_KS_CONSTANT, RobotMap.DRIVEBOX_KV_CONSTANT, RobotMap.DRIVEBOX_KA_CONSTANT);
     
-    PID leftSpeedPID = new PID(9.95, 0, 0);
-    PID rightSpeedPID = new PID(9.95, 0, 0);
+    PID leftSpeedPID;
+    PID rightSpeedPID;
 
     public static final double MAX_METERS_PER_SECOND = 10;
 
@@ -50,6 +50,12 @@ public class Drivetrain extends InternalSubsystem{
 
     public Drivetrain (AHRS ahrs) {
         this.ahrs = ahrs;
+
+        leftSpeedPID = new PID(3, 0.1, 0);
+        rightSpeedPID = new PID(3, 0.1, 0);
+
+        leftSpeedPID.setOutputRange(-3, 3);
+        rightSpeedPID.setOutputRange(-3, 3);
 
         rightForward = new CANSparkMax(RobotMap.DT_RIGHT_FORWARD, MotorType.kBrushless);
         rightBack = new CANSparkMax(RobotMap.DT_RIGHT_BACK, MotorType.kBrushless);
@@ -97,11 +103,13 @@ public class Drivetrain extends InternalSubsystem{
      public void setVelocities(double leftMeterPerSecond, double rightMeterPerSecond) {
          leftSpeedPID.setError(leftMeterPerSecond - getSpeeds().leftMetersPerSecond);
          leftSpeedPID.update();
-         leftSpeedPID.setFeedforward(leftMeterPerSecond);
+         //leftSpeedPID.setFeedforward(leftMeterPerSecond);
          rightSpeedPID.setError(rightMeterPerSecond - getSpeeds().rightMetersPerSecond);
          rightSpeedPID.update();
-         rightSpeedPID.setFeedforward(rightMeterPerSecond);
-         setRawDriveSpeeds(leftSpeedPID.getOutput() / MAX_METERS_PER_SECOND, rightSpeedPID.getOutput() / MAX_METERS_PER_SECOND);
+         //rightSpeedPID.setFeedforward(rightMeterPerSecond);
+         setRawDriveSpeeds((leftSpeedPID.getOutput() + leftMeterPerSecond) / MAX_METERS_PER_SECOND, 
+            (rightSpeedPID.getOutput() + rightMeterPerSecond) / MAX_METERS_PER_SECOND);
+        SmartDashboard.putNumber("LeftPIDOutput", leftSpeedPID.getOutput());
      }
 
     public double getLeftFeet() {

@@ -52,7 +52,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
-    container.drive.setDriveSpeeds(new ChassisSpeeds(0, 1, 0));
+    container.drive.setDriveSpeeds(new ChassisSpeeds(1, 0, 0));
     container.robotUpdateSystems();
   }
 
