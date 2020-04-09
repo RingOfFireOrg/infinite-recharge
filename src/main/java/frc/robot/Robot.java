@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -29,7 +32,7 @@ public class Robot extends TimedRobot {
     DifferentialDrive tankDrive;
  
     PWMVictorSPX transferMotor = new PWMVictorSPX(RobotMap.TRANSFER);
-
+    TalonFX testMotor = new TalonFX(1);
     //Vision vision;
 
     double tx;
@@ -68,14 +71,13 @@ public class Robot extends TimedRobot {
         double collectorSpeed = manipulatorStick.getY();
 
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
-        tankDrive.tankDrive(leftSpeed, rightSpeed, true);
-        transferMotor.set(collectorSpeed);
+        //TankDrive.tankDrive(leftSpeed, rightSpeed, true);
+        testMotor.set(TalonFXControlMode.PercentOutput, collectorSpeed * .5);
 
         //vision.updateVisionVals();
         //vision.getTargetDistance();
     }
 
-    @Override
     public void testPeriodic() {
     }
 }
