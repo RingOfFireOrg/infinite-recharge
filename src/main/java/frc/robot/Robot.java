@@ -19,12 +19,16 @@ import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.XboxController;
+
+
 
 public class Robot extends TimedRobot {
 
     Joystick rightstick = new Joystick(0);
     Joystick leftstick = new Joystick(1);
     Joystick manipulatorStick = new Joystick(2);
+    public XboxController gamepadController;
 
     //AHRS ahrs;
 
@@ -68,7 +72,7 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
-        double collectorSpeed = manipulatorStick.getY();
+        double collectorSpeed = gamepadController.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_X);
 
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         //TankDrive.tankDrive(leftSpeed, rightSpeed, true);

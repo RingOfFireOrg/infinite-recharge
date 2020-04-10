@@ -10,6 +10,10 @@ public class RobotMap {
 
 	//Joystick Buttons
 
+	//Gamepad
+
+	public static final int MANIPULATOR_RIGHT_JOYSTICK_X = 0;
+
 	// Robot Ports
 	// Analog Ports
 
