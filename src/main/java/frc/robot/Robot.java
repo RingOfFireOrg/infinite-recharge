@@ -11,13 +11,6 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PWMVictorSPX;
-
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.XboxController;
 
@@ -35,8 +28,9 @@ public class Robot extends TimedRobot {
     //NeoTankDrive neoDrive;
     DifferentialDrive tankDrive;
  
-    PWMVictorSPX transferMotor = new PWMVictorSPX(RobotMap.TRANSFER);
+    //Change the motor type here
     FalconExample testMotor = new FalconExample(RobotMap.TESTMOTOR1);
+
     //Vision vision;
 
     double tx;
@@ -72,12 +66,11 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
-        double collectorSpeed = gamepadController.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_X);
+        double rightJoystickX = gamepadController.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_X);
 
-        //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         //TankDrive.tankDrive(leftSpeed, rightSpeed, true);
         testMotor.setSensitivity(0.5);
-        testMotor.spin(collectorSpeed);
+        testMotor.spin(rightJoystickX);
 
         //vision.updateVisionVals();
         //vision.getTargetDistance();

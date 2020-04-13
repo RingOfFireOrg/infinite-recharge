@@ -29,6 +29,5 @@ public class RobotMap {
 	//Other Motors
 	//CAN
 	public static final int TESTMOTOR1 = 1;
-	//pwm
-	public static final int TRANSFER = 2;
+	public static final int TESTMOTOR2 = 2;
 }
