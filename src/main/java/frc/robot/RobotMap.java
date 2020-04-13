@@ -10,7 +10,11 @@ public class RobotMap {
 
 	//Joystick Buttons
 
-	//Gamepad
+	//Gamepads
+
+	public static final int MANIPULATOR_GAMEPAD = 3;
+
+	//Gamepad Sticks and Buttons
 
 	public static final int MANIPULATOR_RIGHT_JOYSTICK_X = 0;
 
@@ -21,7 +25,10 @@ public class RobotMap {
 	//pwm
 	public static final int MOTOR_RIGHT = 0;
 	public static final int MOTOR_LEFT = 1;
-	public static final int TRANSFER = 2;
 
-	
+	//Other Motors
+	//CAN
+	public static final int TESTMOTOR1 = 1;
+	//pwm
+	public static final int TRANSFER = 2;
 }

@@ -28,7 +28,7 @@ public class Robot extends TimedRobot {
     Joystick rightstick = new Joystick(0);
     Joystick leftstick = new Joystick(1);
     Joystick manipulatorStick = new Joystick(2);
-    public XboxController gamepadController;
+    public XboxController gamepadController = new XboxController(RobotMap.MANIPULATOR_GAMEPAD);
 
     //AHRS ahrs;
 
@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
     DifferentialDrive tankDrive;
  
     PWMVictorSPX transferMotor = new PWMVictorSPX(RobotMap.TRANSFER);
-    TalonFX testMotor = new TalonFX(1);
+    FalconExample testMotor = new FalconExample(RobotMap.TESTMOTOR1);
     //Vision vision;
 
     double tx;
@@ -76,7 +76,8 @@ public class Robot extends TimedRobot {
 
         //neoDrive.drive(rightSpeed, leftSpeed, 1.0, true);
         //TankDrive.tankDrive(leftSpeed, rightSpeed, true);
-        testMotor.set(TalonFXControlMode.PercentOutput, collectorSpeed * .5);
+        testMotor.setSensitivity(0.5);
+        testMotor.spin(collectorSpeed);
 
         //vision.updateVisionVals();
         //vision.getTargetDistance();
