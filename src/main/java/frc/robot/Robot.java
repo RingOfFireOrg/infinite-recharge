@@ -29,7 +29,7 @@ public class Robot extends TimedRobot {
     DifferentialDrive tankDrive;
  
     //Change the motor type here
-    FalconExample testMotor = new FalconExample(RobotMap.TESTMOTOR1);
+    FalconExample2 testMotor = new FalconExample2(RobotMap.TESTMOTOR1);
 
     //Vision vision;
 
@@ -67,10 +67,12 @@ public class Robot extends TimedRobot {
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
         double rightJoystickX = gamepadController.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_X);
+        boolean buttonA = gamepadController.getRawButton(2);
+        boolean buttonB = gamepadController.getRawButton(3);
 
         //TankDrive.tankDrive(leftSpeed, rightSpeed, true);
-        testMotor.setSensitivity(0.5);
-        testMotor.spin(rightJoystickX);
+        testMotor.setSensitivity(0.2);
+        testMotor.spin(buttonA, buttonB, rightJoystickX, false);
 
         //vision.updateVisionVals();
         //vision.getTargetDistance();
