@@ -29,8 +29,12 @@ public class Robot extends TimedRobot {
     DifferentialDrive tankDrive;
  
     //Change the motor type here
-    FalconExample2 testMotor = new FalconExample2(RobotMap.TESTMOTOR1);
-
+    FalconExample testMotor = new FalconExample(RobotMap.TESTMOTOR1);
+    SRXExample testMotorB = new SRXExample(RobotMap.TESTMOTOR2);
+    ButtonControl gamepadButtons = new ButtonControl(testMotorB);
+    JoystickControl controllerJ = new JoystickControl(manipulatorStick, testMotor);
+    GamepadControl controllerGP = new GamepadControl(gamepadController, testMotor);
+    GenericMotorControl currentControl = controllerJ;
     //Vision vision;
 
     double tx;
@@ -66,13 +70,13 @@ public class Robot extends TimedRobot {
     public void teleopPeriodic() {
         double rightSpeed = rightstick.getY();
         double leftSpeed = leftstick.getY();
-        double rightJoystickX = gamepadController.getRawAxis(RobotMap.MANIPULATOR_RIGHT_JOYSTICK_X);
-        boolean buttonA = gamepadController.getRawButton(2);
-        boolean buttonB = gamepadController.getRawButton(3);
 
         //TankDrive.tankDrive(leftSpeed, rightSpeed, true);
         testMotor.setSensitivity(0.2);
-        testMotor.spin(buttonA, buttonB, rightJoystickX, false);
+        currentControl.readInputs();
+        currentControl.activateMotorSpeed();
+           
+       // testMotor.spin(buttonA, buttonB, rightJoystickX, false);
 
         //vision.updateVisionVals();
         //vision.getTargetDistance();

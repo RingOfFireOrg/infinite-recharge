@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 
-public class SRXExample {
+public class SRXExample implements ExampleMotor {
 
     TalonSRX motor; 
     double speedMultiplier = 1;

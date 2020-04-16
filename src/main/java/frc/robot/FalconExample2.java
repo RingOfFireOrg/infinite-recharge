@@ -16,18 +16,19 @@ public class FalconExample2 {
     public void spin (Boolean Forwardbool, Boolean Backwardbool, double doubleVector, Boolean DoubleOrBoolean) {
 
         int ForwardBack = 0;
+        
         if (Forwardbool) {
-        ForwardBack = 1;
+            ForwardBack = 1;
         } else if (Backwardbool) {
-        ForwardBack = -1;
+            ForwardBack = -1;
         } else {
-        ForwardBack = 0;
+            ForwardBack = 0;
         }
 
         if (DoubleOrBoolean) {
-        motor.set(TalonFXControlMode.PercentOutput, doubleVector * speedMultiplier);
+            motor.set(TalonFXControlMode.PercentOutput, doubleVector * speedMultiplier);
         } else{
-        motor.set(TalonFXControlMode.PercentOutput, ForwardBack * speedMultiplier);
+            motor.set(TalonFXControlMode.PercentOutput, ForwardBack * speedMultiplier);
         }
     }
     public void stop (){
