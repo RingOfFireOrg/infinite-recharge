@@ -33,8 +33,8 @@ public class Robot extends TimedRobot {
     SRXExample testMotorB = new SRXExample(RobotMap.TESTMOTOR2);
     ButtonControl gamepadButtons = new ButtonControl(testMotorB);
     JoystickControl controllerJ = new JoystickControl(manipulatorStick, testMotor);
-    GamepadControl controllerGP = new GamepadControl(gamepadController, testMotor);
-    GenericMotorControl currentControl = controllerJ;
+    GamepadControl controllerGP = new GamepadControl(gamepadController, testMotorB);
+    GenericMotorControl currentControl = controllerGP;
     //Vision vision;
 
     double tx;

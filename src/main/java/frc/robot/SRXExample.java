@@ -30,7 +30,7 @@ public class SRXExample implements ExampleMotor {
     public void setSensitivity (double sensitivity){
 
         speedMultiplier = sensitivity;
-    } 
+    }
     public double getSensitivity () {
 
         return speedMultiplier;
