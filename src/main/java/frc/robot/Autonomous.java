@@ -21,6 +21,7 @@ public class Autonomous {
     private RobotContainer robotContainer = RobotContainer.getInstance();
 
     int autonomousStep = 0;
+    int DesieredStep = 1;
     Timer autonomousTimer;
     double transitionTime = 0;
     PID drive;
@@ -28,7 +29,8 @@ public class Autonomous {
     private final String DriveAndShoot = "DriveAndShoot";
     private final String StraightShot = "StraightShot";
     private final String SimpleDrive = "SimpleDrive";
-
+    private final String AutoNav = "AutoNav";
+ 
     private final SendableChooser<String> autonomousChooser = new SendableChooser<>();
 
     enum AutonomousModes {
@@ -48,7 +50,7 @@ public class Autonomous {
     }
 
     public void runAutonomous() {
-        driveAndShoot();
+        AutoNav();
         /*
         if (autonomousChooser.getSelected() == DriveAndShoot) {
             driveAndShoot();
@@ -151,12 +153,68 @@ public class Autonomous {
                 break;
         }
     }
+    public void AutoNav() {
+        switch (autonomousStep) {
+            case 0:
+            /*should be driving forward 10 feet, still needs to be tuned */
+                drive.setError(-robotContainer.ahrs.getAngle());
+                drive.update();
+                robotContainer.drive.setDriveSpeeds(0.5, 0.5);
+                if (robotContainer.drive.getLeftInches() > 50/*autonomousTimer.get() - transitionTime > 1000*/) {
+                    switchStepByCase(1);
+                    
+                }
+                break;
+            case 1:
+            //stop driving --- coasts right now
+            drive.setError(-robotContainer.ahrs.getAngle());
+            drive.update();
+                robotContainer.drive.setDriveSpeeds(0, 0);
+                if (robotContainer.drive.getLeftInches() < 3459/*autonomousTimer.get() - transitionTime > 1000*/) {
+                    if (DesieredStep == 2) {
+                        switchStepByCase(2);
+                    }
+                    else if (DesieredStep == 4) {
+                        switchStepByCase(0);
+                    }
+                
+                //}
+                break; }
+                
+
+                case 2:
+                /*should be driving forward 10 feet, still needs to be tuned */
+                    drive.setError(-robotContainer.ahrs.getAngle());
+                    drive.update();
+                    robotContainer.drive.setDriveSpeeds(0, 0.2);
+                    if (robotContainer.drive.getLeftInches() > 25/*autonomousTimer.get() - transitionTime > 1000*/) {
+                        switchStepByCase(1);
+                    }
+                    break;
+             case 3:
+            //stop driving --- coasts right now
+                robotContainer.drive.setDriveSpeeds(0, 0);
+                break;
+             } 
+        }
+    
+
+
+
+
 
     private void switchStep() {
         autonomousStep ++;
         transitionTime = autonomousTimer.get();
+        SmartDashboard.putNumber("CurrentCase", autonomousStep);
     }
-
+    private void switchStepByCase(int makeItMakeSense) {
+        autonomousStep = makeItMakeSense;
+        DesieredStep ++;
+        transitionTime = autonomousTimer.get();
+        SmartDashboard.putNumber("CurrentCase", autonomousStep);
+        SmartDashboard.putNumber("DesiredStep", DesieredStep);
+    }
     // public void getAutonomousCommand() {
     //     TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(2), Units.feetToMeters(2));
     //     config.setKinematics(robotContainer.drive.getKinematics());
