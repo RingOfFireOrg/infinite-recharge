@@ -220,6 +220,10 @@ public class Autonomous {
         autonomousStep ++;
         transitionTime = autonomousTimer.get();
         SmartDashboard.putNumber("CurrentCase", autonomousStep);
+        SmartDashboard.putNumber("HowFarLeft", howFarLeft());
+        SmartDashboard.putNumber("HowFarRight", howFarRight());
+        SmartDashboard.putNumber("CurrentCase", robotContainer.drive.getRightInches());
+        SmartDashboard.putNumber("getLeftInches", robotContainer.drive.getLeftInches());
     }
     private void switchStepByCase(int makeItMakeSense) {
         autonomousStep = makeItMakeSense;
