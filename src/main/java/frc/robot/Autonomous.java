@@ -52,8 +52,6 @@ public class Autonomous {
     }
 
     public void runAutonomous() {
-        rightInchesRecord = robotContainer.drive.getLeftInches(); 
-        leftInchesRecord = robotContainer.drive.getLeftInches(); 
         AutoNav();
         /*
         if (autonomousChooser.getSelected() == DriveAndShoot) {
