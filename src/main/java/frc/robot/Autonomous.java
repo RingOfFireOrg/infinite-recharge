@@ -153,50 +153,57 @@ public class Autonomous {
                 break;
         }
     }
-    public void AutoNav() {
-        switch (autonomousStep) {
-            case 0:
+
+    private void moveForward() {
             /*should be driving forward 10 feet, still needs to be tuned */
                 drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
                 robotContainer.drive.setDriveSpeeds(0.5, 0.5);
-                if (robotContainer.drive.getLeftInches() > 50/*autonomousTimer.get() - transitionTime > 1000*/) {
-                    switchStepByCase(1);
-                    
-                }
-                break;
-            case 1:
-            //stop driving --- coasts right now
+    }
+    private void moveStop() {
+           //stop driving --- coasts right now
             drive.setError(-robotContainer.ahrs.getAngle());
             drive.update();
-                robotContainer.drive.setDriveSpeeds(0, 0);
-                if (robotContainer.drive.getLeftInches() < 3459/*autonomousTimer.get() - transitionTime > 1000*/) {
-                    if (DesieredStep == 2) {
-                        switchStepByCase(2);
-                    }
-                    else if (DesieredStep == 4) {
-                        switchStepByCase(0);
-                    }
-                
-                //}
-                break; }
-                
+            robotContainer.drive.setDriveSpeeds(0, 0);
+    }
+    private void moveTurnLeft() {
+        drive.setError(-robotContainer.ahrs.getAngle());
+        drive.update();
+        robotContainer.drive.setDriveSpeeds(0, 0.2);
+    }
 
-                case 2:
-                /*should be driving forward 10 feet, still needs to be tuned */
-                    drive.setError(-robotContainer.ahrs.getAngle());
-                    drive.update();
-                    robotContainer.drive.setDriveSpeeds(0, 0.2);
-                    if (robotContainer.drive.getLeftInches() > 25/*autonomousTimer.get() - transitionTime > 1000*/) {
-                        switchStepByCase(1);
-                    }
-                    break;
-             case 3:
+    public void AutoNav() {
+        switch (autonomousStep) {
+            case 0: {
+            /*should be driving forward 10 feet, still needs to be tuned */
+                moveForward();
+                if (robotContainer.drive.getLeftInches() > 50/*autonomousTimer.get() - transitionTime > 1000*/) {
+                    switchStep();
+                }
+                break;
+            }
+            case 1: {
+                //stop driving --- coasts right now
+                moveStop();
+                switchStep();
+                break; 
+            }   
+
+            case 2: {
+                /*Turn left */
+                moveTurnLeft();
+                if (robotContainer.drive.getRightInches() > 25/*autonomousTimer.get() - transitionTime > 1000*/) {
+                    switchStep();
+                }
+                break;
+            }
+             case 3: {
             //stop driving --- coasts right now
-                robotContainer.drive.setDriveSpeeds(0, 0);
+                moveStop();
                 break;
              } 
         }
+}
     
 
 
