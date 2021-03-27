@@ -25,6 +25,8 @@ public class Autonomous {
     Timer autonomousTimer;
     double transitionTime = 0;
     PID drive;
+    double leftInchesRecord;    
+    double rightInchesRecord;    
 
     private final String DriveAndShoot = "DriveAndShoot";
     private final String StraightShot = "StraightShot";
@@ -50,6 +52,8 @@ public class Autonomous {
     }
 
     public void runAutonomous() {
+        rightInchesRecord = robotContainer.drive.getLeftInches(); 
+        leftInchesRecord = robotContainer.drive.getLeftInches(); 
         AutoNav();
         /*
         if (autonomousChooser.getSelected() == DriveAndShoot) {
@@ -172,12 +176,19 @@ public class Autonomous {
         robotContainer.drive.setDriveSpeeds(0, 0.2);
     }
 
+    double howFarRight() {
+        return robotContainer.drive.getRightInches()- rightInchesRecord;
+    }
+
+    double howFarLeft() {
+        return robotContainer.drive.getLeftInches() - rightInchesRecord;
+    }
     public void AutoNav() {
         switch (autonomousStep) {
             case 0: {
             /*should be driving forward 10 feet, still needs to be tuned */
                 moveForward();
-                if (robotContainer.drive.getLeftInches() > 50/*autonomousTimer.get() - transitionTime > 1000*/) {
+                if (howFarLeft() > 50/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;
@@ -192,7 +203,7 @@ public class Autonomous {
             case 2: {
                 /*Turn left */
                 moveTurnLeft();
-                if (robotContainer.drive.getRightInches() > 25/*autonomousTimer.get() - transitionTime > 1000*/) {
+                if (howFarRight() > 25/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;
@@ -205,12 +216,9 @@ public class Autonomous {
         }
 }
     
-
-
-
-
-
     private void switchStep() {
+        rightInchesRecord = robotContainer.drive.getLeftInches(); 
+        leftInchesRecord = robotContainer.drive.getLeftInches(); 
         autonomousStep ++;
         transitionTime = autonomousTimer.get();
         SmartDashboard.putNumber("CurrentCase", autonomousStep);
