@@ -183,7 +183,7 @@ public class Autonomous {
             case 0: {
             /*should be driving forward 10 feet, still needs to be tuned */
                 moveForward();
-                if (howFarLeft() > 50/*autonomousTimer.get() - transitionTime > 1000*/) {
+                if (howFarLeft() > 40/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;
@@ -198,7 +198,7 @@ public class Autonomous {
             case 2: {
                 /*Turn left */
                 moveTurnLeft();
-                if (howFarRight() > 25/*autonomousTimer.get() - transitionTime > 1000*/) {
+                if (howFarRight() > 40/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;
@@ -211,8 +211,8 @@ public class Autonomous {
              } 
              case 4: {
                 /*Turn left */
-                moveTurnRight();
-                if (howFarLeft() > 25/*autonomousTimer.get() - transitionTime > 1000*/) {
+                moveForward();
+                if (howFarLeft() > 30/*autonomousTimer.get() - transitionTime > 1000*/) {
                     switchStep();
                 }
                 break;
@@ -224,7 +224,34 @@ public class Autonomous {
                 switchStep();
                 break; 
                 }
+                case 6: {
+                    /*Turn left */
+                    moveTurnRight();
+                    if (howFarLeft() > 45/*autonomousTimer.get() - transitionTime > 1000*/) {
+                        switchStep();
+                    }
+                    break;
             }
+            case 7: {
+                /*stop*/
+                moveStop();
+                switchStep();
+                break; 
+                }
+                case 8: {
+                    /*should be driving forward 10 feet, still needs to be tuned */
+                        moveForward();
+                        if (howFarLeft() > 140/*autonomousTimer.get() - transitionTime > 1000*/) {
+                            switchStep();
+                        }
+                        break;
+                    }
+                    case 9: {
+                        /*stop*/
+                        moveStop();
+                        break; 
+                        }
+                    }
     }
     
     private void switchStep() {
