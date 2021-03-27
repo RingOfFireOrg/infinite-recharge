@@ -53,15 +53,6 @@ public class Autonomous {
 
     public void runAutonomous() {
         AutoNav();
-        /*
-        if (autonomousChooser.getSelected() == DriveAndShoot) {
-            driveAndShoot();
-        } else if (autonomousChooser.getSelected() == StraightShot) {
-            simpleShoot();
-        } else if (autonomousChooser.getSelected() == SimpleDrive) {
-            simpleDrive();
-        }
-        */
     }
 
     //simple auto that will shoot immediately
@@ -174,6 +165,12 @@ public class Autonomous {
         robotContainer.drive.setDriveSpeeds(0, 0.2);
     }
 
+    private void moveTurnRight() {
+        drive.setError(-robotContainer.ahrs.getAngle());
+        drive.update();
+        robotContainer.drive.setDriveSpeeds(0.2, 0);
+    }
+
     double howFarRight() {
         return robotContainer.drive.getRightInches()- rightInchesRecord;
     }
@@ -192,7 +189,7 @@ public class Autonomous {
                 break;
             }
             case 1: {
-                //stop driving --- coasts right now
+                //stop driving
                 moveStop();
                 switchStep();
                 break; 
@@ -207,12 +204,28 @@ public class Autonomous {
                 break;
             }
              case 3: {
-            //stop driving --- coasts right now
+                //stop driving
                 moveStop();
+                switchStep();
                 break;
              } 
-        }
-}
+             case 4: {
+                /*Turn left */
+                moveTurnRight();
+                if (howFarLeft() > 25/*autonomousTimer.get() - transitionTime > 1000*/) {
+                    switchStep();
+                }
+                break;
+
+            }
+             case 5: {
+                /*stop*/
+                moveStop();
+                switchStep();
+                break; 
+                }
+            }
+    }
     
     private void switchStep() {
         rightInchesRecord = robotContainer.drive.getLeftInches(); 
