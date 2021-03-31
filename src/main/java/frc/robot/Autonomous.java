@@ -52,35 +52,8 @@ public class Autonomous {
     }
 
     public void runAutonomous() {
-        AutoNav();
+        AutoNavSlalomPath();
     }
-
-    //simple auto that will shoot immediately
-    public void simpleShoot() {
-        switch (autonomousStep) {
-            case 0:
-                robotContainer.shooter.setLowerShooterSpeed(1);
-                robotContainer.shooter.setShooterSpeed(1);
-                robotContainer.shooter.setLowerShooterState(shooterStates.BASE_SPEED);
-                robotContainer.shooter.setState(shooterStates.BASE_SPEED);
-                if (autonomousTimer.get() - transitionTime > 1000) {
-                    switchStep();
-                }
-                break;
-            case 1:
-                robotContainer.indexer.setState(Indexer.IndexerState.FORWARD);
-                if (autonomousTimer.get() - transitionTime > 4000) {
-                    switchStep();
-                }
-                break;
-            case 2:
-                robotContainer.indexer.setState(Indexer.IndexerState.IDLE);
-                robotContainer.shooter.setLowerShooterState(shooterStates.OFF);
-                robotContainer.shooter.setState(shooterStates.OFF);
-                break;
-        }
-    }
-
     //simple auto that will drive forward for x time and then shoot against wall
     public void driveAndShoot() {
         SmartDashboard.putNumber("time", autonomousTimer.get() - transitionTime);
@@ -178,81 +151,116 @@ public class Autonomous {
     double howFarLeft() {
         return robotContainer.drive.getLeftInches() - rightInchesRecord;
     }
-    public void AutoNav() {
+    public void AutoNavSlalomPath() {
         switch (autonomousStep) {
             case 0: {
-            /*should be driving forward 10 feet, still needs to be tuned */
+                //Drive Forward
                 moveForward();
-                if (howFarLeft() > 40/*autonomousTimer.get() - transitionTime > 1000*/) {
+                if (howFarLeft() > 40) {
                     switchStep();
                 }
                 break;
             }
             case 1: {
-                //stop driving
+                //Stop Driving
                 moveStop();
                 switchStep();
                 break; 
             }   
 
             case 2: {
-                /*Turn left */
+                //Turn Left
                 moveTurnLeft();
-                if (howFarRight() > 40/*autonomousTimer.get() - transitionTime > 1000*/) {
+                if (howFarRight() > 40) {
                     switchStep();
                 }
                 break;
             }
              case 3: {
-                //stop driving
+                //Stop Driving
                 moveStop();
                 switchStep();
                 break;
              } 
              case 4: {
-                /*Turn left */
+                //Drive Forward
                 moveForward();
-                if (howFarLeft() > 30/*autonomousTimer.get() - transitionTime > 1000*/) {
+                if (howFarLeft() > 30) {
                     switchStep();
                 }
                 break;
-
             }
-             case 5: {
-                /*stop*/
+            case 5: {
+                //Stop Driving
                 moveStop();
                 switchStep();
                 break; 
                 }
-                case 6: {
-                    /*Turn left */
-                    moveTurnRight();
-                    if (howFarLeft() > 45/*autonomousTimer.get() - transitionTime > 1000*/) {
-                        switchStep();
-                    }
-                    break;
+            case 6: {
+                //Left Turn
+                moveTurnRight();
+                if (howFarLeft() > 45) {
+                    switchStep();
+                }
+                break;
             }
             case 7: {
-                /*stop*/
+                //Stop Driving
                 moveStop();
                 switchStep();
                 break; 
                 }
-                case 8: {
-                    /*should be driving forward 10 feet, still needs to be tuned */
-                        moveForward();
-                        if (howFarLeft() > 140/*autonomousTimer.get() - transitionTime > 1000*/) {
-                            switchStep();
-                        }
-                        break;
-                    }
-                    case 9: {
-                        /*stop*/
-                        moveStop();
-                        break; 
-                        }
-                    }
+            case 8: {
+                //Drive Forward
+                moveForward();
+                if (howFarLeft() > 140) {
+                    switchStep();
+                }
+                break;
+                }
+            case 9: {
+                //Stop Driving
+                moveStop();
+                break; 
+                }
+            }
+        }
+        public void AutoNavBarrelRacing() {
+            switch (autonomousStep) {
+            case 0: {
+                //Drive Forward
+                moveForward();
+                if (howFarLeft() > 40) {
+                    switchStep();
+                }
+                break;
+            }
+            case 1: {
+                //Stop Driving
+                moveStop();
+                break; 
+                }
+        }
+        
     }
+    public void AutoNavBounce() {
+        switch (autonomousStep) {
+        case 0: {
+            //Drive Forward
+            moveForward();
+            if (howFarLeft() > 40) {
+                switchStep();
+            }
+            break;
+        }
+        case 1: {
+            //Stop Driving
+            moveStop();
+            break; 
+            }
+    }
+    
+}
     
     private void switchStep() {
         rightInchesRecord = robotContainer.drive.getLeftInches(); 
