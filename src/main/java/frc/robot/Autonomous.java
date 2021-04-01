@@ -195,7 +195,7 @@ public class Autonomous {
                 moveStop();
                 switchStep();
                 break; 
-                }
+            }
             case 6: {
                 //Left Turn
                 moveTurnRight();
@@ -209,7 +209,7 @@ public class Autonomous {
                 moveStop();
                 switchStep();
                 break; 
-                }
+            }
             case 8: {
                 //Drive Forward
                 moveForward();
@@ -217,15 +217,15 @@ public class Autonomous {
                     switchStep();
                 }
                 break;
-                }
+            }
             case 9: {
                 //Stop Driving
                 moveStop();
                 break; 
-                }
             }
         }
-        public void AutoNavBarrelRacing() {
+    }
+    public void AutoNavBarrelRacing() {
             switch (autonomousStep) {
             case 0: {
                 //Drive Forward
@@ -263,7 +263,7 @@ public class Autonomous {
 }
     
     private void switchStep() {
-        rightInchesRecord = robotContainer.drive.getLeftInches(); 
+        rightInchesRecord = robotContainer.drive.getRightInches(); 
         leftInchesRecord = robotContainer.drive.getLeftInches(); 
         autonomousStep ++;
         transitionTime = autonomousTimer.get();
