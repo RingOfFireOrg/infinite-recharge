@@ -48,8 +48,33 @@ public class Autonomous {
         autonomousChooser.addOption(StraightShot, StraightShot);
         autonomousChooser.addOption(SimpleDrive, SimpleDrive);
         SmartDashboard.putData(autonomousChooser);
-
     }
+
+    private void moveForward() {
+            //drive forward a specified amount
+            drive.setError(-robotContainer.ahrs.getAngle());
+            drive.update();
+            robotContainer.drive.setDriveSpeeds(0.5, 0.5);
+    }
+    private void moveStop() {
+           //stop driving
+            drive.setError(-robotContainer.ahrs.getAngle());
+            drive.update();
+            robotContainer.drive.setDriveSpeeds(0, 0);
+    }
+    private void moveTurnLeft() {
+            //left turn. only left motor is powered right now
+            drive.setError(-robotContainer.ahrs.getAngle());
+            drive.update();
+            robotContainer.drive.setDriveSpeeds(0, 0.2);
+    }
+    private void moveTurnRight() {
+            //right turn. only left motor is powered right now
+            drive.setError(-robotContainer.ahrs.getAngle());
+            drive.update();
+            robotContainer.drive.setDriveSpeeds(0.2, 0);
+    }
+
 
     public void runAutonomous() {
         AutoNavSlalomPath();
@@ -120,29 +145,6 @@ public class Autonomous {
         }
     }
 
-    private void moveForward() {
-            /*should be driving forward 10 feet, still needs to be tuned */
-                drive.setError(-robotContainer.ahrs.getAngle());
-                drive.update();
-                robotContainer.drive.setDriveSpeeds(0.5, 0.5);
-    }
-    private void moveStop() {
-           //stop driving --- coasts right now
-            drive.setError(-robotContainer.ahrs.getAngle());
-            drive.update();
-            robotContainer.drive.setDriveSpeeds(0, 0);
-    }
-    private void moveTurnLeft() {
-        drive.setError(-robotContainer.ahrs.getAngle());
-        drive.update();
-        robotContainer.drive.setDriveSpeeds(0, 0.2);
-    }
-
-    private void moveTurnRight() {
-        drive.setError(-robotContainer.ahrs.getAngle());
-        drive.update();
-        robotContainer.drive.setDriveSpeeds(0.2, 0);
-    }
 
     double howFarRight() {
         return robotContainer.drive.getRightInches()- rightInchesRecord;
