@@ -246,9 +246,9 @@ public class Autonomous {
     public void AutoNavBounce() {
         switch (autonomousStep) {
         case 0: {
-            //Drive Forward
+            //Drive Forward (5 ft)
             moveForward();
-            if (howFarLeft() > 40) {
+            if (howFarLeft() > 30) {
                 switchStep();
             }
             break;
@@ -256,8 +256,261 @@ public class Autonomous {
         case 1: {
             //Stop Driving
             moveStop();
+            switchStep();
             break; 
             }
+        case 2: {
+            //Drive Left (~90°)
+            moveTurnLeft();
+            if (howFarRight() > 40) {
+                switchStep();
+            }
+            break;
+        }
+        case 3: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 4: {
+            //Drive Forward (10 ft)
+            moveForward();
+            if (howFarLeft() > 60) {
+                switchStep();
+            }
+            break;   
+        }
+        case 5: {
+            //Stop Driving (Location = A3)
+            moveStop();
+            switchStep();
+            break;
+        }    
+        case 6: {
+            //Turn Right (~150°)
+            moveTurnRight();
+            if (howFarLeft() > 55) {
+                switchStep();
+            
+            }
+            break;
+        }
+        case 7: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 8: {
+            //Drive Straight (20 ft)
+            moveForward();
+            if (howFarLeft() > 120) {
+                switchStep();
+            }
+            break;
+        }
+        case 9: {
+            //Stop Driving (Location: ~E4)
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 10: {
+            //Turn Left (~90°)
+            moveTurnLeft();
+            if (howFarRight() > 40) {
+                switchStep();
+            }
+            break;
+        }
+        case 11: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 12: {
+            //Drive Forward (5ft)
+            moveForward();
+            if (howFarLeft() > 30) {
+                switchStep();
+            }
+            break;
+        }
+        case 13: {
+            //Stop Driving (Location = ~E6)
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 14: {
+            //Turn Left (~90°)
+            moveTurnLeft();
+            if (howFarRight() > 40) {
+                switchStep();
+            }
+            break;
+        }
+        case 15: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 16: {
+            //Drive Forward (20 ft)
+            moveForward();
+            if (howFarLeft() > 120) {
+                switchStep();
+            }
+            break;
+        }
+        case 17: {
+            //Stop Driving (Location = A6)
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 18: {
+            //Turn Right (~180°)
+            moveTurnRight();
+            if (howFarLeft() > 80) {
+                switchStep();
+            }
+            break;
+        }
+        case 19: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 20: {
+            //Drive Forward (20 ft)
+            moveForward();
+            if (howFarLeft() > 120) {
+                switchStep();
+            }
+            break;
+        }
+        case 21: {
+            //Stop Driving (Location = ~E6)
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 22: {
+            //Turn Left (~90°)
+            moveTurnLeft();
+            if (howFarRight() > 40) {
+                switchStep();
+            }
+            break;
+        }
+        case 23: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 24: {
+            //Drive Forward (10 ft)
+            moveForward();
+            if (howFarLeft() > 60) {
+                switchStep();
+            }
+            break;
+        }
+        case 25: {
+            //Stop Driving (Location = E9)
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 26: {
+            //Turn Left (~90°)
+            moveTurnLeft();
+            if (howFarRight() > 40) {
+                switchStep();
+            }
+            break;
+        }
+        case 27: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 28: {
+            //Drive Forward (20 ft)
+            moveForward();
+            if (howFarLeft() > 120) {
+                switchStep();
+            }
+            break;
+        }
+        case 29: {
+            //Stop Driving (Location = A9)
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 30: {
+            //Turn Right (~180°)
+            moveTurnRight();
+            if (howFarLeft() > 80) {
+                switchStep();
+            }
+            break;
+        }
+        case 31: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 32: {
+            //Drive Forward (10 ft)
+            moveForward();
+            if (howFarLeft() > 60) {
+                switchStep();
+            }
+            break;
+        }
+        case 33: {
+            //Stop Driving (Location = ~C9)
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 34: {
+            //Turn Left (~90°)
+            moveTurnLeft();
+            if (howFarRight() > 40) {
+                switchStep();
+            }
+            break;
+        }
+        case 35: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 36: {
+            //Drive Forward (5 ft)
+            moveForward();
+            if (howFarLeft() > 30) {
+                switchStep();
+            }
+            break;
+        }
+        case 37: {
+            //Stop Driving (Location = Finish Zone)
+            moveStop();
+            break;
+        }
     }
     
 }
