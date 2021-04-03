@@ -75,7 +75,7 @@ public class Autonomous {
         // right turn. only left motor is powered right now
         drive.setError(-robotContainer.ahrs.getAngle());
         drive.update();
-        robotContainer.drive.setDriveSpeeds(0.2, 0);
+        robotContainer.drive.setDriveSpeeds(0.2, -0.2);
     }
 
     private void intakeOut() {
@@ -266,7 +266,7 @@ public class Autonomous {
         case 0: {
             //Drive Forward (5 ft)
             moveForward();
-            if (howFarLeft() > 30) {
+            if (howFarLeft() > 40) {
                 switchStep();
             }
             break;
@@ -310,9 +310,10 @@ public class Autonomous {
         case 6: {
             //Turn Right (~150°)
             moveTurnRight();
-            if (howFarLeft() > 40) {
+            if (howFarLeft() > 1) {
                 switchStep();
             
+                
             }
             break;
         }
