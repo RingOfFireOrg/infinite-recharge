@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.util.Units;
 import frc.robot.subsystems.Indexer;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter.shooterStates;
-
 
 public class Autonomous {
 
@@ -32,7 +32,7 @@ public class Autonomous {
     private final String StraightShot = "StraightShot";
     private final String SimpleDrive = "SimpleDrive";
     private final String AutoNav = "AutoNav";
- 
+
     private final SendableChooser<String> autonomousChooser = new SendableChooser<>();
 
     enum AutonomousModes {
@@ -51,30 +51,46 @@ public class Autonomous {
     }
 
     private void moveForward() {
-            //drive forward a specified amount
-            drive.setError(-robotContainer.ahrs.getAngle());
-            drive.update();
-            robotContainer.drive.setDriveSpeeds(0.5, 0.5);
-    }
-    private void moveStop() {
-           //stop driving
-            drive.setError(-robotContainer.ahrs.getAngle());
-            drive.update();
-            robotContainer.drive.setDriveSpeeds(0, 0);
-    }
-    private void moveTurnLeft() {
-            //left turn. only left motor is powered right now
-            drive.setError(-robotContainer.ahrs.getAngle());
-            drive.update();
-            robotContainer.drive.setDriveSpeeds(0, 0.2);
-    }
-    private void moveTurnRight() {
-            //right turn. only left motor is powered right now
-            drive.setError(-robotContainer.ahrs.getAngle());
-            drive.update();
-            robotContainer.drive.setDriveSpeeds(0.2, 0);
+        // drive forward a specified amount
+        drive.setError(-robotContainer.ahrs.getAngle());
+        drive.update();
+        robotContainer.drive.setDriveSpeeds(0.5, 0.5);
     }
 
+    private void moveStop() {
+        // stop driving
+        drive.setError(-robotContainer.ahrs.getAngle());
+        drive.update();
+        robotContainer.drive.setDriveSpeeds(0, 0);
+    }
+
+    private void moveTurnLeft() {
+        // left turn. only left motor is powered right now
+        drive.setError(-robotContainer.ahrs.getAngle());
+        drive.update();
+        robotContainer.drive.setDriveSpeeds(0, 0.2);
+    }
+
+    private void moveTurnRight() {
+        // right turn. only left motor is powered right now
+        drive.setError(-robotContainer.ahrs.getAngle());
+        drive.update();
+        robotContainer.drive.setDriveSpeeds(0.2, 0);
+    }
+
+    private void intakeOut() {
+        // right turn. only left motor is powered right now
+        drive.setError(-robotContainer.ahrs.getAngle());
+        drive.update();
+        robotContainer.intake.setState(Intake.IntakeStates.OUT);
+    }
+
+    private void intakeIdle() {
+        // right turn. only left motor is powered right now
+        drive.setError(-robotContainer.ahrs.getAngle());
+        drive.update();
+        robotContainer.intake.setState(Intake.IntakeStates.IDLE);
+}
 
     public void runAutonomous() {
         AutoNavBounce();
@@ -250,7 +266,7 @@ public class Autonomous {
         case 0: {
             //Drive Forward (5 ft)
             moveForward();
-            if (howFarLeft() > 40) {
+            if (howFarLeft() > 30) {
                 switchStep();
             }
             break;
@@ -278,7 +294,8 @@ public class Autonomous {
         case 4: {
             //Drive Forward (3 ft)
             moveForward();
-            if (howFarLeft() > 10) {
+            intakeOut();
+            if (howFarLeft() > 1 && howFarLeft() < 3) {
                 switchStep();
             }
             break;   
@@ -286,13 +303,14 @@ public class Autonomous {
         case 5: {
             //Stop Driving (Location = A3)
             moveStop();
+            intakeIdle();
             switchStep();
             break;
         }    
         case 6: {
             //Turn Right (~150°)
             moveTurnRight();
-            if (howFarLeft() > 55) {
+            if (howFarLeft() > 40) {
                 switchStep();
             
             }
@@ -513,9 +531,9 @@ public class Autonomous {
             moveStop();
             break;
         }*/
-    }
     
-}
+        }
+    }
     
     private void switchStep() {
         rightInchesRecord = robotContainer.drive.getRightInches(); 
