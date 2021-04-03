@@ -31,7 +31,15 @@ public class ControlSystems {
         manualSpinner = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_Y_BUTTON);
         switchCameraViewManipulator = new JoystickButton(manipulatorGamepadTeleop, RobotMap.MANIPULATOR_START_BUTTON);
         switchCameraViewDriver = new JoystickButton(leftDriveStick, RobotMap.DRIVER_TRIGGER);
-
+        
+    }
+    public double rightJoyStickZ() {
+        if (rightDriveStick.getZ() > 0.5) {
+            return (.5);
+        }
+        else {
+            return (1);
+        }
     }
 
     public static ControlSystems getInstance() {

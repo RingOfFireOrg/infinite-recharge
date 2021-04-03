@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.controller.SimpleMotorFeedforward;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import frc.robot.RobotMap;
+import frc.robot.ControlSystems;
 import frc.robot.PID;
 
 //drive train is tank drive style
@@ -115,7 +116,7 @@ public class Drivetrain extends InternalSubsystem{
     // }
 
     public void teleopControl() {
-        double leftInputSpeed = -0.8 * super.controlSystem.leftDriveStick.getY();
+        double leftInputSpeed = -0.8 * super.controlSystem.leftDriveStick.getY()/* * super.controlSystem.rightJoyStickZ()*/;
         leftGoalSpeed = Math.copySign(leftInputSpeed * leftInputSpeed, leftInputSpeed);
         double rightInputSymbol = -0.8 * super.controlSystem.rightDriveStick.getY();
         rightGoalSpeed = Math.copySign(rightInputSymbol * rightInputSymbol, rightInputSymbol);

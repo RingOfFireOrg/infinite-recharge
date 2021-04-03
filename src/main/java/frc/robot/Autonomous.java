@@ -77,7 +77,7 @@ public class Autonomous {
 
 
     public void runAutonomous() {
-        AutoNavSlalomPath();
+        AutoNavBounce();
     }
     //simple auto that will drive forward for x time and then shoot against wall
     public void driveAndShoot() {
@@ -250,7 +250,7 @@ public class Autonomous {
         case 0: {
             //Drive Forward (5 ft)
             moveForward();
-            if (howFarLeft() > 30) {
+            if (howFarLeft() > 40) {
                 switchStep();
             }
             break;
@@ -276,9 +276,9 @@ public class Autonomous {
             break;
         }
         case 4: {
-            //Drive Forward (10 ft)
+            //Drive Forward (3 ft)
             moveForward();
-            if (howFarLeft() > 60) {
+            if (howFarLeft() > 10) {
                 switchStep();
             }
             break;   
@@ -318,7 +318,7 @@ public class Autonomous {
             switchStep();
             break;
         }
-        case 10: {
+        /*case 10: {
             //Turn Left (~90°)
             moveTurnLeft();
             if (howFarRight() > 40) {
@@ -512,7 +512,7 @@ public class Autonomous {
             //Stop Driving (Location = Finish Zone)
             moveStop();
             break;
-        }
+        }*/
     }
     
 }
