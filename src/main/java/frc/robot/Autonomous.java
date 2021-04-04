@@ -70,6 +70,9 @@ public class Autonomous {
         drive.update();
         robotContainer.drive.setDriveSpeeds(0, 0.2);
     }
+    private float testDirecton () {
+        return robotContainer.ahrs.getYaw();
+    }
 
     private void moveTurnRight() {
         // right turn. only left motor is powered right now
@@ -80,19 +83,18 @@ public class Autonomous {
 
     private void intakeOut() {
         // right turn. only left motor is powered right now
-        drive.setError(-robotContainer.ahrs.getAngle());
         drive.update();
         robotContainer.intake.setState(Intake.IntakeStates.OUT);
     }
 
     private void intakeIdle() {
         // right turn. only left motor is powered right now
-        drive.setError(-robotContainer.ahrs.getAngle());
         drive.update();
         robotContainer.intake.setState(Intake.IntakeStates.IDLE);
 }
 
     public void runAutonomous() {
+        robotContainer.ahrs.zeroYaw();
         AutoNavBounce();
     }
     //simple auto that will drive forward for x time and then shoot against wall
@@ -189,7 +191,7 @@ public class Autonomous {
             case 2: {
                 //Turn Left
                 moveTurnLeft();
-                if (howFarRight() > 40) {
+                if (testDirecton() < -45) {
                     switchStep();
                 }
                 break;
