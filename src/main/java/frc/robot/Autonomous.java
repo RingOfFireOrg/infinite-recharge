@@ -391,7 +391,7 @@ public class Autonomous {
             break;
         }
         case 17: {
-            
+
             //Stop Driving (Location = A6)
             moveStop();
             switchStep();
