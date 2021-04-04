@@ -57,6 +57,13 @@ public class Autonomous {
         robotContainer.drive.setDriveSpeeds(0.5, 0.5);
     }
 
+    private void moveBackward() {
+        // drive backward a specified amount
+        drive.setError(-robotContainer.ahrs.getAngle());
+        drive.update();
+        robotContainer.drive.setDriveSpeeds(-0.5,-0.5);
+    }
+
     private void moveStop() {
         // stop driving
         drive.setError(-robotContainer.ahrs.getAngle());
@@ -70,8 +77,9 @@ public class Autonomous {
         drive.update();
         robotContainer.drive.setDriveSpeeds(0, 0.2);
     }
-    private float testDirecton () {
+    private float getabsoluteDirection() {
         return robotContainer.ahrs.getYaw();
+
     }
 
     private void moveTurnRight() {
@@ -191,7 +199,7 @@ public class Autonomous {
             case 2: {
                 //Turn Left
                 moveTurnLeft();
-                if (testDirecton() < -45) {
+                if (getabsoluteDirection() < -45) {
                     switchStep();
                 }
                 break;
@@ -385,7 +393,7 @@ public class Autonomous {
         case 16: {
             //Drive Forward (20 ft)
             moveForward();
-            if (howFarLeft() > 100) {
+            if (howFarLeft() > 80) {
                 switchStep();
             }
             break;
@@ -397,35 +405,21 @@ public class Autonomous {
             switchStep();
             break;
         }
-        /*case 18: {
-            //Turn Right (~180°)
-            moveTurnRight();
-            if (howFarLeft() > 80) {
+        case 18: {
+            //Drive Backward (20 ft)
+            moveBackward();
+            if (howFarLeft() < -80) {
                 switchStep();
             }
             break;
         }
         case 19: {
-            //Stop Driving
-            moveStop();
-            switchStep();
-            break;
-        }
-        case 20: {
-            //Drive Forward (20 ft)
-            moveForward();
-            if (howFarLeft() > 120) {
-                switchStep();
-            }
-            break;
-        }
-        case 21: {
             //Stop Driving (Location = ~E6)
             moveStop();
             switchStep();
             break;
         }
-        case 22: {
+        /*case 22: {
             //Turn Left (~90°)
             moveTurnLeft();
             if (howFarRight() > 40) {
