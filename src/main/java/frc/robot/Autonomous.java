@@ -268,7 +268,7 @@ public class Autonomous {
         case 0: {
             //Drive Forward (5 ft)
             moveForward();
-            if (howFarLeft() > 40) {
+            if (howFarLeft() > 50) {
                 switchStep();
             }
             break;
@@ -312,7 +312,7 @@ public class Autonomous {
         case 6: {
             //Turn Right (~150°)
             moveTurnRight();
-            if (howFarLeft() > 1) {
+            if (howFarLeft() > 0.1) {
                 switchStep();
             
                 
@@ -328,7 +328,7 @@ public class Autonomous {
         case 8: {
             //Drive Straight (20 ft)
             moveForward();
-            if (howFarLeft() > 120) {
+            if (howFarLeft() > 130) {
                 switchStep();
             }
             break;
@@ -339,10 +339,10 @@ public class Autonomous {
             switchStep();
             break;
         }
-        /*case 10: {
+        case 10: {
             //Turn Left (~90°)
             moveTurnLeft();
-            if (howFarRight() > 40) {
+            if (howFarRight() > 50) {
                 switchStep();
             }
             break;
@@ -384,7 +384,7 @@ public class Autonomous {
         case 16: {
             //Drive Forward (20 ft)
             moveForward();
-            if (howFarLeft() > 120) {
+            if (howFarLeft() > 100) {
                 switchStep();
             }
             break;
@@ -395,7 +395,7 @@ public class Autonomous {
             switchStep();
             break;
         }
-        case 18: {
+        /*case 18: {
             //Turn Right (~180°)
             moveTurnRight();
             if (howFarLeft() > 80) {
