@@ -262,6 +262,7 @@ public class Autonomous {
         
     }
     public void AutoNavBounce() {
+        
         switch (autonomousStep) {
         case 0: {
             //Drive Forward (5 ft)
@@ -310,7 +311,7 @@ public class Autonomous {
         case 6: {
             //Turn Right (~150°)
             moveTurnRight();
-            if (howFarLeft() > 1) {
+            if (howFarLeft() > 0.5) {
                 switchStep();
             
                 
@@ -326,7 +327,7 @@ public class Autonomous {
         case 8: {
             //Drive Straight (20 ft)
             moveForward();
-            if (howFarLeft() > 120) {
+            if (howFarLeft() > 130) {
                 switchStep();
             }
             break;
@@ -365,7 +366,7 @@ public class Autonomous {
             switchStep();
             break;
         }
-        case 14: {
+        /*case 14: {
             //Turn Left (~90°)
             moveTurnLeft();
             if (howFarRight() > 40) {
