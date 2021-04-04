@@ -267,7 +267,7 @@ public class Autonomous {
         case 0: {
             //Drive Forward (5 ft)
             moveForward();
-            if (howFarLeft() > 40) {
+            if (howFarLeft() > 50) {
                 switchStep();
             }
             break;
@@ -311,7 +311,7 @@ public class Autonomous {
         case 6: {
             //Turn Right (~150°)
             moveTurnRight();
-            if (howFarLeft() > 0.5) {
+            if (howFarLeft() > 0.1) {
                 switchStep();
             
                 
