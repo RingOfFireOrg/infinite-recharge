@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotContainer;
 
 
@@ -31,6 +32,8 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
+    double NavXDirection = autonomous.getabsoluteDirection();
+    SmartDashboard.putNumber("NavXAngle", NavXDirection);
   }
 
   @Override

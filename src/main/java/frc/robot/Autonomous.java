@@ -77,9 +77,8 @@ public class Autonomous {
         drive.update();
         robotContainer.drive.setDriveSpeeds(0, 0.2);
     }
-    private float getabsoluteDirection() {
+    public float getabsoluteDirection() {
         return robotContainer.ahrs.getYaw();
-
     }
 
     private void moveTurnRight() {
@@ -543,7 +542,8 @@ public class Autonomous {
         SmartDashboard.putNumber("HowFarLeft", howFarLeft());
         SmartDashboard.putNumber("HowFarRight", howFarRight());
         SmartDashboard.putNumber("CurrentCase", robotContainer.drive.getRightInches());
-        SmartDashboard.putNumber("getLeftInches", robotContainer.drive.getLeftInches());
+        SmartDashboard.putNumber("getLeftInches", robotContainer.drive.getLeftInches()); 
+        SmartDashboard.putNumber("NavXAngle", getabsoluteDirection());
     }
     private void switchStepByCase(int makeItMakeSense) {
         autonomousStep = makeItMakeSense;
