@@ -22,7 +22,7 @@ public class Autonomous {
 
     int autonomousStep = 0;
     int DesieredStep = 1;
-    int wheelRotation = 8; // To go one feet, the robot encoder has to read ~8 rotations of the wheel
+    int FEET = 8; // To go one FEET, the robot encoder has to read ~8 inches of the wheel
     Timer autonomousTimer;
     double transitionTime = 0;
     PID drive;
@@ -110,7 +110,7 @@ public class Autonomous {
         SmartDashboard.putNumber("time", autonomousTimer.get() - transitionTime);
         switch (autonomousStep) {
             case 0:
-            /*should be driving forward 10 feet, still needs to be tuned */
+            /*should be driving forward 10 FEET, still needs to be tuned */
                 drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
                 robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
@@ -156,7 +156,7 @@ public class Autonomous {
     public void simpleDrive() {
         switch (autonomousStep) {
             case 0:
-            /*should be driving forward 10 feet, still needs to be tuned */
+            /*should be driving forward 10 FEET, still needs to be tuned */
                 drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
                 robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
@@ -261,7 +261,7 @@ public class Autonomous {
                 case 0: {
                     //Drive Forward 10 ft
                     moveForward();
-                    if (howFarLeft() > 10*wheelRotation) {
+                    if (howFarLeft() > 10*FEET) {
                         switchStep();
                     }
                     break;
@@ -287,9 +287,9 @@ public class Autonomous {
                     break;
                 }
                 case 4: {
-                //Drive Forward 5 feet
+                //Drive Forward 5 FEET
                 moveForward();
-                if (howFarLeft() > 5*wheelRotation) {
+                if (howFarLeft() > 5*FEET) {
                     switchStep();
                 }
                 break;
@@ -314,9 +314,9 @@ public class Autonomous {
                     break;
                 }
                 case 8: {
-                //Drive Forward 5 feet
+                //Drive Forward 5 FEET
                 moveForward();
-                if (howFarLeft() > 5*wheelRotation) {
+                if (howFarLeft() > 5*FEET) {
                     switchStep();
                     }
                     break;
@@ -330,7 +330,7 @@ public class Autonomous {
                 case 10: {
                     //Turn Right 90°
                     moveTurnRight();
-                    if (getabsoluteDirection() < -90) {
+                    if (getabsoluteDirection() > -90) {
                         switchStep();
                     }
                     break;
@@ -344,7 +344,7 @@ public class Autonomous {
                 case 12: {
                     //Drive Forward 5 ft
                     moveForward();
-                    if (howFarLeft() > 5*wheelRotation) {
+                    if (howFarLeft() > 5*FEET) {
                         switchStep();
                     }
                     break;
@@ -358,7 +358,7 @@ public class Autonomous {
                 case 14: {
                     //Turn Right 75°
                     moveTurnRight();
-                    if (getabsoluteDirection() < -15) {
+                    if (getabsoluteDirection() > -15) {
                         switchStep();
                     }
                     break;
@@ -370,9 +370,9 @@ public class Autonomous {
                     break;
                 }
                 case 16: {
-                    //Drive Forward 13 feet
+                    //Drive Forward 13 FEET
                     moveForward();
-                    if (howFarLeft() > 13*wheelRotation) {
+                    if (howFarLeft() > 13*FEET) {
                         switchStep();
                     }
                     break;
@@ -398,9 +398,9 @@ public class Autonomous {
                     break;
                 }
                 case 20: {
-                    //Drive Forward 2.5 feet
+                    //Drive Forward 2.5 FEET
                     moveForward();
-                    if (howFarLeft() > 2.5*wheelRotation) {
+                    if (howFarLeft() > 2.5*FEET) {
                         switchStep();
                     }
                     break;
@@ -426,9 +426,9 @@ public class Autonomous {
                     break;
                 }
                 case 24: {
-                    //Drive Forward 7.5 feet
+                    //Drive Forward 7.5 FEET
                     moveForward();
-                    if (howFarLeft() > 7.5*wheelRotation) {
+                    if (howFarLeft() > 7.5*FEET) {
                         switchStep();
                     }
                     break;
@@ -455,9 +455,9 @@ public class Autonomous {
                     break;
                 }
                 case 28: {
-                    //Drive Forward 9 feet
+                    //Drive Forward 9 FEET
                     moveForward();
-                    if (howFarLeft() > 9*wheelRotation) {
+                    if (howFarLeft() > 9*FEET) {
                         switchStep();
                     }
                     break;
@@ -483,9 +483,9 @@ public class Autonomous {
                     break;
                 }
                 case 32: {
-                    //Drive Forward 5 feet
+                    //Drive Forward 5 FEET
                     moveForward();
-                    if (howFarLeft() > 5*wheelRotation) {
+                    if (howFarLeft() > 5*FEET) {
                         switchStep();
                     }
                     break;
@@ -511,9 +511,9 @@ public class Autonomous {
                     break;
                 }
                 case 36: {
-                    //Drive Forward 5 feet
+                    //Drive Forward 5 FEET
                     moveForward();
-                    if (howFarLeft() > 5*wheelRotation) {
+                    if (howFarLeft() > 5*FEET) {
                         switchStep();
                     }
                     break;
@@ -539,9 +539,9 @@ public class Autonomous {
                     break;
                 }
                 case 40: {
-                    //Drive Forward 27 feet
+                    //Drive Forward 27 FEET
                     moveForward();
-                    if (howFarLeft() > 27*wheelRotation) {
+                    if (howFarLeft() > 27*FEET) {
                         switchStep();
                     }
                     break;
@@ -837,7 +837,7 @@ public class Autonomous {
         SmartDashboard.putNumber("DesiredStep", DesieredStep);
     }
     // public void getAutonomousCommand() {
-    //     TrajectoryConfig config = new TrajectoryConfig(Units.feetToMeters(2), Units.feetToMeters(2));
+    //     TrajectoryConfig config = new TrajectoryConfig(Units.FEETToMeters(2), Units.FEETToMeters(2));
     //     config.setKinematics(robotContainer.drive.getKinematics());
 
     //     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
