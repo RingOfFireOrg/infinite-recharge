@@ -577,7 +577,7 @@ public class Autonomous {
         case 2: {
             //Drive Left (~90°)
             moveTurnLeft();
-            if (getabsoluteDirection() > 90) {
+            if (getabsoluteDirection() < -88) {
                 switchStep();
             }
             break;
@@ -605,12 +605,9 @@ public class Autonomous {
             break;
         }    
         case 6: {
-            //Turn Right (~150°)
             moveTurnRight();
-            if (howFarLeft() > 0.1) {
+            if (getabsoluteDirection() > 60) {
                 switchStep();
-            
-                
             }
             break;
         }
@@ -635,9 +632,8 @@ public class Autonomous {
             break;
         }
         case 10: {
-            //Turn Left (~90°)
             moveTurnLeft();
-            if (howFarRight() > 50) {
+            if (getabsoluteDirection() > 0) {
                 switchStep();
             }
             break;
@@ -663,9 +659,8 @@ public class Autonomous {
             break;
         }
         case 14: {
-            //Turn Left (~90°)
             moveTurnLeft();
-            if (howFarRight() > 40) {
+            if (getabsoluteDirection() < -90) {
                 switchStep();
             }
             break;
