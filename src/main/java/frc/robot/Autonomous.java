@@ -86,9 +86,8 @@ public class Autonomous {
         // right turn. only left motor is powered right now
         drive.setError(-robotContainer.ahrs.getAngle());
         drive.update();
-        robotContainer.drive.setDriveSpeeds(0.2, -0.2);
-    }
-
+        robotContainer.drive.setDriveSpeeds(0.1, -0.1);
+    } 
     private void intakeOut() {
         // right turn. only left motor is powered right now
         drive.update();
@@ -102,7 +101,6 @@ public class Autonomous {
 }
 
     public void runAutonomous() {
-        robotContainer.ahrs.zeroYaw();
         AutoNavBounce();
     }
     //simple auto that will drive forward for x time and then shoot against wall
@@ -259,9 +257,9 @@ public class Autonomous {
         public void AutoNavBarrelRace() {
             switch (autonomousStep) {
                 case 0: {
-                    //Drive Forward 10 ft
+                    //Drive Forward 11 ft
                     moveForward();
-                    if (howFarLeft() > 10*FEET) {
+                    if (howFarLeft() > 11*FEET) {
                         switchStep();
                     }
                     break;
@@ -283,10 +281,11 @@ public class Autonomous {
                 case 3: {
                     //Stop Driving
                     moveStop();
-                    switchStep();
+                    //switchStep();
                     break;
                 }
-                case 4: {
+                
+                /*case 4: {
                 //Drive Forward 5 FEET
                 moveForward();
                 if (howFarLeft() > 5*FEET) {
@@ -550,7 +549,7 @@ public class Autonomous {
                     //Stop Driving
                     moveStop();
                     break;
-                }
+                }*/
             }
         }
 
@@ -560,7 +559,7 @@ public class Autonomous {
         case 0: {
             //Drive Forward (5 ft)
             moveForward();
-            if (howFarLeft() > 50) {
+            if (howFarLeft() > 5*FEET) {
                 switchStep();
             }
             break;
@@ -589,7 +588,7 @@ public class Autonomous {
             //Drive Forward (3 ft)
             moveForward();
             intakeOut();
-            if (howFarLeft() > 1 && howFarLeft() < 3) {
+            if (howFarLeft() > 3*FEET) {
                 switchStep();
             }
             break;   
@@ -825,7 +824,7 @@ public class Autonomous {
         SmartDashboard.putNumber("CurrentCase", autonomousStep);
         SmartDashboard.putNumber("HowFarLeft", howFarLeft());
         SmartDashboard.putNumber("HowFarRight", howFarRight());
-        SmartDashboard.putNumber("CurrentCase", robotContainer.drive.getRightInches());
+        SmartDashboard.putNumber("getRightInches", robotContainer.drive.getRightInches());
         SmartDashboard.putNumber("getLeftInches", robotContainer.drive.getLeftInches()); 
         SmartDashboard.putNumber("NavXAngle", getabsoluteDirection());
     }
@@ -838,7 +837,7 @@ public class Autonomous {
     }
     // public void getAutonomousCommand() {
     //     TrajectoryConfig config = new TrajectoryConfig(Units.FEETToMeters(2), Units.FEETToMeters(2));
-    //     config.setKinematics(robotContainer.drive.getKinematics());
+ //config.setKinematics(robotContainer.drive.getKinematics());
 
     //     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(
     //         Arrays.asList(new Pose2d(), new Pose2d(1.0, 0, new Rotation2d())),
