@@ -672,8 +672,9 @@ public class Autonomous {
             break;
         }
         case 16: {
-            //Drive Forward (20 ft)
+            //Drive Forward (10 ft)
             moveForward();
+            intakeOut();
             if (howFarLeft() > 80) {
                 switchStep();
             }
@@ -683,13 +684,14 @@ public class Autonomous {
 
             //Stop Driving (Location = A6)
             moveStop();
+            intakeIdle();
             switchStep();
             break;
         }
         case 18: {
-            //Drive Backward (20 ft)
+            //Drive Backward (10 ft)
             moveBackward();
-            if (howFarLeft() < -80) {
+            if (howFarLeft() < -10*FEET) {
                 switchStep();
             }
             break;
@@ -700,66 +702,82 @@ public class Autonomous {
             switchStep();
             break;
         }
-        /*case 22: {
+        case 20: {
             //Turn Left (~90°)
             moveTurnLeft();
-            if (howFarRight() > 40) {
+            if (getabsoluteDirection() > 0) {
+                switchStep();
+            }
+            break;
+        }
+        case 21: {
+            //Stop Driving
+            moveStop();
+            switchStep();
+            break;
+        }
+        case 22: {
+            //Drive Forward (7 ft)
+            moveForward();
+            if (howFarLeft() > 7*FEET) {
                 switchStep();
             }
             break;
         }
         case 23: {
-            //Stop Driving
-            moveStop();
-            switchStep();
-            break;
-        }
-        case 24: {
-            //Drive Forward (10 ft)
-            moveForward();
-            if (howFarLeft() > 60) {
-                switchStep();
-            }
-            break;
-        }
-        case 25: {
             //Stop Driving (Location = E9)
             moveStop();
             switchStep();
             break;
         }
-        case 26: {
+        case 24: {
             //Turn Left (~90°)
             moveTurnLeft();
-            if (howFarRight() > 40) {
+            if (getabsoluteDirection() < -85) {
                 switchStep();
             }
             break;
         }
-        case 27: {
+        case 25: {
             //Stop Driving
             moveStop();
             switchStep();
             break;
         }
-        case 28: {
-            //Drive Forward (20 ft)
+        case 26: {
+            //Drive Forward (10 ft)
             moveForward();
-            if (howFarLeft() > 120) {
+            intakeOut();
+            if (howFarLeft() > 10*FEET) {
+                switchStep();
+            }
+            break;
+        }
+        case 27: {
+            //Stop Driving (Location = A9)
+            moveStop();
+            intakeIdle();
+            switchStep();
+            break;
+        }
+        case 28: {
+            //Drive Backward (5 ft)
+            moveBackward();
+            if (howFarLeft() > -5*FEET) {
                 switchStep();
             }
             break;
         }
         case 29: {
-            //Stop Driving (Location = A9)
+            //Stop Driving (Location = ~C9)
             moveStop();
             switchStep();
             break;
         }
         case 30: {
-            //Turn Right (~180°)
+            //Turn Right (~90°)
             moveTurnRight();
-            if (howFarLeft() > 80) {
+            if (getabsoluteDirection() > 0) {
                 switchStep();
             }
             break;
@@ -771,46 +789,18 @@ public class Autonomous {
             break;
         }
         case 32: {
-            //Drive Forward (10 ft)
+            //Drive Forward (4 ft)
             moveForward();
-            if (howFarLeft() > 60) {
+            if (howFarLeft() > 4*FEET) {
                 switchStep();
             }
             break;
         }
         case 33: {
-            //Stop Driving (Location = ~C9)
-            moveStop();
-            switchStep();
-            break;
-        }
-        case 34: {
-            //Turn Left (~90°)
-            moveTurnLeft();
-            if (howFarRight() > 40) {
-                switchStep();
-            }
-            break;
-        }
-        case 35: {
-            //Stop Driving
-            moveStop();
-            switchStep();
-            break;
-        }
-        case 36: {
-            //Drive Forward (5 ft)
-            moveForward();
-            if (howFarLeft() > 30) {
-                switchStep();
-            }
-            break;
-        }
-        case 37: {
             //Stop Driving (Location = Finish Zone)
             moveStop();
             break;
-        }*/
+        }
     
         }
     }
