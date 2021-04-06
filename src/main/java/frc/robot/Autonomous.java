@@ -257,7 +257,7 @@ public class Autonomous {
             case 0: {
                 //Drive Forward
                 moveForward();
-                if (howFarLeft() > 40) {
+                if (howFarLeft() > 75) {
                     switchStep();
                 }
                 break;
@@ -265,8 +265,97 @@ public class Autonomous {
             case 1: {
                 //Stop Driving
                 moveStop();
-                break; 
+                switchStep();
+                break;
+
                 }
+            case 2: {
+                //Turn Left
+                moveTurnRight();
+                if (getabsoluteDirection() > 90) {
+                    switchStep();
+                }
+                break;
+            }
+            case 3: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 4: {
+                //Drive Forward
+                moveForward();
+                if (howFarLeft() > 75) {
+                    switchStep();
+                }
+                break;
+            }
+            case 5: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 6: {
+                //Turn Left
+                moveTurnRight();
+                if (getabsoluteDirection() > 180) {
+                    switchStep();
+                }
+                break;
+            }
+            case 7: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+                }
+            case 8: {
+                //Drive Forward
+                moveForward();
+                if (howFarLeft() > 75) {
+                    switchStep();
+                }
+                break;
+            }
+            case 9: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+                }
+
+            case 10: {
+                //Turn Left
+                moveTurnRight();
+                if (getabsoluteDirection() < 270) {
+                    switchStep();
+                }
+                break;
+            }
+            case 11: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+
+            }
+            case 12: {
+                //Turn Left
+                moveTurnRight();
+                if (getabsoluteDirection() < 340) {
+                    switchStep();
+                }
+                break;
+            }
+            case 13: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+
+            }
         }
         
     }
