@@ -22,7 +22,7 @@ public class Autonomous {
 
     int autonomousStep = 0;
     int DesieredStep = 1;
-    int FEET = 8; // To go one FEET, the robot encoder has to read ~8 inches of the wheel
+    double FEET = 8.50; // To go one 8.50, the robot encoder has to read ~8.50 inches of the wheel
     Timer autonomousTimer;
     double transitionTime = 0;
     PID drive;
@@ -101,14 +101,14 @@ public class Autonomous {
 }
 
     public void runAutonomous() {
-        AutoNavBounce();
+        AutoNavBarrelRace();
     }
     //simple auto that will drive forward for x time and then shoot against wall
     public void driveAndShoot() {
         SmartDashboard.putNumber("time", autonomousTimer.get() - transitionTime);
         switch (autonomousStep) {
             case 0:
-            /*should be driving forward 10 FEET, still needs to be tuned */
+            /*should be driving forward 10 8.50, still needs to be tuned */
                 drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
                 robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
@@ -154,7 +154,7 @@ public class Autonomous {
     public void simpleDrive() {
         switch (autonomousStep) {
             case 0:
-            /*should be driving forward 10 FEET, still needs to be tuned */
+            /*should be driving forward 10 8.50, still needs to be tuned */
                 drive.setError(-robotContainer.ahrs.getAngle());
                 drive.update();
                 robotContainer.drive.setDriveSpeeds(0.2 + drive.getOutput(), 0.2 - drive.getOutput());
@@ -257,12 +257,12 @@ public class Autonomous {
         public void AutoNavBarrelRace() {
             switch (autonomousStep) {
                 case 0: {
-                    //Drive Forward 11 ft
+                    //Drive Forward 13 ft
                     moveForward();
-                    if (howFarLeft() > 11*FEET) {
+                    if (howFarLeft() > 13*8.50) {
                         switchStep();
                     }
-                    break;
+                    break; 
                 }
                 case 1: {
                     //Stop Driving
@@ -281,14 +281,14 @@ public class Autonomous {
                 case 3: {
                     //Stop Driving
                     moveStop();
-                    //switchStep();
+                    switchStep();
                     break;
                 }
                 
-                /*case 4: {
-                //Drive Forward 5 FEET
+                case 4: {
+                //Drive Forward 5 8.50
                 moveForward();
-                if (howFarLeft() > 5*FEET) {
+                if (howFarLeft() > 5*8.50) {
                     switchStep();
                 }
                 break;
@@ -303,6 +303,7 @@ public class Autonomous {
                     //Turn Right 90° 
                     moveTurnRight();
                     if (getabsoluteDirection() > 179) { //needs to be >180, bc the gyro max reading is 180
+                    switchStep();
                     }
                     break;
                 }
@@ -313,9 +314,9 @@ public class Autonomous {
                     break;
                 }
                 case 8: {
-                //Drive Forward 5 FEET
+                //Drive Forward 5 8.50
                 moveForward();
-                if (howFarLeft() > 5*FEET) {
+                if (howFarLeft() > 5*8.50) {
                     switchStep();
                     }
                     break;
@@ -343,7 +344,7 @@ public class Autonomous {
                 case 12: {
                     //Drive Forward 5 ft
                     moveForward();
-                    if (howFarLeft() > 5*FEET) {
+                    if (howFarLeft() > 5*8.50) {
                         switchStep();
                     }
                     break;
@@ -369,9 +370,9 @@ public class Autonomous {
                     break;
                 }
                 case 16: {
-                    //Drive Forward 13 FEET
+                    //Drive Forward 13 8.50
                     moveForward();
-                    if (howFarLeft() > 13*FEET) {
+                    if (howFarLeft() > 13*8.50) {
                         switchStep();
                     }
                     break;
@@ -397,9 +398,9 @@ public class Autonomous {
                     break;
                 }
                 case 20: {
-                    //Drive Forward 2.5 FEET
+                    //Drive Forward 2.5 8.50
                     moveForward();
-                    if (howFarLeft() > 2.5*FEET) {
+                    if (howFarLeft() > 2.5*8.50) {
                         switchStep();
                     }
                     break;
@@ -425,9 +426,9 @@ public class Autonomous {
                     break;
                 }
                 case 24: {
-                    //Drive Forward 7.5 FEET
+                    //Drive Forward 7.5 8.50
                     moveForward();
-                    if (howFarLeft() > 7.5*FEET) {
+                    if (howFarLeft() > 7.5*8.50) {
                         switchStep();
                     }
                     break;
@@ -441,7 +442,7 @@ public class Autonomous {
                 case 26: {
                     //Turn Left 135
                     moveTurnLeft();
-                    if (getabsoluteDirection() > 46 && getabsoluteDirection() < 44) { 
+                    if (getabsoluteDirection() > 50 && getabsoluteDirection() < 40) { 
                         //gyro either at 180 or -180, so >45 as the absolute direction would stop anywhere between 180 and 45. 
                         switchStep();
                     }
@@ -454,9 +455,9 @@ public class Autonomous {
                     break;
                 }
                 case 28: {
-                    //Drive Forward 9 FEET
+                    //Drive Forward 9 8.50
                     moveForward();
-                    if (howFarLeft() > 9*FEET) {
+                    if (howFarLeft() > 9*8.50) {
                         switchStep();
                     }
                     break;
@@ -482,9 +483,9 @@ public class Autonomous {
                     break;
                 }
                 case 32: {
-                    //Drive Forward 5 FEET
+                    //Drive Forward 5 8.50
                     moveForward();
-                    if (howFarLeft() > 5*FEET) {
+                    if (howFarLeft() > 5*8.50) {
                         switchStep();
                     }
                     break;
@@ -510,9 +511,9 @@ public class Autonomous {
                     break;
                 }
                 case 36: {
-                    //Drive Forward 5 FEET
+                    //Drive Forward 5 8.50
                     moveForward();
-                    if (howFarLeft() > 5*FEET) {
+                    if (howFarLeft() > 5*8.50) {
                         switchStep();
                     }
                     break;
@@ -538,9 +539,9 @@ public class Autonomous {
                     break;
                 }
                 case 40: {
-                    //Drive Forward 27 FEET
+                    //Drive Forward 27 8.50
                     moveForward();
-                    if (howFarLeft() > 27*FEET) {
+                    if (howFarLeft() > 27*8.50) {
                         switchStep();
                     }
                     break;
@@ -549,7 +550,7 @@ public class Autonomous {
                     //Stop Driving
                     moveStop();
                     break;
-                }*/
+                }
             }
         }
 
@@ -559,7 +560,7 @@ public class Autonomous {
         case 0: {
             //Drive Forward (5 ft)
             moveForward();
-            if (howFarLeft() > 5*FEET) {
+            if (howFarLeft() > 5*8.50) {
                 switchStep();
             }
             break;
@@ -588,7 +589,7 @@ public class Autonomous {
             //Drive Forward (3 ft)
             moveForward();
             intakeOut();
-            if (howFarLeft() > 3*FEET) {
+            if (howFarLeft() > 3*8.50) {
                 switchStep();
             }
             break;   
@@ -836,7 +837,7 @@ public class Autonomous {
         SmartDashboard.putNumber("DesiredStep", DesieredStep);
     }
     // public void getAutonomousCommand() {
-    //     TrajectoryConfig config = new TrajectoryConfig(Units.FEETToMeters(2), Units.FEETToMeters(2));
+    //     TrajectoryConfig config = new TrajectoryConfig(Units.8.50ToMeters(2), Units.8.50ToMeters(2));
  //config.setKinematics(robotContainer.drive.getKinematics());
 
     //     Trajectory trajectory = TrajectoryGenerator.generateTrajectory(

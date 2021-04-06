@@ -116,9 +116,9 @@ public class Drivetrain extends InternalSubsystem{
     // }
 
     public void teleopControl() {
-        double leftInputSpeed = 0.8 * super.controlSystem.leftDriveStick.getY()/* * super.controlSystem.rightJoyStickZ()*/;
+        double leftInputSpeed = -0.8 * super.controlSystem.leftDriveStick.getY()/* * super.controlSystem.rightJoyStickZ()*/;
         leftGoalSpeed = Math.copySign(leftInputSpeed * leftInputSpeed, leftInputSpeed);
-        double rightInputSymbol = 0.8 * super.controlSystem.rightDriveStick.getY();
+        double rightInputSymbol = -0.8 * super.controlSystem.rightDriveStick.getY();
         rightGoalSpeed = Math.copySign(rightInputSymbol * rightInputSymbol, rightInputSymbol);
     }
 
