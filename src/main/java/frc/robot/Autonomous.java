@@ -561,9 +561,9 @@ public class Autonomous {
         
         switch (autonomousStep) {
         case 0: {
-            //Drive Forward (5 ft)
+            //Drive Forward (6 ft)
             moveForward();
-            if (howFarLeft() > 5*FEET) {
+            if (howFarLeft() > 6*FEET) {
                 switchStep();  
             }
             break;
@@ -620,7 +620,7 @@ public class Autonomous {
         case 8: {
             //Drive Straight (20 ft)
             moveForward();
-            if (howFarLeft() > 130) {
+            if (howFarLeft() > 50) {
                 switchStep();
             }
             break;
@@ -660,7 +660,7 @@ public class Autonomous {
         }
         case 14: {
             moveTurnLeft();
-            if (getabsoluteDirection() < -90) {
+            if (getabsoluteDirection() < -60) {
                 switchStep();
             }
             break;
