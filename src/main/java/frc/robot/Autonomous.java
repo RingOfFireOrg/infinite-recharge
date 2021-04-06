@@ -22,6 +22,7 @@ public class Autonomous {
 
     int autonomousStep = 0;
     int DesieredStep = 1;
+    int wheelRotation = 8; // To go one feet, the robot encoder has to read ~8 rotations of the wheel
     Timer autonomousTimer;
     double transitionTime = 0;
     PID drive;
@@ -251,114 +252,308 @@ public class Autonomous {
                 break; 
             }
         }
-    }
-    public void AutoNavBarrelRacing() {
+    }       
+    
+    
+
+        public void AutoNavBarrelRace() {
             switch (autonomousStep) {
-            case 0: {
-                //Drive Forward
+                case 0: {
+                    //Drive Forward 10 ft
+                    moveForward();
+                    if (howFarLeft() > 10*wheelRotation) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 1: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 2: {
+                    //Turn Right 90°
+                    moveTurnRight();
+                    if (getabsoluteDirection() > 90) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 3: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 4: {
+                //Drive Forward 5 feet
                 moveForward();
-                if (howFarLeft() > 75) {
+                if (howFarLeft() > 5*wheelRotation) {
                     switchStep();
                 }
                 break;
-            }
-            case 1: {
-                //Stop Driving
-                moveStop();
-                switchStep();
-                break;
-
                 }
-            case 2: {
-                //Turn Left
-                moveTurnRight();
-                if (getabsoluteDirection() > 90) {
+                case 5: {
+                    //Stop Driving
+                    moveStop();
                     switchStep();
+                    break;
                 }
-                break;
-            }
-            case 3: {
-                //Stop Driving
-                moveStop();
-                switchStep();
-                break;
-            }
-            case 4: {
-                //Drive Forward
+                case 6: {
+                    //Turn Right 90° 
+                    moveTurnRight();
+                    if (getabsoluteDirection() > 179) { //needs to be >180, bc the gyro max reading is 180
+                    }
+                    break;
+                }
+                case 7: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 8: {
+                //Drive Forward 5 feet
                 moveForward();
-                if (howFarLeft() > 75) {
+                if (howFarLeft() > 5*wheelRotation) {
                     switchStep();
+                    }
+                    break;
                 }
-                break;
-            }
-            case 5: {
-                //Stop Driving
-                moveStop();
-                switchStep();
-                break;
-            }
-            case 6: {
-                //Turn Left
-                moveTurnRight();
-                if (getabsoluteDirection() > 180) {
-                    switchStep();
-                }
-                break;
-            }
-            case 7: {
+                case 9: {
                 //Stop Driving
                 moveStop();
                 switchStep();
                 break;
                 }
-            case 8: {
-                //Drive Forward
-                moveForward();
-                if (howFarLeft() > 75) {
+                case 10: {
+                    //Turn Right 90°
+                    moveTurnRight();
+                    if (getabsoluteDirection() < -90) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 11: {
+                    //Stop Driving 
+                    moveStop();
                     switchStep();
+                    break;
                 }
-                break;
-            }
-            case 9: {
-                //Stop Driving
-                moveStop();
-                switchStep();
-                break;
+                case 12: {
+                    //Drive Forward 5 ft
+                    moveForward();
+                    if (howFarLeft() > 5*wheelRotation) {
+                        switchStep();
+                    }
+                    break;
                 }
-
-            case 10: {
-                //Turn Left
-                moveTurnRight();
-                if (getabsoluteDirection() < 270) {
+                case 13: {
+                    //Stop Driving
+                    moveStop();
                     switchStep();
+                    break;
                 }
-                break;
-            }
-            case 11: {
-                //Stop Driving
-                moveStop();
-                switchStep();
-                break;
-
-            }
-            case 12: {
-                //Turn Left
-                moveTurnRight();
-                if (getabsoluteDirection() < 340) {
+                case 14: {
+                    //Turn Right 75°
+                    moveTurnRight();
+                    if (getabsoluteDirection() < -15) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 15: {
+                    //Stop Driving
+                    moveStop();
                     switchStep();
+                    break;
                 }
-                break;
-            }
-            case 13: {
-                //Stop Driving
-                moveStop();
-                switchStep();
-                break;
-
+                case 16: {
+                    //Drive Forward 13 feet
+                    moveForward();
+                    if (howFarLeft() > 13*wheelRotation) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 17: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 18: {
+                    // Turn left 75°
+                    moveTurnLeft();
+                    if (getabsoluteDirection() < -90) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 19: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 20: {
+                    //Drive Forward 2.5 feet
+                    moveForward();
+                    if (howFarLeft() > 2.5*wheelRotation) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 21: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 22: {
+                    //Turn Left 90
+                    moveTurnLeft();
+                    if (getabsoluteDirection() < -179) { //gyro reads from -180 to +180
+                        switchStep();
+                    }
+                    break;
+                }
+                case 23: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 24: {
+                    //Drive Forward 7.5 feet
+                    moveForward();
+                    if (howFarLeft() > 7.5*wheelRotation) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 25: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 26: {
+                    //Turn Left 135
+                    moveTurnLeft();
+                    if (getabsoluteDirection() > 46 && getabsoluteDirection() < 44) { 
+                        //gyro either at 180 or -180, so >45 as the absolute direction would stop anywhere between 180 and 45. 
+                        switchStep();
+                    }
+                    break;
+                }
+                case 27: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 28: {
+                    //Drive Forward 9 feet
+                    moveForward();
+                    if (howFarLeft() > 9*wheelRotation) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 29: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 30: {
+                    //Turn Left 45
+                    moveTurnLeft();
+                    if (getabsoluteDirection() < 0) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 31: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 32: {
+                    //Drive Forward 5 feet
+                    moveForward();
+                    if (howFarLeft() > 5*wheelRotation) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 33: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 34: {
+                    //Turn Left 90
+                    moveTurnLeft();
+                    if (getabsoluteDirection() < -90) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 35: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 36: {
+                    //Drive Forward 5 feet
+                    moveForward();
+                    if (howFarLeft() > 5*wheelRotation) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 37: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 38: {
+                    //Turn Left 90 
+                    moveTurnLeft(); 
+                    if (getabsoluteDirection() < -179) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 39: {
+                    //Stop Driving
+                    moveStop();
+                    switchStep();
+                    break;
+                }
+                case 40: {
+                    //Drive Forward 27 feet
+                    moveForward();
+                    if (howFarLeft() > 27*wheelRotation) {
+                        switchStep();
+                    }
+                    break;
+                }
+                case 41: {
+                    //Stop Driving
+                    moveStop();
+                    break;
+                }
             }
         }
-        
-    }
+
     public void AutoNavBounce() {
         
         switch (autonomousStep) {
