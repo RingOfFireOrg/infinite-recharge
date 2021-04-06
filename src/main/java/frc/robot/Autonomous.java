@@ -577,7 +577,7 @@ public class Autonomous {
         case 2: {
             //Drive Left (~90°)
             moveTurnLeft();
-            if (howFarRight() > 40) {
+            if (getabsoluteDirection() > 90) {
                 switchStep();
             }
             break;
