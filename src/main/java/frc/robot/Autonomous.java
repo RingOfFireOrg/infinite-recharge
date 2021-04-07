@@ -101,7 +101,7 @@ public class Autonomous {
 }
 
     public void runAutonomous() {
-        AutoNavBarrelRace();
+        AutoNavBounce();
     }
     //simple auto that will drive forward for x time and then shoot against wall
     public void driveAndShoot() {
@@ -890,9 +890,9 @@ public class Autonomous {
             break;
         }
         case 12: {
-            //Drive Forward (5ft)
+            //Drive Forward (2ft)
             moveForward();
-            if (howFarLeft() > 2.5*FEET) {
+            if (howFarLeft() > 1.5*FEET) {
                 switchStep();
             }
             break;
@@ -936,7 +936,7 @@ public class Autonomous {
         case 18: {
             //Drive Backward (10 ft)
             moveBackward();
-            if (howFarLeft() < -10*FEET) {
+            if (howFarLeft() < -11*FEET) {
                 switchStep();
             }
             break;
@@ -964,7 +964,7 @@ public class Autonomous {
         case 22: {
             //Drive Forward (7 ft)
             moveForward();
-            if (howFarLeft() > 7*FEET) {
+            if (howFarLeft() > 7.50*FEET) {
                 switchStep();
             }
             break;
@@ -978,7 +978,7 @@ public class Autonomous {
         case 24: {
             //Turn Left (~90°)
             moveTurnLeft();
-            if (getabsoluteDirection() < -85) {
+            if (getabsoluteDirection() < -80) {
                 switchStep();
             }
             break;
@@ -1006,9 +1006,9 @@ public class Autonomous {
             break;
         }
         case 28: {
-            //Drive Backward (5 ft)
+            //Drive Backward (4 ft)
             moveBackward();
-            if (howFarLeft() < -5*FEET) {
+            if (howFarLeft() < -4*FEET) {
                 switchStep();
             }
             break;
@@ -1022,7 +1022,7 @@ public class Autonomous {
         case 30: {
             //Turn Right (~90°)
             moveTurnRight();
-            if (getabsoluteDirection() > 0) {
+            if (getabsoluteDirection() > -10) {
                 switchStep();
             }
             break;
@@ -1036,7 +1036,7 @@ public class Autonomous {
         case 32: {
             //Drive Forward (4 ft)
             moveForward();
-            if (howFarLeft() > 5*FEET) {
+            if (howFarLeft() > 4*FEET) {
                 switchStep();
             }
             break;
