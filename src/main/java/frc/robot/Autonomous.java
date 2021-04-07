@@ -316,7 +316,7 @@ public class Autonomous {
                 case 8: {
                 //Drive Forward 3 FEET
                 moveForward();
-                if (howFarLeft() > 4*FEET) {
+                if (howFarLeft() > 4.5*FEET) {
                     switchStep();
                     }
                     break;
@@ -350,7 +350,7 @@ public class Autonomous {
                 case 12: {
                     //Drive Forward 3 ft
                     moveForward();
-                    if (howFarLeft() > 3*FEET) {
+                    if (howFarLeft() > 4*FEET) {
                         switchStep();
                     }
                     break;
@@ -378,7 +378,7 @@ public class Autonomous {
                 case 16: {
                     //Drive Forward 13 FEET
                     moveForward();
-                    if (howFarLeft() > 13*FEET) {
+                    if (howFarLeft() > 14*FEET) {
                         switchStep();
                     }
                     break;
@@ -411,7 +411,7 @@ public class Autonomous {
                     }
                     break;
                 }
-                case 21: {
+                 case 21: {
                     //Stop Driving
                     moveStop();
                     switchStep();
@@ -452,10 +452,10 @@ public class Autonomous {
                         //gyro either at 180 or -180, so >45 as the absolute direction would stop anywhere between 180 and 45. 
                         moveTurnLeft();
                     }
-                    else if (getabsoluteDirection() > 55) {
+                    else if (getabsoluteDirection() > 80) {
                         moveTurnLeft();
                     }
-                    else if(getabsoluteDirection() < 40) {
+                    else if(getabsoluteDirection() < 70) {
                         switchStep();
                     }
                     break;
