@@ -101,7 +101,7 @@ public class Autonomous {
 }
 
     public void runAutonomous() {
-        AutoNavBarrelRace();
+        AutoNavSlalomPath();
     }
     //simple auto that will drive forward for x time and then shoot against wall
     public void driveAndShoot() {
@@ -180,9 +180,9 @@ public class Autonomous {
     public void AutoNavSlalomPath() {
         switch (autonomousStep) {
             case 0: {
-                //Drive Forward
+                //Drive Forward 2.5 feet
                 moveForward();
-                if (howFarLeft() > 40) {
+                if (howFarLeft() > 2.5*FEET) {
                     switchStep();
                 }
                 break;
@@ -197,7 +197,7 @@ public class Autonomous {
             case 2: {
                 //Turn Left
                 moveTurnLeft();
-                if (getabsoluteDirection() < -45) {
+                if (getabsoluteDirection() < -80) {
                     switchStep();
                 }
                 break;
@@ -209,9 +209,9 @@ public class Autonomous {
                 break;
              } 
              case 4: {
-                //Drive Forward
+                //Drive Forward 5 feet
                 moveForward();
-                if (howFarLeft() > 30) {
+                if (howFarLeft() > 5*FEET) {
                     switchStep();
                 }
                 break;
@@ -223,9 +223,9 @@ public class Autonomous {
                 break; 
             }
             case 6: {
-                //Left Turn
+                //Right Turn
                 moveTurnRight();
-                if (howFarLeft() > 45) {
+                if (getabsoluteDirection() > 0) {
                     switchStep();
                 }
                 break;
@@ -237,9 +237,9 @@ public class Autonomous {
                 break; 
             }
             case 8: {
-                //Drive Forward
+                //Drive Forward 15 feet
                 moveForward();
-                if (howFarLeft() > 140) {
+                if (howFarLeft() > 19.5*FEET) {
                     switchStep();
                 }
                 break;
@@ -247,10 +247,246 @@ public class Autonomous {
             case 9: {
                 //Stop Driving
                 moveStop();
+                switchStep();
                 break; 
             }
+            case 10: {
+                //Turn Right 90
+                moveTurnRight();
+                if (getabsoluteDirection() > 80) {
+                    switchStep();
+                }
+                break;
+            }
+            case 11: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 12: {
+                //Drive Forward 4 feet
+                moveForward();
+                if (howFarLeft() > 4*FEET) {
+                    switchStep();
+                }
+                break;
+            } 
+            case 13: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 14: {
+                //Turn Left 90
+                moveTurnLeft();
+                if (getabsoluteDirection() < 0) {
+                    switchStep();
+                }
+                break;
+            }
+            case 15: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 16: {
+                //Drive Forward 4 feet
+                moveForward();
+                if (howFarLeft() > 4*FEET) {
+                    switchStep();
+                }
+                break;
+            }
+            case 17: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 18: {
+                //Turn Left 90
+                moveTurnLeft(); 
+                if (getabsoluteDirection() < -90) {
+                    switchStep();
+                }
+                break;
+            }
+            case 19: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 20: {
+                //Drive Forward 4 feet
+                moveForward();
+                if (howFarLeft() > 4*FEET) {
+                    switchStep();
+                }
+                break;
+            }
+            case 21: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 22: {
+                //Turn Left 90
+                moveTurnLeft();
+                if (getabsoluteDirection() < -175) {
+                    switchStep();
+                } 
+                break;
+            }
+            case 23: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 24: {
+                //Drive Forward 3 feet
+                moveForward();
+                if (howFarLeft() > 3*FEET) {
+                    switchStep();
+                }
+                break;
+            }
+            case 25: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 26: {
+                //Turn Left 90
+                moveTurnLeft();
+                if (getabsoluteDirection() < -170) {
+                    moveTurnLeft();
+                }
+                else if (getabsoluteDirection() > 100) {
+                    moveTurnLeft();
+                }
+                else if (getabsoluteDirection() < 90) {
+                    switchStep();
+                }
+                break;
+            }
+            case 27: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 28: {
+                //Drive Forward 5 feet
+                moveForward();
+                if (howFarLeft() > 5*FEET) {
+                    switchStep();
+                }
+                break;
+            }
+            case 29: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 30: {
+                //Turn Right 90
+                moveTurnRight();
+                if (getabsoluteDirection() > 175) {
+                    switchStep();
+                }
+                break;
+            }
+            case 31: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 32: {
+                //Drive Forward 20 feet
+                moveForward();
+                if (howFarLeft() > 20*FEET) {
+                    switchStep();
+                }
+                break;
+            }
+            case 33: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 34: {
+                //Turn Right 90
+                moveTurnRight();
+                if (getabsoluteDirection() > 170) {
+                    moveTurnRight();
+                }
+                else if (getabsoluteDirection() < -95) {
+                    moveTurnRight();
+                }
+                else if (getabsoluteDirection() > -90) {
+                    switchStep();
+                }
+                break;
+            }
+            case 35: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 36: {
+                //Drive Forward 5 feet
+                moveForward();
+                if (howFarLeft() > 5*FEET) { 
+                    switchStep();
+                }
+                break;
+            }
+            case 37: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 38: {
+                //Turn Left 90 
+                moveTurnLeft();
+                if (getabsoluteDirection() < -175) {
+                    switchStep();
+                }
+                break;
+            }
+            case 39: {
+                //Stop Driving
+                moveStop();
+                switchStep();
+                break;
+            }
+            case 40: {
+                //Drive Forward 5 feet
+                moveForward();
+                if (howFarLeft() > 5*FEET) {
+                    switchStep();
+                } 
+                break;
+            }
+            case 41: {
+                //Stop Driving
+                moveStop();
+                break;
+            }
         }
-    }       
+    }         
     
     
 
