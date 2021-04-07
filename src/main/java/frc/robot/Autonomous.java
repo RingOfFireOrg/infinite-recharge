@@ -101,7 +101,7 @@ public class Autonomous {
 }
 
     public void runAutonomous() {
-        AutoNavSlalomPath();
+        AutoNavBarrelRace();
     }
     //simple auto that will drive forward for x time and then shoot against wall
     public void driveAndShoot() {
@@ -640,9 +640,9 @@ public class Autonomous {
                     break;
                 }
                 case 20: {
-                    //Drive Forward 2.5 FEET
+                    //Drive Forward 2.0 FEET
                     moveForward();
-                    if (howFarLeft() > 2.5*FEET) {
+                    if (howFarLeft() > 2*FEET) {
                         switchStep();
                     }
                     break;
@@ -668,9 +668,9 @@ public class Autonomous {
                     break;
                 }
                 case 24: {
-                    //Drive Forward 3 FEET
+                    //Drive Forward 3.5 FEET
                     moveForward();
-                    if (howFarLeft() > 3*FEET) {
+                    if (howFarLeft() > 3.5*FEET) {
                         switchStep();
                     }
                     break;
@@ -688,10 +688,10 @@ public class Autonomous {
                         //gyro either at 180 or -180, so >45 as the absolute direction would stop anywhere between 180 and 45. 
                         moveTurnLeft();
                     }
-                    else if (getabsoluteDirection() > 80) {
+                    else if (getabsoluteDirection() > 70) {
                         moveTurnLeft();
                     }
-                    else if(getabsoluteDirection() < 70) {
+                    else if(getabsoluteDirection() < 60) {
                         switchStep();
                     }
                     break;
@@ -703,9 +703,9 @@ public class Autonomous {
                     break;
                 }
                 case 28: {
-                    //Drive Forward 9 FEET
+                    //Drive Forward 13 FEET
                     moveForward();
-                    if (howFarLeft() > 9*FEET) {
+                    if (howFarLeft() > 13*FEET) {
                         switchStep();
                     }
                     break;
@@ -719,7 +719,7 @@ public class Autonomous {
                 case 30: {
                     //Turn Left 45
                     moveTurnLeft();
-                    if (getabsoluteDirection() > 85) {
+                    if (getabsoluteDirection() < 5) {
                         switchStep();
                     }
                     break;
@@ -731,9 +731,9 @@ public class Autonomous {
                     break;
                 }
                 case 32: {
-                    //Drive Forward 5 FEET
+                    //Drive Forward 2.5 FEET
                     moveForward();
-                    if (howFarLeft() > 5*FEET) {
+                    if (howFarLeft() > 2.5*FEET) {
                         switchStep();
                     }
                     break;
@@ -759,9 +759,9 @@ public class Autonomous {
                     break;
                 }
                 case 36: {
-                    //Drive Forward 5 FEET
+                    //Drive Forward 3 FEET
                     moveForward();
-                    if (howFarLeft() > 5*FEET) {
+                    if (howFarLeft() > 3*FEET) {
                         switchStep();
                     }
                     break;
@@ -775,7 +775,7 @@ public class Autonomous {
                 case 38: {
                     //Turn Left 90 
                     moveTurnLeft(); 
-                    if (getabsoluteDirection() < -179) {
+                    if (getabsoluteDirection() < -170) {
                         switchStep();
                     }
                     break;
@@ -787,9 +787,9 @@ public class Autonomous {
                     break;
                 }
                 case 40: {
-                    //Drive Forward 27 FEET
+                    //Drive Forward 30 FEET
                     moveForward();
-                    if (howFarLeft() > 27*FEET) {
+                    if (howFarLeft() > 30*FEET) {
                         switchStep();
                     }
                     break;
