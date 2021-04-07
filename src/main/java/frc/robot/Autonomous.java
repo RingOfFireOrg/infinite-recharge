@@ -101,7 +101,7 @@ public class Autonomous {
 }
 
     public void runAutonomous() {
-        AutoNavBounce();
+        AutoNavBarrelRace();
     }
     //simple auto that will drive forward for x time and then shoot against wall
     public void driveAndShoot() {
@@ -259,7 +259,7 @@ public class Autonomous {
                 case 0: {
                     //Drive Forward 13 ft
                     moveForward();
-                    if (howFarLeft() > 13.5*FEET) {
+                    if (howFarLeft() > 14*FEET) {
                         switchStep();
                     }
                     break; 
@@ -273,7 +273,7 @@ public class Autonomous {
                 case 2: {
                     //Turn Right 90°
                     moveTurnRight();
-                    if (getabsoluteDirection() > 90) {
+                    if (getabsoluteDirection() > 85) {
                         switchStep();
                     }
                     break;
@@ -286,9 +286,9 @@ public class Autonomous {
                 }
                 
                 case 4: {
-                //Drive Forward 3 FEET
+                //Drive Forward 4 FEET
                 moveForward();
-                if (howFarLeft() > 3*FEET) {
+                if (howFarLeft() > 5*FEET) {
                     switchStep();
                 }
                 break;
@@ -302,7 +302,7 @@ public class Autonomous {
                 case 6: {
                     //Turn Right 90° 
                     moveTurnRight();
-                    if (getabsoluteDirection() > 179) { //needs to be >180, bc the gyro max reading is 180
+                    if (getabsoluteDirection() > 170) { //needs to be >180, bc the gyro max reading is 180
                     switchStep();
                     }
                     break;
@@ -316,7 +316,7 @@ public class Autonomous {
                 case 8: {
                 //Drive Forward 3 FEET
                 moveForward();
-                if (howFarLeft() > 3*FEET) {
+                if (howFarLeft() > 4*FEET) {
                     switchStep();
                     }
                     break;
@@ -330,7 +330,13 @@ public class Autonomous {
                 case 10: {
                     //Turn Right 90°
                     moveTurnRight();
-                    if (getabsoluteDirection() > -90) {
+                    if (getabsoluteDirection() > 150) {
+                        moveTurnRight();
+                    }
+                    else if (getabsoluteDirection() < -95) {
+                        moveTurnRight();
+                    }
+                    else if (getabsoluteDirection() > -90) {
                         switchStep();
                     }
                     break;
@@ -414,7 +420,7 @@ public class Autonomous {
                 case 22: {
                     //Turn Left 90
                     moveTurnLeft();
-                    if (getabsoluteDirection() < -179) { //gyro reads from -180 to +180
+                    if (getabsoluteDirection() < -175) { //gyro reads from -180 to +180
                         switchStep();
                     }
                     break;
@@ -442,11 +448,14 @@ public class Autonomous {
                 case 26: {
                     //Turn Left 135
                     moveTurnLeft();
-                    if (getabsoluteDirection() > 150) { 
+                    if (getabsoluteDirection() < 0) { 
                         //gyro either at 180 or -180, so >45 as the absolute direction would stop anywhere between 180 and 45. 
                         moveTurnLeft();
                     }
-                    else if(getabsoluteDirection() < 45) {
+                    else if (getabsoluteDirection() > 55) {
+                        moveTurnLeft();
+                    }
+                    else if(getabsoluteDirection() < 40) {
                         switchStep();
                     }
                     break;
@@ -474,7 +483,7 @@ public class Autonomous {
                 case 30: {
                     //Turn Left 45
                     moveTurnLeft();
-                    if (getabsoluteDirection() < 0) {
+                    if (getabsoluteDirection() > 85) {
                         switchStep();
                     }
                     break;
