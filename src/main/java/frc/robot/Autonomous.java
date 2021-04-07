@@ -703,8 +703,8 @@ public class Autonomous {
             break;
         }
         case 20: {
-            //Turn Left (~90°)
-            moveTurnLeft();
+            //Turn Right (~90°)
+            moveTurnRight();
             if (getabsoluteDirection() > 0) {
                 switchStep();
             }
