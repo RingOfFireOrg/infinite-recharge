@@ -18,7 +18,7 @@ public class Robot extends TimedRobot {
 
   ControlSystems controlSystem;
 
-  Vision vision;
+  //Vision vision;
 
   Autonomous autonomous;
 
@@ -26,7 +26,7 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     controlSystem = ControlSystems.getInstance();
     container = RobotContainer.getInstance();
-    vision = new Vision();
+   // vision = new Vision();
     autonomous = new Autonomous();
   }
 

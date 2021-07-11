@@ -63,11 +63,11 @@ public class Climber extends InternalSubsystem {
     public void setWinch(double winchSpeed) {
         this.winchSpeed = winchSpeed;
         if (winchSpeed > 0) {
-            winchState = winchState.WINDING_UP;
+            winchState = WinchState.WINDING_UP;
         } else if (winchSpeed < 0) {
-            winchState = winchState.WINDING_DOWN;
+            winchState = WinchState.WINDING_DOWN;
         } else {
-            winchState = winchState.IDLE;
+            winchState = WinchState.IDLE;
         }
     }
 
